@@ -25,9 +25,12 @@ header {
   text-transform: uppercase;
 }
 
-.month-summary-header {
+.month-summary-header, .transaction--list-header {
   font-weight: 600;
   padding: 0 5px 5px;
+}
+
+.month-summary-header {
   font-size: 18px;
 }
 
@@ -51,4 +54,33 @@ td.month-summary-balance {
 
 .month-summary-balance-total.negative-total {
   color: #E53935;
+}
+
+.transaction--list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction--list-date {
+  display: flex;
+}
+
+.transaction--list-date .number {
+  font-size: 2.5em;
+  line-height: 1;
+}
+
+.transaction--list-date > span:not(.number) {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px;
+}
+
+.transaction--list-date > span:not(.number) > small {
+  font-weight: 400;
+}
+
+.transaction--list-total-balance {
+  font-weight: 500;
 }
