@@ -24,3 +24,31 @@ header {
 .appbar-title {
   text-transform: uppercase;
 }
+
+.month-summary-header {
+  font-weight: 600;
+  padding: 0 5px 5px;
+  font-size: 18px;
+}
+
+.month-summary-content .mui-table {
+  margin-bottom: 0;
+}
+
+.month-summary-content .mui-table > tbody > tr > td {
+  padding: 5px;
+}
+
+td.month-summary-balance {
+  text-align: right;
+  width: 10%;
+}
+
+.month-summary-balance-total {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.month-summary-balance-total.negative-total {
+  color: #E53935;
+}
