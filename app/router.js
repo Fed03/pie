@@ -6,6 +6,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('month', { path: 'months/:month_id'});
 });
 
 export default Router;
