@@ -3,6 +3,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-shadow: 1px 1px 1px rgba(0,0,0,.004);
+  background-color: #F5F5F5;
 }
 
 header {
@@ -52,8 +53,12 @@ td.month-summary-balance {
   font-weight: 500;
 }
 
-.month-summary-balance-total.negative-total {
+.expense-amount {
   color: #E53935;
+}
+
+.income-amount {
+  color: #2E7D32;
 }
 
 .transaction--list-header {
@@ -77,10 +82,84 @@ td.month-summary-balance {
   padding: 0 8px;
 }
 
-.transaction--list-date > span:not(.number) > small {
+.transaction--list-date > span:not(.number) > small,
+.transaction--list-item-description > small {
   font-weight: 400;
+  color: #616161;
 }
 
 .transaction--list-total-balance {
   font-weight: 500;
+}
+
+ul.transaction--list-box {
+  margin-bottom: 0;
+}
+
+li.transaction--list-item {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+li.transaction--list-item:last-child {
+  padding-bottom: 0;
+}
+
+.transaction--list-item-info {
+  display: flex;
+}
+
+.transaction--list-item-description {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.category--badge {
+  background-color: #00C853;
+  margin: .4em .6em .4em 0;
+  border-radius: 50%;
+  font-size: 19px;
+  color: white;
+  width: 2.2em;
+  height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.category--badge::after {
+  content: "";
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  font: normal normal normal .6em/1 FontAwesome;
+  border: 2px solid white;
+
+  position: absolute;
+  top: -.6em;
+  right: -1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category--badge.category--badge-income::after {
+  background-color: #2E7D32;
+  content: "\f067";
+}
+
+.category--badge.category--badge-expense::after {
+  background-color: #E53935;
+  content: "\f068";
+}
+
+.category--badge > span {
+  line-height: 0;
 }
