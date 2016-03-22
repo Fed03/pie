@@ -10,6 +10,8 @@ Router.map(function() {
     this.route('view', { path: '/months/:month_id'});
   });
 
+  this.route('transaction', { path: 'transactions/:transaction_id'});
+  this.route('create-transaction', { path: 'transactions/create'});
 });
 
 export default Router;
