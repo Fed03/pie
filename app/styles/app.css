@@ -163,3 +163,13 @@ li.transaction--list-item:last-child {
 .category--badge > span {
   line-height: 0;
 }
+
+
+#transaction-appbar {
+  background-color: #78909C;
+  color: white;
+}
+
+#transaction-appbar > a.appbar-brand {
+  color: inherit;
+}
