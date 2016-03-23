@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  monthService: Ember.inject.service('month-retrieve-service'),
+
   beforeModel() {
-    // get current month from date
-    // get the correct month
-    // than redirect
-    let month = 1;
-    this.transitionTo('months.view', month);
+    this.get('monthService').findCurrentMonth().then(month => {
+      this.transitionTo('months.view', month);
+    });
   }
 });
