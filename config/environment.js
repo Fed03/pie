@@ -21,7 +21,7 @@ module.exports = function(environment) {
 
   if (environment === 'development') {
     ENV.emberPouch = {
-      localDb: 'testing'
+      localDb: 'pie_db'
     };
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -40,6 +40,10 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    ENV.emberPouch = {
+      localDb: 'testing'
+    };
   }
 
   if (environment === 'production') {

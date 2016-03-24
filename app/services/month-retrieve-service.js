@@ -28,6 +28,8 @@ export default Ember.Service.extend({
       }
 
       return createCurrentMonth(this.get('store'));
+    }).catch(() => {
+      debugger;
     });
   }
 });
