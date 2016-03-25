@@ -1,0 +1,29 @@
+<header>
+  <nav id="transaction-appbar" class="mui-appbar">
+    <h1 class="mui--appbar-line-height appbar-brand">Create a new transaction</h1>
+  </nav>
+</header>
+<div class="mui--appbar-height"></div>
+<main>
+  <div class="mui-container-fluid">
+    <div class="mui-row">
+      <div class="mui-col-xs-12">
+        <form>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{input type="tel" value=value name="transaction-value"}}
+            <label for="transaction-value">Value</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <input type="text" value="Value on load">
+            <label>Input 2</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            <textarea>Value on load</textarea>
+            <label>Textarea</label>
+          </div>
+          <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

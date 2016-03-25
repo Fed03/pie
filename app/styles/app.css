@@ -10,6 +10,7 @@ header {
   position: fixed;
   right: 0;
   left: 0;
+  z-index: 1;
 }
 
 .mui-appbar {
@@ -20,6 +21,7 @@ header {
 
 .appbar-brand {
   font-size: 20px;
+  margin: 0;
 }
 
 .appbar-title {
