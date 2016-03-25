@@ -5,20 +5,15 @@ moduleForComponent('transaction-value-input', 'Integration | Component | transac
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
+test('It renders a number input', function(assert) {
   this.render(hbs`{{transaction-value-input}}`);
+  assert.equal(this.$('input[type="number"]').length, 1, 'Input is rendered');
+});
 
-  assert.equal(this.$().text().trim(), '');
+test('it sets the correct class based on the transaction type', function(assert) {
+  this.set('transactionType', 'income');
 
-  // Template block usage:
-  this.render(hbs`
-    {{#transaction-value-input}}
-      template block text
-    {{/transaction-value-input}}
-  `);
+  this.render(hbs`{{transaction-value-input transactionType=transactionType}}`);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(this.$('input').hasClass('income-amount'));
 });
