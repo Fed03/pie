@@ -12,6 +12,8 @@ Router.map(function() {
 
   this.route('transaction', { path: 'transactions/:transaction_id'});
   this.route('create-transaction', { path: 'transactions/create'});
+
+  this.route('seed');
 });
 
 export default Router;
