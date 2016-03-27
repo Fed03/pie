@@ -1,6 +1,6 @@
 import { test } from 'qunit';
-// import moduleForPouchAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
-import moduleForAcceptance from 'offline-app/tests/helpers/module-for-acceptance';
+import moduleForPouchAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
+// import moduleForAcceptance from 'offline-app/tests/helpers/module-for-acceptance';
 
 function getCurrentMonthName() {
   const months = [
@@ -12,7 +12,7 @@ function getCurrentMonthName() {
   return months[today.getUTCMonth()];
 }
 
-moduleForAcceptance('Acceptance | show current month');
+moduleForPouchAcceptance('Acceptance | show current month');
 
 test('visiting `/` redirects to the current month', function(assert) {
   const monthName = getCurrentMonthName();

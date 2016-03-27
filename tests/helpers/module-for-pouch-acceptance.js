@@ -1,10 +1,8 @@
-// import PouchDB from 'pouchdb';
-import { module } from 'qunit';
+import {
+  module
+} from 'qunit';
 import startApp from '../helpers/start-app';
-// import config from '../../config/environment';
 import destroyApp from '../helpers/destroy-app';
-
-// let db = new PouchDB(config.emberPouch.localDb);
 
 export default function(name, options = {}) {
   module(name, {
@@ -14,7 +12,10 @@ export default function(name, options = {}) {
       if (options.beforeEach) {
         options.beforeEach.apply(this, arguments);
       }
-      // return db.destroy();
+
+
+      let db = this.application.__container__.lookup('adapter:application').get('db');
+      return db.destroy();
     },
 
     afterEach() {
