@@ -166,7 +166,6 @@ li.transaction--list-item:last-child {
   line-height: 0;
 }
 
-
 #transaction-appbar {
   background-color: #78909C;
   color: white;
@@ -174,4 +173,48 @@ li.transaction--list-item:last-child {
 
 #transaction-appbar > a.appbar-brand {
   color: inherit;
+}
+
+.category-selector {
+  height: 32px;
+  width: 100%;
+  display: block;
+  color: rgba(0, 0, 0, 0.87);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+}
+
+/* Sidedrawer */
+.sidedrawer {
+  width: 300px;
+  background-color: red;
+  transition: transform 0.2s ease-in-out;
+  position: fixed;
+  bottom: 0;
+}
+
+.sidedrawer.sidedrawer-left-positioned {
+  left: 0;
+  transform: translateX(-300px);
+}
+
+.sidedrawer.sidedrawer-right-positioned {
+  right: 0;
+  transform: translateX(300px);
+}
+
+.sidedrawer-sibling {
+  margin: 0;
+  transition: margin 0.2s ease-in-out;
+}
+
+body.sidedrawer-opened .sidedrawer {
+  transform: translateX(0);
+}
+
+body.sidedrawer-opened .sidedrawer-sibling.sidedrawer-sibling-right {
+  margin-right: 300px;
+}
+
+body.sidedrawer-opened .sidedrawer-sibling.sidedrawer-sibling-left {
+  margin-left: 300px;
 }
