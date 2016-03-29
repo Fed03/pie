@@ -2,3 +2,8 @@
   {{category-badge category=selectedCategory}}
   <span data-test-selector="selected-category-name">{{selectedCategory.name}}</span>
 {{/if}}
+{{#ember-wormhole to="create-trasaction-main"}}
+  {{#side-drawer isOpen=drawerOpened position='right'}}
+    wella
+  {{/side-drawer}}
+{{/ember-wormhole}}
