@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('category-selector-input', 'Integration | Component | category selector', {
+moduleForComponent('category-selector-input', 'Integration | Component | category selector input', {
   integration: true
 });
 

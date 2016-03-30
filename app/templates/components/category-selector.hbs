@@ -1,0 +1,9 @@
+<!-- appbar -->
+<ul class="mui-list--unstyled">
+  {{#each categories as |category|}}
+    <li class="category-list-item" data-category="{{category.id}}-{{category.name}}" {{action "selectedCategory" category}}>
+      {{category-badge category=category}}
+      <span>{{selectedCategory.name}}</span>
+    </li>
+  {{/each}}
+</ul>
