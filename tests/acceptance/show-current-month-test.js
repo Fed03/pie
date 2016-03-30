@@ -20,13 +20,11 @@ moduleForAcceptance('Acceptance | show current month', {
 
 test('visiting `/` redirects to the current month', function(assert) {
   const monthName = getCurrentMonthName();
-  makeModel('month', {id: 'foo-bar'});
 
   visit('/');
 
   andThen(function() {
     assert.equal(currentRouteName(), 'months.view');
-    assert.equal(currentURL(), `/months/foo-bar`);
     assert.ok(
       find('.month-summary-header').text().trim().toLowerCase().indexOf(monthName) !== -1,
       'The `.month-summary-header` contains the current month name'

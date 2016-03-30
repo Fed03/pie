@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import './make-model';
 
 export default function startApp(attrs) {
   let application;
