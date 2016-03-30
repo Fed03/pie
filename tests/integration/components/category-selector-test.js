@@ -37,3 +37,17 @@ test('it send an action when a category is clicked', function(assert) {
 
   this.$(`li[data-category=foo-bar]`).click();
 });
+
+test('it divides the categories based on type', function(assert) {
+  let incomeCategories = makeList('category', 2, { type: 'income' });
+  let outcomeCategories = makeList('category', 4, { type: 'outcome' });
+
+  let categories = incomeCategories.concat(outcomeCategories);
+  this.set('categories', categories);
+  this.render(hbs`{{category-selector categories=categories}}`);
+
+  assert.equal(this.$('ul[data-test-selector=income-list] li').length, 2,
+    'The income categories are inside ul.income-list');
+  assert.equal(this.$('ul[data-test-selector=outcome-list] li').length, 4,
+    'The income categories are inside ul.outcome-list');
+});
