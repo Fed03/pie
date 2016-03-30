@@ -1,5 +1,5 @@
 import { test } from 'qunit';
-import { destroyPouchDB } from 'offline-app/tests/helpers/pouch-helpers';
+import FactoryGuy, { make } from 'ember-data-factory-guy';
 import moduleForAcceptance from 'offline-app/tests/helpers/module-for-acceptance';
 
 function getCurrentMonthName() {
@@ -14,13 +14,13 @@ function getCurrentMonthName() {
 
 moduleForAcceptance('Acceptance | show current month', {
   beforeEach() {
-    return destroyPouchDB(this.application);
+    FactoryGuy.cacheOnlyMode();
   }
 });
 
 test('visiting `/` redirects to the current month', function(assert) {
   const monthName = getCurrentMonthName();
-  makeModel('month', {id: 'foo-bar'});
+  make('currentMonth', { id: 'foo-bar' });
 
   visit('/');
 
