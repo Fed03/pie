@@ -13,6 +13,29 @@ header {
   z-index: 1;
 }
 
+/* List item */
+li.list-item {
+  padding: 10px 0;
+}
+
+li.list-item:last-child {
+  padding-bottom: 0;
+}
+
+.list-item--info {
+  display: flex;
+  align-items: center;
+}
+
+.list-item--description {
+    margin: 0;
+    /*display: flex;
+    flex-direction: column;
+    justify-content: center;*/
+    line-height: 1.2;
+}
+/* end list item */
+
 .mui-appbar {
   display: flex;
   justify-content: space-between;
@@ -99,25 +122,13 @@ ul.transaction--list-box {
 }
 
 li.transaction--list-item {
-  padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 
-li.transaction--list-item:last-child {
-  padding-bottom: 0;
-}
-
-.transaction--list-item-info {
-  display: flex;
-}
-
 .transaction--list-item-description {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    line-height: 1.2;
+  display: flex;
+  flex-direction: column;
 }
 
 .category--badge {
@@ -186,10 +197,11 @@ li.transaction--list-item:last-child {
 /* Sidedrawer */
 .sidedrawer {
   width: 300px;
-  background-color: red;
+  /*background-color: red;*/
   transition: transform 0.2s ease-in-out;
   position: fixed;
   bottom: 0;
+  overflow: auto;
 }
 
 .sidedrawer.sidedrawer-left-positioned {
