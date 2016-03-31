@@ -14,7 +14,7 @@ test('it renders the categories list', function(assert) {
   this.set('categories', categories);
   this.render(hbs`{{category-selector categories=categories}}`);
 
-  assert.equal(this.$('li.category-list-item').length, 5);
+  assert.equal(this.$('li.list-item').length, 5);
 
   let firstCategory = categories[0];
   assert.equal(this.$(`li[data-category=${firstCategory.get('id')}-${firstCategory.get('name')}]`).length, 1, 'It adds a data-category attr to list item');
