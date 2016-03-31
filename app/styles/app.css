@@ -157,7 +157,7 @@ li.transaction--list-item:last-child {
   content: "\f067";
 }
 
-.category--badge.category--badge-expense::after {
+.category--badge.category--badge-outcome::after {
   background-color: #E53935;
   content: "\f068";
 }
@@ -175,7 +175,7 @@ li.transaction--list-item:last-child {
   color: inherit;
 }
 
-.category-selector {
+.category-selector-input {
   height: 32px;
   width: 100%;
   display: block;
