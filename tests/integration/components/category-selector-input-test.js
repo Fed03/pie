@@ -9,11 +9,11 @@ moduleForComponent('category-selector-input', 'Integration | Component | categor
   }
 });
 
-test('it renders the span element', function(assert) {
+test('it renders element', function(assert) {
   this.set('categories', makeList('category', 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
-  assert.equal(this.$('span.category-selector-input').length, 1, 'It\'s a span element');
+  assert.equal(this.$('.category-selector-input').length, 1);
 });
 
 test('it shows the selected category', function(assert) {
@@ -47,20 +47,20 @@ test('it toggle the sidedrawer when clicked', function(assert) {
   this.set('categories', makeList('category', 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
-  this.$('span.category-selector-input').click();
-  assert.ok($('body').hasClass('sidedrawer-opened'));
+  this.$('.category-selector-input > span').click();
+  assert.ok(this.$('.sidedrawer').hasClass('sidedrawer-opened'));
 
-  this.$('span.category-selector-input').click();
-  assert.ok($('body').hasClass('sidedrawer-closed'));
+  this.$('.category-selector-input > span').click();
+  assert.ok(this.$('.sidedrawer').hasClass('sidedrawer-closed'));
 });
 
 test('it add a class when is clicked', function(assert) {
   this.set('categories', makeList('category', 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
-  this.$('span.category-selector-input').click();
+  this.$('.category-selector-input > span').click();
 
-  assert.ok(this.$('span.category-selector-input').hasClass('category-selector-input-focused'),
+  assert.ok(this.$('.category-selector-input').hasClass('category-selector-input-focused'),
     'It has the `category-selector-input-focused` class');
 });
 
@@ -69,11 +69,24 @@ test('it adds a class if has a selected category', function(assert) {
 
   this.render(hbs`{{category-selector-input selectedCategory=selectedCategory categories=categories}}`);
 
-  assert.notOk(this.$('span.category-selector-input').hasClass('category-selector-input-full'));
+  assert.notOk(this.$('.category-selector-input').hasClass('category-selector-input-full'));
 
   this.set('selectedCategory', make('category', {
     name: 'Food',
     type: 'income'
   }));
-  assert.ok(this.$('span.category-selector-input').hasClass('category-selector-input-full'));
+  assert.ok(this.$('.category-selector-input').hasClass('category-selector-input-full'));
+});
+
+test('it closes the drawer when a category is selected', function(assert) {
+  this.set('categories', makeList('category', 3));
+  this.render(hbs`{{category-selector-input selectedCategoty=dummy categories=categories onSelection=(action (mut dummy))}}`);
+
+  assert.ok(this.$('.sidedrawer').hasClass('sidedrawer-closed'));
+
+  this.$('.category-selector-input > span').click();
+  assert.ok(this.$('.sidedrawer').hasClass('sidedrawer-opened'));
+
+  this.$(`li.list-item`).first().click();
+  assert.ok(this.$('.sidedrawer').hasClass('sidedrawer-closed'));
 });

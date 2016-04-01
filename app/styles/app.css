@@ -186,13 +186,32 @@ li.transaction--list-item {
   color: inherit;
 }
 
-.category-selector-input {
-  height: 32px;
+/* category-selector-input component */
+.category-selector-input > span {
+  min-height: 32px;
   width: 100%;
   display: block;
   color: rgba(0, 0, 0, 0.87);
   border-bottom: 1px solid rgba(0, 0, 0, 0.26);
 }
+.category-selector-input.category-selector-input-focused > span {
+  min-height: 33px;
+  margin-bottom: -1px;
+  border-color: #2196F3;
+  border-width: 2px
+}
+.category-selector-input.category-selector-input-focused ~ label,
+.category-selector-input.category-selector-input-full ~ label {
+  color: #2196F3;
+  transform: translate(0px, 0px);
+  font-size: 12px;
+  line-height: 15px;
+  text-overflow: ellipsis;
+}
+.category-selector-input.category-selector-input-full:not(.category-selector-input-focused) ~ label {
+  color: rgba(0, 0, 0, 0.54);
+}
+/* end category-selector-input component */
 
 /* Sidedrawer */
 .sidedrawer {

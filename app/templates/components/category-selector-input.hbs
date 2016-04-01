@@ -1,9 +1,13 @@
-{{#if selectedCategory}}
-  {{category-badge category=selectedCategory}}
-  <span data-test-selector="selected-category-name">{{selectedCategory.name}}</span>
-{{/if}}
-{{#ember-wormhole to="create-trasaction-main" renderInPlace=isTesting}}
-  {{#side-drawer isOpen=drawerOpened position='right'}}
+<span {{action "selectCategory"}}> 
+  {{#if selectedCategory}}
+    <div class="list-item--info">
+      {{category-badge category=selectedCategory}}
+      <span class="list-item--description" data-test-selector="selected-category-name">{{selectedCategory.name}}</span>
+    </div>
+  {{/if}}
+</span>
+{{#ember-wormhole to="create-transaction-main" renderInPlace=isTesting}}
+  {{#side-drawer isOpen=drawerOpened position='right' parentSelector='#create-transaction-main'}}
     {{category-selector categories=categories onSelection=(action 'categorySelected')}}
   {{/side-drawer}}
 {{/ember-wormhole}}
