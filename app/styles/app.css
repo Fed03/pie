@@ -219,14 +219,14 @@ li.transaction--list-item {
   transition: margin 0.2s ease-in-out;
 }
 
-body.sidedrawer-opened .sidedrawer {
+.sidedrawer.sidedrawer-opened {
   transform: translateX(0);
 }
 
-body.sidedrawer-opened .sidedrawer-sibling.sidedrawer-sibling-right {
+.sidedrawer-sibling.sidedrawer-sibling-opened.sidedrawer-sibling-right {
   margin-right: 300px;
 }
 
-body.sidedrawer-opened .sidedrawer-sibling.sidedrawer-sibling-left {
+.sidedrawer-sibling.sidedrawer-sibling-opened.sidedrawer-sibling-left {
   margin-left: 300px;
 }
