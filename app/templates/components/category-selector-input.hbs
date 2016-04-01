@@ -4,6 +4,6 @@
 {{/if}}
 {{#ember-wormhole to="create-trasaction-main" renderInPlace=isTesting}}
   {{#side-drawer isOpen=drawerOpened position='right'}}
-    wella
+    {{category-selector categories=categories onSelection=(action 'categorySelected')}}
   {{/side-drawer}}
 {{/ember-wormhole}}

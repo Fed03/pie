@@ -8,5 +8,10 @@ export default Ember.Component.extend({
   isTesting: config.environment === 'test',
   click() {
     this.toggleProperty('drawerOpened');
+  },
+  actions: {
+    categorySelected(category) {
+      this.get('onSelection')(category);
+    }
   }
 });
