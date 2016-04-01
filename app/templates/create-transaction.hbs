@@ -14,12 +14,10 @@
             <label for="transaction-value">Value</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
-            <input type="text" value="Value on load">
-            <label>Input 2</label>
-          </div>
-          <div class="mui-textfield mui-textfield--float-label">
-            <textarea>Value on load</textarea>
-            <label>Textarea</label>
+            {{category-selector-input
+              categories=model selectedCategory=transactionCategory
+              onSelection=(action (mut transactionCategory))
+            }}
           </div>
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
         </form>
