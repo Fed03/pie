@@ -1,13 +1,21 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   tagName: 'span',
   classNames: ['category-selector-input'],
-  drawerOpened: false,
+  classNameBindings: [
+    'isFocused:category-selector-input-focused',
+    'hasCategory:category-selector-input-full'
+  ],
+  isFocused: false,
+  hasCategory: computed.bool('selectedCategory'),
+  drawerOpened: computed.alias('isFocused'),
   isTesting: config.environment === 'test',
   click() {
-    this.toggleProperty('drawerOpened');
+    this.toggleProperty('isFocused');
   },
   actions: {
     categorySelected(category) {
