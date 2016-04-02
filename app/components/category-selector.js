@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['category--selector'],
   filteredCategories: Ember.Object.create(),
   actions: {
     selectedCategory(category) {

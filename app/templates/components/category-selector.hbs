@@ -1,13 +1,26 @@
-<!-- appbar -->
-{{#each categoryTypes as |type|}}
-  <ul class="mui-list--unstyled" data-test-selector="{{type}}-list">
-    {{#each (get filteredCategories type) as |category|}}
-      <li class="list-item" data-category="{{category.id}}-{{category.name}}" {{action "selectedCategory" category}}>
-        <div class="list-item--info">
-          {{category-badge category=category}}
-          <h3 class="list-item--description">{{category.name}}</h3>
-        </div>
-      </li>
-    {{/each}}
-  </ul>
-{{/each}}
+<div class="mui-appbar">
+  <h2 class="mui--appbar-line-height appbar-brand">Choose category</h2>
+</div>
+<div class="main">
+  {{#each categoryTypes as |type index|}}
+    <div class="mui-tabs__pane {{if (eq index 0) 'mui--is-active'}}" id="{{type}}-categories-pane">
+      <ul class="mui-list--unstyled" data-test-selector="{{type}}-list">
+        {{#each (get filteredCategories type) as |category|}}
+          <li class="list-item" data-category="{{category.id}}-{{category.name}}" {{action "selectedCategory" category}}>
+            <div class="list-item--info">
+              {{category-badge category=category}}
+              <h3 class="list-item--description">{{category.name}}</h3>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/each}}
+</div>
+<ul class="mui-tabs__bar mui-tabs__bar--justified">
+  {{#each categoryTypes as |type index|}}
+    <li class="{{if (eq index 0) 'mui--is-active'}}">
+      <a data-mui-toggle="tab" data-mui-controls="{{type}}-categories-pane">{{type}}</a>
+    </li>
+  {{/each}}
+</ul>
