@@ -1,6 +1,5 @@
 import { test } from 'qunit';
-import { destroyPouchDB } from 'offline-app/tests/helpers/pouch-helpers';
-import moduleForAcceptance from 'offline-app/tests/helpers/module-for-acceptance';
+import moduleForPouchAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
 
 function getCurrentMonthName() {
   const months = [
@@ -12,22 +11,20 @@ function getCurrentMonthName() {
   return months[today.getUTCMonth()];
 }
 
-moduleForAcceptance('Acceptance | show current month', {
-  beforeEach() {
-    return destroyPouchDB(this.application);
-  }
-});
+moduleForPouchAcceptance('Acceptance | show current month');
 
 test('visiting `/` redirects to the current month', function(assert) {
-  const monthName = getCurrentMonthName();
+  create('currentMonth', { id: 'foo' });
 
   visit('/');
 
   andThen(function() {
     assert.equal(currentRouteName(), 'months.view');
+    assert.equal(currentURL(), '/months/foo');
     assert.ok(
-      find('.month-summary-header').text().trim().toLowerCase().indexOf(monthName) !== -1,
+      find('.month-summary-header').text().trim().toLowerCase().indexOf(getCurrentMonthName()) !== -1,
       'The `.month-summary-header` contains the current month name'
     );
   });
+
 });
