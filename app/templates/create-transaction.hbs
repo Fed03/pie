@@ -24,10 +24,9 @@
             }}
             <label for="transaction-category">Category</label>
           </div>
-          <div class="mui-textfield mui-textfield--float-label">
-            {{datepicker-input}}
+          {{#datepicker-input class="mui-textfield mui-textfield--float-label" value=transactionDate onSelection=(action (mut transactionDate))}}
             <label for="transaction-date">Date</label>
-          </div>
+          {{/datepicker-input}}
           <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
         </form>
       </div>
