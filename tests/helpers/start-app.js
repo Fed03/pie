@@ -3,6 +3,7 @@ import Application from '../../app';
 import config from '../../config/environment';
 import './create-list';
 import './create';
+import './find-latest-in-db';
 
 export default function startApp(attrs) {
   let application;

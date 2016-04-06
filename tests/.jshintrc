@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "create",
-    "createList"
+    "createList",
+    "findLatestInDb"
   ],
   "node": false,
   "browser": false,
