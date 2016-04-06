@@ -26,3 +26,33 @@ test('the fields are prefilled with default values', function(assert) {
     assert.equal(find('[name="transaction-date"]').val(), today, 'Transaction date field is prefilled with today date');
   });
 });
+
+test('it change the value field class according to the category type', function(assert) {
+  create('category', {name:'foo', type: 'outcome', id: 1});
+  create('category', {name:'bar', type: 'income', id: 2});
+  visit('/transactions/create');
+
+  click('li[data-category=1-foo]');
+  andThen(function() {
+    assert.ok(
+      find('[name="transaction-value"]').hasClass('outcome-amount'),
+      'Transaction value field has outcome-amount class'
+    );
+    assert.notOk(
+      find('[name="transaction-value"]').hasClass('income-amount'),
+      'Transaction value field has not income-amount class'
+    );
+
+    click('li[data-category=2-bar]');
+    andThen(function() {
+      assert.ok(
+        find('[name="transaction-value"]').hasClass('income-amount'),
+        'Transaction value field has income-amount class'
+      );
+      assert.notOk(
+        find('[name="transaction-value"]').hasClass('outcome-amount'),
+        'Transaction value field has not outcome-amount class'
+      );
+    });
+  });
+});

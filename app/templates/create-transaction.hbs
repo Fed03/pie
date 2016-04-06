@@ -10,7 +10,11 @@
       <div class="mui-col-xs-12">
         <form>
           <div class="mui-textfield mui-textfield--float-label">
-            {{one-way-input type="tel" value=transactionValue name="transaction-value" update=(action (mut transactionValue))}}
+            {{one-way-input type="tel"
+              value=transactionValue
+              name="transaction-value"
+              update=(action (mut transactionValue))
+              class=transactionTypeClass}}
             <label for="transaction-value">Value</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
