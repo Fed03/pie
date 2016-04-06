@@ -22,6 +22,8 @@ module.exports = function(defaults) {
 
   app.import(app.bowerDirectory + '/mui/packages/cdn/css/mui.css');
   app.import(app.bowerDirectory + '/mui/packages/cdn/js/mui.js');
+  app.import('vendor/Pikaday-Material/css/pikaday.css');
+  app.import('vendor/Pikaday-Material/pikaday/pikaday.js');
 
   return app.toTree();
 };
