@@ -15,14 +15,30 @@ export default Ember.Controller.extend({
   }),
   actions: {
     createTransaction() {
-      const newTransaction = this.store.createRecord('transaction', {
-        value: this.get('transactionValue'),
-        description: this.get('transactionDescription'),
-        date: this.get('transactionDate'),
-        category: this.get('transactionCategory')
-      });
+      return this._findBelongingMonth().then(month => {
 
-      return newTransaction.save();
+        const newTransaction = this.store.createRecord('transaction', {
+          value: this.get('transactionValue'),
+          description: this.get('transactionDescription'),
+          date: this._getDateWithoutTime(),
+          category: this.get('transactionCategory'),
+          month: month
+        });
+
+        return newTransaction.save();
+      });
     }
+  },
+  _getDateWithoutTime() {
+    const date = new Date(this.get('transactionDate').getTime());
+    date.setUTCHours(0,0,0,0);
+    return date;
+  },
+  _findBelongingMonth() {
+    const date = this._getDateWithoutTime();
+    date.setUTCDate(1);
+    return this.store.findAll('month').then(months => {
+      return months.find(month => month.get('date').getTime() === date.getTime());
+    });
   }
 });

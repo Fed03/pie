@@ -8,7 +8,7 @@
   <div class="mui-container-fluid sidedrawer-sibling">
     <div class="mui-row">
       <div class="mui-col-xs-12">
-        <form>
+        <form {{action 'createTransaction' on='submit'}}>
           <div class="mui-textfield mui-textfield--float-label">
             {{one-way-input type="tel"
               value=transactionValue
@@ -31,7 +31,7 @@
           {{#datepicker-input class="mui-textfield mui-textfield--float-label" value=transactionDate onSelection=(action (mut transactionDate))}}
             <label for="transaction-date">Date</label>
           {{/datepicker-input}}
-          <button type="submit" class="mui-btn mui-btn--raised">Submit</button>
+          <button type="submit" class="mui-btn mui-btn--raised" data-test-selector="submit-transaction">Submit</button>
         </form>
       </div>
     </div>
