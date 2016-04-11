@@ -5,7 +5,7 @@ moduleForModel('month', 'Unit | Model | month', {
   needs: ['model:transaction']
 });
 
-test('it defaults the value of the date filed to the current month', function(assert) {
+test('it defaults the value of the date field to the current month', function(assert) {
   let expected = new Date();
   expected.setUTCDate(1);
   expected.setUTCHours(0, 0, 0, 0);
