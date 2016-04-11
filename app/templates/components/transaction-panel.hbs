@@ -1,0 +1,10 @@
+<div class="mui--divider-bottom transaction--list-header">
+  <div class="transaction--list-date">
+    <span class="number">{{moment-format momentDate "D"}}</span>
+    <span>
+      {{moment-format momentDate "dddd"}}
+      <small>{{moment-format momentDate "MMMM YYYY"}}</small>
+    </span>
+  </div>
+  <span class="transaction--list-total-balance income-amount">{{totalAmount}}</span>
+</div>
