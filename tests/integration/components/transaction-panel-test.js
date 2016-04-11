@@ -1,6 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import { make, manualSetup } from 'ember-data-factory-guy';
 import moment from 'moment';
+import Ember from 'ember';
+import { currency } from "accounting/settings";
 import hbs from 'htmlbars-inline-precompile';
 
 const stringContains = function(string, containing) {
@@ -11,6 +13,12 @@ const stringContains = function(string, containing) {
 moduleForComponent('transaction-panel', 'Integration | Component | transaction panel', {
   integration: true,
   beforeEach() {
+    currency.symbol = '€';
+    currency.format = {
+      pos: "%s +%v",
+      neg: "%s -%v",
+      zero: "%s %v"
+    };
     manualSetup(this.container);
   }
 });
@@ -18,7 +26,8 @@ moduleForComponent('transaction-panel', 'Integration | Component | transaction p
 test('it renders with the correct attrs', function(assert) {
   const today = new Date();
   this.set('date', today);
-  this.render(hbs`{{transaction-panel date=date}}`);
+  this.set('transactions', Ember.A([]));
+  this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
   assert.equal(this.$('div.transaction--panel.mui-panel').length, 1);
   assert.ok(this.$('div.transaction--panel.mui-panel').is(`[data-test-selector=${today.getUTCDate()}-day]`));
@@ -27,7 +36,8 @@ test('it renders with the correct attrs', function(assert) {
 test('it renders the date', function(assert) {
   const today = new Date();
   this.set('date', today);
-  this.render(hbs`{{transaction-panel date=date}}`);
+  this.set('transactions', Ember.A([]));
+  this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
   assert.ok(stringContains(this.$('.transaction--list-date').text(), moment().format('D dddd MMMM YYYY')));
 });
@@ -40,5 +50,28 @@ test('it prints the sum of transactions', function(assert) {
   ]);
   this.render(hbs`{{transaction-panel transactions=transactions}}`);
 
-  assert.equal(this.$('.transaction--list-total-balance').text().trim(), "+2.50");
+  assert.equal(this.$('.transaction--list-total-balance').text().trim(), "€ +2.50");
+});
+
+test('it sets a class according to the total balance', function(assert) {
+  const transaction1 = make('transaction', {value: 5.20});
+  const transaction2 = make('transaction', {value: 5.20});
+  this.set('transactions', [transaction1, transaction2]);
+  this.render(hbs`{{transaction-panel transactions=transactions}}`);
+
+  assert.ok(this.$('.transaction--list-total-balance').hasClass('income-amount'), 'It has the ".income-amount" class');
+  assert.notOk(this.$('.transaction--list-total-balance').hasClass('outcome-amount'), 'It has not the ".outcome-amount" class');
+
+  Ember.run(() => {
+    transaction2.set('value', -5.20);
+  });
+  assert.notOk(this.$('.transaction--list-total-balance').hasClass('income-amount'), 'It has not the ".income-amount" class');
+  assert.notOk(this.$('.transaction--list-total-balance').hasClass('outcome-amount'), 'It has not the ".outcome-amount" class');
+
+  Ember.run(() => {
+    transaction2.set('value', -8.20);
+  });
+  assert.notOk(this.$('.transaction--list-total-balance').hasClass('income-amount'), 'It has not the ".income-amount" class');
+  assert.ok(this.$('.transaction--list-total-balance').hasClass('outcome-amount'), 'It has the ".outcome-amount" class');
+});
 });

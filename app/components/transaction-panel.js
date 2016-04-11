@@ -12,11 +12,21 @@ export default Ember.Component.extend({
     }
   }),
   momentDate: momentComputed('date'),
-  totalAmount: computed('transactions.@each.value', {
+  balance: computed('transactions.@each.value', {
     get() {
       return this.get('transactions').reduce((sum, transaction) => {
         return sum + transaction.get('value');
       }, 0);
+    }
+  }),
+  balanceClass: computed('balance', {
+    get() {
+      const balance = this.get('balance');
+      if (balance > 0) {
+        return 'income-amount';
+      } else if (balance < 0) {
+        return 'outcome-amount';
+      }
     }
   })
 });
