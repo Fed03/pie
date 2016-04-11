@@ -45,6 +45,8 @@ li.list-item:last-child {
 .appbar-title {
   text-transform: uppercase;
 }
+
+/* month view */
 .month-summary-header, .transaction--list-header {
   font-weight: 600;
   padding: 0 5px 5px;
@@ -66,6 +68,17 @@ td.month-summary-balance {
   font-size: 17px;
   font-weight: 500;
 }
+.no-transactions {
+  color: #737373;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2.5em;
+}
+.no-transactions small {
+  font-size: 65%;
+}
+/* end month view */
 .outcome-amount {
   color: #E53935;
 }
