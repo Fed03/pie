@@ -74,4 +74,37 @@ test('it sets a class according to the total balance', function(assert) {
   assert.notOk(this.$('.transaction--list-total-balance').hasClass('income-amount'), 'It has not the ".income-amount" class');
   assert.ok(this.$('.transaction--list-total-balance').hasClass('outcome-amount'), 'It has the ".outcome-amount" class');
 });
+
+test('it renders the transactions', function(assert) {
+  const category = make('category', {type: 'income', name: 'Food'});
+  const firstTransaction = make('transaction', {value: 5.20, category: category, description: 'Coffee'});
+  this.set('transactions', [
+    firstTransaction,
+    make('transaction', {value: -3.10}),
+    make('transaction', {value: 0.40})
+  ]);
+  this.render(hbs`{{transaction-panel transactions=transactions}}`);
+
+  assert.equal(this.$('.transaction--list-item').length, 3);
+
+  const firstTransactionEl = this.$('.transaction--list-item').first();
+  assert.ok(firstTransactionEl.find('.category--badge').hasClass('category--badge-income'));
+  assert.ok(stringContains(
+    firstTransactionEl.find('.transaction--list-item-description').text().trim(),
+    "Coffee Food"
+  ));
+  assert.equal(
+    firstTransactionEl.find('.transaction--list-item-balance').text().trim(),
+    "€ +5.20"
+  );
+
+  assert.ok(
+    firstTransactionEl.find('.transaction--list-item-balance').hasClass('income-amount')
+  );
+  Ember.run(() => {
+    firstTransaction.set('value', -4);
+  });
+  assert.ok(
+    firstTransactionEl.find('.transaction--list-item-balance').hasClass('outcome-amount')
+  );
 });
