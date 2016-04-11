@@ -6,5 +6,15 @@ FactoryGuy.define('transaction', {
     description: FactoryGuy.generate(() => faker.commerce.product()),
     value: FactoryGuy.generate(() => faker.commerce.price()),
     category: FactoryGuy.belongsTo('category')
+  },
+  traits: {
+    yesterday: {
+      date: function() {
+        const yesterday = new Date();
+        yesterday.setUTCHours(0,0,0,0);
+        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+        return yesterday;
+      }()
+    }
   }
 });
