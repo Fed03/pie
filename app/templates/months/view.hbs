@@ -8,15 +8,21 @@
         <tbody>
           <tr>
             <td>Opening balance</td>
-            <td class="month-summary-balance">2,145.56</td>
+            <td class="month-summary-balance" data-test-selector="opening-balance-value">
+              {{format-money model.openingBalance format="%s %v"}}
+            </td>
           </tr>
           <tr>
             <td>Current balance</td>
-            <td class="month-summary-balance">989.45</td>
+            <td class="month-summary-balance" data-test-selector="current-balance-value">
+              {{format-money currentBalance format="%s %v"}}
+            </td>
           </tr>
           <tr>
             <td>&nbsp;</td>
-            <td class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount">-1,952.46</td>
+            <td class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount" data-test-selector="month-balance-value">
+              {{format-money model.balance}}
+            </td>
           </tr>
         </tbody>
       </table>
