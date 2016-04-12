@@ -50,3 +50,13 @@ test('viewing a month will list its transactions', function(assert) {
     });
   });
 });
+
+test('clicking on the add button redirects to create-transaction', function(assert) {
+  assert.expect(1);
+  visit(`/months/${this.currentMonth.get('id')}`);
+  click('.create-transaction-link');
+
+  andThen(function() {
+    assert.equal(currentRouteName(), 'create-transaction');
+  });
+});
