@@ -22,5 +22,12 @@ export default Model.extend({
     get() {
       return months[this.get('date').getUTCMonth()];
     }
+  }),
+  balance: Ember.computed('transactions.@each.value', {
+    get() {
+      return this.get('transactions').reduce((sum, transaction) => {
+        return sum + transaction.get('value');
+      }, 0);
+    }
   })
 });

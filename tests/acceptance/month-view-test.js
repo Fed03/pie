@@ -84,3 +84,31 @@ test('clicking on the add button redirects to create-transaction', function(asse
     assert.equal(currentRouteName(), 'create-transaction');
   });
 });
+
+test('it computes the total balance', function(assert) {
+  Ember.RSVP.all([
+    create('transaction', {value: 5}),
+    create('transaction', {value: -60}),
+    createList('transaction', 3, {value: 10})
+  ]).then(() => {
+    this.currentMonth.get('transactions').pushObjects(this.store.peekAll('transaction'));
+    this.currentMonth.set('openingBalance', 339);
+    return this.currentMonth.save();
+  });
+
+  visit(`/months/${this.currentMonth.get('id')}`);
+  andThen(() => {
+    assert.equal(
+      findWithAssert('[data-test-selector=opening-balance-value]').text().trim(),
+      "€ 339.00", 'The opening balance is correctly displayed'
+    );
+    assert.equal(
+      findWithAssert('[data-test-selector=month-balance-value]').text().trim(),
+      "€ -25.00", 'The month balance is the sum of transactions value'
+    );
+    assert.equal(
+      findWithAssert('[data-test-selector=current-balance-value]').text().trim(),
+      "€ 314.00", 'The current balance'
+    );
+  });
+});
