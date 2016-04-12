@@ -2,6 +2,16 @@ import { test } from 'qunit';
 import Ember from 'ember';
 import moduleForAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
 
+function getCurrentMonthName() {
+  const months = [
+    'january', 'february', 'march', 'april', 'may', 'june',
+    'july', 'august', 'september', 'october', 'november', 'december'
+  ];
+  const today = new Date();
+
+  return months[today.getUTCMonth()];
+}
+
 moduleForAcceptance('Acceptance | month view', {
   beforeEach() {
     this.store = this.application.__container__.lookup('service:store');
@@ -10,6 +20,20 @@ moduleForAcceptance('Acceptance | month view', {
       return month;
     });
   }
+});
+
+test('visiting `/` redirects to the current month', function(assert) {
+  visit('/');
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'months.view');
+    assert.equal(currentURL(), `/months/${this.currentMonth.get('id')}`);
+    assert.ok(
+      find('.month-summary-header').text().trim().toLowerCase().indexOf(getCurrentMonthName()) !== -1,
+      'The `.month-summary-header` contains the current month name'
+    );
+  });
+
 });
 
 test('viewing a month without transaction will result in an empty page', function(assert) {
