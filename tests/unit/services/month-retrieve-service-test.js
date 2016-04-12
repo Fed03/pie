@@ -29,7 +29,10 @@ const month = Ember.Object.extend({
 });
 
 let storeStub = Ember.Service.extend({
-  months: Ember.A([]),
+  month: Ember.A([]),
+  wallet: Ember.A([
+    Ember.Object.create({ value: 30 })
+  ]),
   newMonth: null,
   init() {
     this._super(...arguments);
@@ -37,8 +40,8 @@ let storeStub = Ember.Service.extend({
     saveMonthSpy = sinon.spy(newMonth, 'save');
     this.set('newMonth', newMonth);
   },
-  findAll() {
-    return Promise.resolve(this.get('months'));
+  findAll(modelType) {
+    return Promise.resolve(this.get(modelType));
   },
   createRecord() {
     return this.get('newMonth');
@@ -67,7 +70,7 @@ test('it creates a new month if current month is not found in the store', functi
 
   result.then(newMonth => {
     assert.deepEqual(newMonth.get('date'), getDateForCurrentMonth());
-    assert.ok(createRecordSpy.calledWithExactly('month'));
+    assert.ok(createRecordSpy.calledWithExactly('month', {openingBalance: 30}));
     assert.ok(saveMonthSpy.calledOnce);
   });
 });
@@ -75,7 +78,7 @@ test('it creates a new month if current month is not found in the store', functi
 test('it returns the correct month if found in store', function(assert) {
   let service = this.subject();
   let currentMonth = month.create();
-  service.get('store.months').push(currentMonth);
+  service.get('store.month').push(currentMonth);
   let createRecordSpy = sinon.spy(service.get('store'), 'createRecord');
 
   let result = service.findCurrentMonth();
