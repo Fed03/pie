@@ -16,6 +16,7 @@ const months = [
 export default Model.extend({
   date: attr('date', { defaultValue: getDateForCurrentMonth}),
   transactions: hasMany('transaction'),
+  openingBalance: attr('number'),
 
   name: Ember.computed('date', {
     get() {

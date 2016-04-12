@@ -8,9 +8,14 @@ const {
 } = Ember;
 
 function createCurrentMonth(store) {
-  let month = store.createRecord('month');
+  return store.findAll('wallet').then(wallets => {
+    const wallet = wallets.get('firstObject');
+    let month = store.createRecord('month', {
+      openingBalance: wallet.get('value')
+    });
 
-  return month.save();
+    return month.save();
+  });
 }
 
 export default Ember.Service.extend({

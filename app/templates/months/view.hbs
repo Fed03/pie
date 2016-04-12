@@ -8,7 +8,9 @@
         <tbody>
           <tr>
             <td>Opening balance</td>
-            <td class="month-summary-balance">2,145.56</td>
+            <td class="month-summary-balance" data-test-selector="opening-balance-value">
+              {{format-money model.openingBalance format="%s %v"}}
+            </td>
           </tr>
           <tr>
             <td>Current balance</td>
