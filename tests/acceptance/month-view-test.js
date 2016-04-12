@@ -51,27 +51,27 @@ test('viewing a month without transaction will result in an empty page', functio
 test('viewing a month will list its transactions', function(assert) {
   assert.expect(3);
   const todayDate = (new Date()).getUTCDate();
-  return Ember.RSVP.all([
+  Ember.RSVP.all([
     createList('transaction', 2),
     create('transaction', 'yesterday'),
     create('transaction', 'yesterday'),
     create('transaction', 'yesterday')
   ]).then(() => {
     this.currentMonth.get('transactions').pushObjects(this.store.peekAll('transaction'));
-    this.currentMonth.save().then(() => {
-      visit(`/months/${this.currentMonth.get('id')}`);
-      andThen(function() {
-        assert.equal(find('.transaction--panel').length, 2, 'The month has 2 days with transactions');
-        assert.equal(
-          findWithAssert(`[data-test-selector=${todayDate}-day] .transaction--list-item`).length,
-          2, 'Today panel has 2 transactions'
-        );
-        assert.equal(
-          findWithAssert(`[data-test-selector=${todayDate - 1}-day] .transaction--list-item`).length,
-          3, 'Yesterday panel has 3 transactions'
-        );
-      });
-    });
+    return this.currentMonth.save();
+  });
+
+  visit(`/months/${this.currentMonth.get('id')}`);
+  andThen(function() {
+    assert.equal(find('.transaction--panel').length, 2, 'The month has 2 days with transactions');
+    assert.equal(
+      findWithAssert(`[data-test-selector=${todayDate}-day] .transaction--list-item`).length,
+      2, 'Today panel has 2 transactions'
+    );
+    assert.equal(
+      findWithAssert(`[data-test-selector=${todayDate - 1}-day] .transaction--list-item`).length,
+      3, 'Yesterday panel has 3 transactions'
+    );
   });
 });
 
