@@ -1,9 +1,14 @@
 ---
 language: node_js
 node_js:
-  - "0.12"
+  - "5"
+  - "4"
 
 sudo: false
+
+notifications:
+  email:
+    on_failure: change
 
 cache:
   directories:
@@ -11,8 +16,7 @@ cache:
 
 before_install:
   - "npm config set spin false"
-  - "npm install -g npm@^2"
-  - npm install -g phantomjs-prebuilt
+  - "npm install -g phantomjs-prebuilt"
 
 install:
   - npm install -g bower
