@@ -22,3 +22,12 @@ function(assert) {
     });
   });
 });
+
+test('if installed property is false redirects to setup', function(assert) {
+  create('configuration', { installed: false });
+  visit('/');
+
+  andThen(() => {
+    assert.equal(currentURL(), '/setup');
+  });
+});

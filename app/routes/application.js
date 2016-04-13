@@ -7,7 +7,7 @@ export default Ember.Route.extend({
     });
   },
   redirect(configModel) {
-    if (!configModel) {
+    if (!configModel || !configModel.get('installed')) {
       this.transitionTo('setup');
     }
   }
