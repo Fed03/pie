@@ -31,3 +31,19 @@ test('if installed property is false redirects to setup', function(assert) {
     assert.equal(currentURL(), '/setup');
   });
 });
+
+test('create wallet', function(assert) {
+  visit('/setup');
+  fillIn('[data-test-selector=username]', 'John Doe');
+  fillIn('[data-test-selector=initial-balance]', 12345);
+  click('[type=submit]');
+
+  andThen(() => {
+    this.store.findAll('wallet').then(wallets => {
+      return wallets.get('firstObject');
+    }).then(wallet => {
+      assert.equal(wallet.get('ownerName'), 'John Doe');
+      assert.equal(wallet.get('value'), 12345);
+    });
+  });
+});
