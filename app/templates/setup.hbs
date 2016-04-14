@@ -1,0 +1,31 @@
+<header>
+  <nav class="mui-appbar">
+    <span class="appbar-brand appbar-title mui--appbar-line-height">SetUp</span>
+  </nav>
+</header>
+<div class="mui--appbar-height"></div>
+<main>
+  <div class="mui-container-fluid">
+    <div class="mui-row">
+      <div class="mui-col-xs-12">
+        <form>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{one-way-input
+              value=username
+              name="username"
+              update=(action (mut username))}}
+            <label>Your name</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{one-way-input type="tel"
+              value=initialBalance
+              name="initial-balance"
+              update=(action (mut initialBalance))}}
+            <label>Initial balance</label>
+          </div>
+          <button type="submit" class="mui-btn" {{action 'createWallet'}}>Go!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>

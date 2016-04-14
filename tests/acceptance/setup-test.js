@@ -17,8 +17,8 @@ function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/setup');
-    this.store.findAll('configuration').then(configs => {
-      assert.equal(configs.get('length'), 1, "A config object has been created");
+    findLatestInDb('configuration').then(config => {
+      assert.ok(config, "A config object has been created");
     });
   });
 });
@@ -33,17 +33,19 @@ test('if installed property is false redirects to setup', function(assert) {
 });
 
 test('create wallet', function(assert) {
+  assert.expect(3);
   visit('/setup');
-  fillIn('[data-test-selector=username]', 'John Doe');
-  fillIn('[data-test-selector=initial-balance]', 12345);
+  fillIn('[name=username]', 'John Doe');
+  fillIn('[name=initial-balance]', 12345);
   click('[type=submit]');
 
   andThen(() => {
-    this.store.findAll('wallet').then(wallets => {
-      return wallets.get('firstObject');
-    }).then(wallet => {
+    return findLatestInDb('wallet').then(wallet => {
       assert.equal(wallet.get('ownerName'), 'John Doe');
       assert.equal(wallet.get('value'), 12345);
+      findLatestInDb('configuration').then(config => {
+        assert.ok(config.get('installed'), 'Config is installed');
+      });
     });
   });
 });

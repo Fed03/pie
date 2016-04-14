@@ -6,5 +6,6 @@ const {
 } = DS;
 
 export default Model.extend({
-  value: attr('number')
+  value: attr('number'),
+  ownerName: attr('string')
 });
