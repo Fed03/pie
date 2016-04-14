@@ -15,10 +15,13 @@ function getCurrentMonthName() {
 moduleForAcceptance('Acceptance | month view', {
   beforeEach() {
     this.store = this.application.__container__.lookup('service:store');
-    return create('currentMonth').then(month => {
+    let monthPromise = create('currentMonth').then(month => {
       this.currentMonth = month;
       return month;
     });
+    let configPromise = create('configuration', { installed:true });
+
+    return Ember.RSVP.all([monthPromise, configPromise]);
   }
 });
 

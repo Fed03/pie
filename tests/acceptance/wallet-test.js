@@ -1,13 +1,17 @@
 import { test } from 'qunit';
+import Ember from 'ember';
 import moduleForAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
 
 moduleForAcceptance('Acceptance | wallet', {
   beforeEach() {
     this.store = this.application.__container__.lookup('service:store');
-    return create('wallet', { value: 12345.67 }).then(wallet => {
+    let walletPromise = create('wallet', { value: 12345.67 }).then(wallet => {
       this.wallet = wallet;
       return wallet;
     });
+    let configPromise = create('configuration', { installed:true });
+
+    return Ember.RSVP.all([walletPromise, configPromise]);
   }
 });
 

@@ -1,12 +1,15 @@
 import { test } from 'qunit';
 import moment from 'moment';
+import Ember from 'ember';
 import getDateForCurrentMonth from 'offline-app/utils/get-date-for-current-month';
 import moduleForPouchAcceptance from 'offline-app/tests/helpers/module-for-pouch-acceptance';
 
 moduleForPouchAcceptance('Acceptance | create transaction', {
   beforeEach() {
-    const store = this.application.__container__.lookup('service:store');
-    return store.createRecord('month').save();
+    return Ember.RSVP.all([
+      create('currentMonth'),
+      create('configuration', { installed: true })
+    ]);
   }
 });
 
@@ -63,7 +66,7 @@ test('it change the value field class according to the category type', function(
   });
 });
 
-test('create category', function(assert) {
+test('create transaction', function(assert) {
   assert.expect(5);
   const today = new Date();
   today.setUTCHours(0,0,0,0);
