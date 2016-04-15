@@ -49,3 +49,16 @@ test('create wallet', function(assert) {
     });
   });
 });
+
+test('it creates default categories', function(assert) {
+  visit('/setup');
+  fillIn('[name=username]', 'John Doe');
+  fillIn('[name=initial-balance]', 12345);
+  click('[type=submit]');
+
+  andThen(() => {
+    this.store.findAll('category').then(categories => {
+      assert.ok(categories.get('length') !== 0);
+    });
+  });
+});
