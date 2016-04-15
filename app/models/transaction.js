@@ -1,5 +1,6 @@
 import Model from 'ember-pouch/model';
 import DS from 'ember-data';
+import Ember from 'ember';
 
 const {
   attr,
@@ -14,6 +15,7 @@ export default Model.extend({
     return today;
   }}),
   value: attr('number'),
+  type: Ember.computed.readOnly('category.type'),
 
   month: belongsTo('month'),
   category: belongsTo('category')
