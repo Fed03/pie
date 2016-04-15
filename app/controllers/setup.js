@@ -7,7 +7,9 @@ export default Ember.Controller.extend({
         this._createWallet(),
         this._markAsInstalled(),
         this._createBaseCategories(),
-      ]);
+      ]).then(() => {
+        this.transitionToRoute('months');
+      });
     }
   },
   _createWallet() {

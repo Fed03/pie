@@ -62,3 +62,14 @@ test('it creates default categories', function(assert) {
     });
   });
 });
+
+test('it creates default categories', function(assert) {
+  visit('/setup');
+  fillIn('[name=username]', 'John Doe');
+  fillIn('[name=initial-balance]', 12345);
+  click('[type=submit]');
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'months.view');
+  });
+});
