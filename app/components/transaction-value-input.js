@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import OneWayInput from 'ember-one-way-controls/components/one-way-input';
+import { formatMoney } from 'accounting';
 
 const { computed } = Ember;
 
@@ -8,12 +8,36 @@ const typeClasses = {
   outcome: 'outcome-amount'
 };
 
-export default OneWayInput.extend({
-  type: 'number',
-  classNameBindings: ['typeClass'],
+export default Ember.Component.extend({
+  value: 0,
+  _value: computed.oneWay('value'),
+  actions: {
+    updateValue(newValue) {
+      this.set('_value', newValue);
+      if (this.get('update')) {
+        this.get('update')(newValue);
+      }
+    }
+  },
+  sign: computed('transactionType', {
+    get() {
+      if (this.get('transactionType') === 'income') {
+        return "+";
+      } else if(this.get('transactionType') === 'outcome') {
+        return "-";
+      }
+    }
+  }),
   typeClass: computed('transactionType', {
     get() {
       return typeClasses[this.get('transactionType')];
+    }
+  }),
+  formattedValue: computed('_value', 'typeClass', {
+    get() {
+      return formatMoney(this.get('_value'), {
+        format: `${this.get('sign')}%v`,
+      });
     }
   })
 });
