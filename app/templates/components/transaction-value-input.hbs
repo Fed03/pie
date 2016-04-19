@@ -1,1 +1,4 @@
-{{one-way-input value=formattedValue class=typeClass update=(action 'updateValue')}}
+<!-- {{one-way-input value=formattedValue class=typeClass update=(action 'updateValue')}} -->
+<span data-test-selector="transaction-value" class="{{typeClass}}">
+  {{formattedValue}}
+</span>

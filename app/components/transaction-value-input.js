@@ -10,10 +10,9 @@ const typeClasses = {
 
 export default Ember.Component.extend({
   value: 0,
-  _value: computed.oneWay('value'),
   actions: {
     updateValue(newValue) {
-      this.set('_value', newValue);
+      this.set('value', newValue);
       if (this.get('update')) {
         this.get('update')(newValue);
       }
@@ -33,9 +32,9 @@ export default Ember.Component.extend({
       return typeClasses[this.get('transactionType')];
     }
   }),
-  formattedValue: computed('_value', 'typeClass', {
+  formattedValue: computed('value', 'sign', {
     get() {
-      return formatMoney(this.get('_value'), {
+      return formatMoney(this.get('value'), {
         format: `${this.get('sign')}%v`,
       });
     }
