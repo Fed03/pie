@@ -277,3 +277,36 @@ li.transaction--list-item {
 .sidedrawer-sibling.sidedrawer-sibling-opened.sidedrawer-sibling-left {
   margin-left: 300px;
 }
+
+/* calc input */
+.calc-input--actions {
+  display: flex;
+  flex-direction: column;
+}
+.calc-input--actions > div {
+  display: flex;
+}
+.calc-input--actions .calc-input--operations button {
+  width: 25%;
+}
+.calc-input--actions .calc-input--numpad {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  width: 75%;
+}
+.calc-input--actions .calc-input--numpad button {
+  width: 33.333333333333333333%;
+}
+.calc-input--actions .calc-input--numpad button[data-number="0"] {
+  width: 66.666666666666666666%;
+  order: 1;
+}
+.calc-input--general-actions {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+.calc-input--general-actions .calc-input--commit-btn{
+  flex-grow: 1;
+}
