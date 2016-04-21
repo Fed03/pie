@@ -279,9 +279,53 @@ li.transaction--list-item {
 }
 
 /* calc input */
+.calc-input {
+  max-width: 400px;
+}
+.calc-input--actions button {
+  height: 50px;
+  background-color: #FAFAFA;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.26);;
+  border-top: none;
+  border-left: none;
+  outline: none;
+}
+.calc-input--actions button:active {
+  background-color: #BDBDBD;
+}
+.calc-input--actions .calc-input--op-btn,
+.calc-input--actions .calc-input--del-btn {
+  background-color: #E0E0E0;
+}
+.calc-input--actions .calc-input--op-btn:active,
+.calc-input--actions .calc-input--del-btn:active {
+  background-color: #757575;
+}
+.calc-input--actions .calc-input--reset-btn {
+  background-color: #F9A825;
+}
+.calc-input--actions .calc-input--reset-btn:active {
+  background-color: #F57F17;
+}
+.calc-input--actions .calc-input--commit-btn.commit {
+  background-color: #00C853;
+}
+.calc-input--actions .calc-input--commit-btn.commit:active {
+  background-color: #43A047;
+}
+.calc-input--actions .calc-input--commit-btn.calculate {
+  background-color: #2196F3;
+}
+.calc-input--actions .calc-input--commit-btn.calculate:active {
+  background-color: #1976D2;
+}
 .calc-input--actions {
   display: flex;
   flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.26);;
+  border-right: none;
+  border-bottom: none;
 }
 .calc-input--actions > div {
   display: flex;
