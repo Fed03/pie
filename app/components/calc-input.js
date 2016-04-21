@@ -96,7 +96,7 @@ export default Ember.Component.extend({
     return ops.contains(this.get('lastChar'));
   },
   _lastCharIsNumber() {
-    return !Number.isNaN(this.get('lastChar'));
+    return !isNaN(this.get('lastChar'));
   },
   _lastCharIsZero() {
     return this.get('lastChar') === '0';
