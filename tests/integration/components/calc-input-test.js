@@ -46,24 +46,27 @@ test('it changes the playground on button press', function(assert) {
 
   this.$('button[data-op=plus]').click();
   this.$('button[data-number=8]').click();
+  this.$('button[data-number=0]').click();
+  this.$('.calc-input--point-btn').click();
   this.$('button[data-number=7]').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 87`);
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 80.7`);
 });
 
 test('it displays the correct result', function(assert) {
   this.render(hbs`{{calc-input}}`);
 
-  // we build "9 + 88 / 2"
+  // we build "9 + 808 / 2"
   this.$('button[data-number=9]').click();
   this.$('button[data-op=plus]').click();
   this.$('button[data-number=8]').click();
+  this.$('button[data-number=0]').click();
   this.$('button[data-number=8]').click();
   this.$('button[data-op=divide]').click();
   this.$('button[data-number=2]').click();
 
   this.$('.calc-input--commit-btn').click();
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 53`);
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 413`);
 });
 
 test('it fires an action if there are no operation involved', function(assert) {
@@ -135,8 +138,37 @@ test('it deletes the playground string', function(assert) {
   this.$('button[data-number=9]').click();
   this.$('button[data-op=plus]').click();
   this.$('button[data-number=8]').click();
+  this.$('button[data-number=0]').click();
   this.$('button[data-number=8]').click();
 
   this.$('.calc-input--del-btn').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 8`);
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 80`);
+});
+
+test('it not add an op if previous char is an op', function(assert) {
+  this.render(hbs`{{calc-input}}`);
+
+  this.$('button[data-op=plus]').click();
+  this.$('button[data-op=divide]').click();
+
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0 +`);
+});
+
+test('it add a point', function(assert) {
+  this.render(hbs`{{calc-input}}`);
+
+  this.$('.calc-input--point-btn').click();
+
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0.`);
+});
+
+test('sensible delete', function(assert) {
+  this.render(hbs`{{calc-input}}`);
+
+  this.$('.calc-input--del-btn').click();
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`);
+
+  this.$('button[data-number=9]').click();
+  this.$('.calc-input--del-btn').click();
+  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`);
 });
