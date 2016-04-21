@@ -47,6 +47,7 @@ li.list-item:last-child {
 }
 
 /* month view */
+
 .month-summary-header, .transaction--list-header {
   font-weight: 600;
   padding: 0 5px 5px;
@@ -78,7 +79,9 @@ td.month-summary-balance {
 .no-transactions small {
   font-size: 65%;
 }
+
 /* end month view */
+
 .outcome-amount {
   color: #E53935;
 }
@@ -176,13 +179,16 @@ li.transaction--list-item {
 
 /* end create transaction */
 
+
 /* pikaday */
+
 .pikaday-overlay.hidden {
   display: none;
 }
 .pika-table {
   margin-bottom: 0;
 }
+
 /* end pikaday */
 
 
@@ -278,15 +284,28 @@ li.transaction--list-item {
   margin-left: 300px;
 }
 
+/* end Sidedrawer */
+
+
 /* calc input */
+
 .calc-input {
   max-width: 400px;
+}
+.calc-input--actions, .calc-input--actions button, .calc-input--playground input {
+  border: 1px solid rgba(0, 0, 0, 0.26);
+}
+.calc-input--playground input {
+  border-bottom: none;
+  width: 100%;
+  font-size: 2.3em;
+  line-height: 3;
+  padding-left: .3em;
 }
 .calc-input--actions button {
   height: 50px;
   background-color: #FAFAFA;
   padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.26);;
   border-top: none;
   border-left: none;
   outline: none;
@@ -294,12 +313,10 @@ li.transaction--list-item {
 .calc-input--actions button:active {
   background-color: #BDBDBD;
 }
-.calc-input--actions .calc-input--op-btn,
-.calc-input--actions .calc-input--del-btn {
+.calc-input--actions .calc-input--op-btn, .calc-input--actions .calc-input--del-btn {
   background-color: #E0E0E0;
 }
-.calc-input--actions .calc-input--op-btn:active,
-.calc-input--actions .calc-input--del-btn:active {
+.calc-input--actions .calc-input--op-btn:active, .calc-input--actions .calc-input--del-btn:active {
   background-color: #757575;
 }
 .calc-input--actions .calc-input--reset-btn {
@@ -323,7 +340,6 @@ li.transaction--list-item {
 .calc-input--actions {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, 0.26);;
   border-right: none;
   border-bottom: none;
 }
@@ -351,6 +367,8 @@ li.transaction--list-item {
   flex-direction: column;
   width: 25%;
 }
-.calc-input--general-actions .calc-input--commit-btn{
+.calc-input--general-actions .calc-input--commit-btn {
   flex-grow: 1;
 }
+
+/* end calc input */
