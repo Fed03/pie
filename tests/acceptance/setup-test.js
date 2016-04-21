@@ -63,7 +63,7 @@ test('it creates default categories', function(assert) {
   });
 });
 
-test('it creates default categories', function(assert) {
+test('it redirects to months.view', function(assert) {
   visit('/setup');
   fillIn('[name=username]', 'John Doe');
   fillIn('[name=initial-balance]', 12345);
