@@ -1,5 +1,5 @@
 <div class="calc-input--playground">
-  <span class="symbol">{{symbol}}</span> {{playgroundValue}}
+  {{one-way-input readonly="readonly" value=(concat symbol " " playgroundValue)}}
 </div>
 <div class="calc-input--actions">
   <div class="calc-input--operations">

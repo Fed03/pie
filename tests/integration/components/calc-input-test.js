@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 import { currency } from "accounting/settings";
 
 moduleForComponent('calc-input', 'Integration | Component | calc input', {
@@ -29,27 +30,27 @@ test('it renders', function(assert) {
 test('the default value is 0 with symbol', function(assert) {
   this.render(hbs`{{calc-input}}`);
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`, 'The default is 0');
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0`, 'The default is 0');
 });
 
 test('it set an initial value', function(assert) {
   this.render(hbs`{{calc-input value=35}}`);
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 35`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 35`);
 });
 
 test('it changes the playground on button press', function(assert) {
   this.render(hbs`{{calc-input}}`);
 
   this.$('button[data-number=9]').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 9`);
 
   this.$('button[data-op=plus]').click();
   this.$('button[data-number=8]').click();
   this.$('button[data-number=0]').click();
   this.$('.calc-input--point-btn').click();
   this.$('button[data-number=7]').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 80.7`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 9 + 80.7`);
 });
 
 test('it displays the correct result', function(assert) {
@@ -66,7 +67,7 @@ test('it displays the correct result', function(assert) {
 
   this.$('.calc-input--commit-btn').click();
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 413`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 413`);
 });
 
 test('it fires an action if there are no operation involved', function(assert) {
@@ -129,7 +130,7 @@ test('it resets the playground', function(assert) {
   this.$('button[data-number=2]').click();
 
   this.$('.calc-input--reset-btn').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0`);
 });
 
 test('it deletes the playground string', function(assert) {
@@ -142,7 +143,7 @@ test('it deletes the playground string', function(assert) {
   this.$('button[data-number=8]').click();
 
   this.$('.calc-input--del-btn').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 9 + 80`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 9 + 80`);
 });
 
 test('it not add an op if previous char is an op', function(assert) {
@@ -151,7 +152,7 @@ test('it not add an op if previous char is an op', function(assert) {
   this.$('button[data-op=plus]').click();
   this.$('button[data-op=divide]').click();
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0 +`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0 +`);
 });
 
 test('it add a point', function(assert) {
@@ -159,16 +160,50 @@ test('it add a point', function(assert) {
 
   this.$('.calc-input--point-btn').click();
 
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0.`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0.`);
 });
 
 test('sensible delete', function(assert) {
   this.render(hbs`{{calc-input}}`);
 
   this.$('.calc-input--del-btn').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0`);
 
   this.$('button[data-number=9]').click();
   this.$('.calc-input--del-btn').click();
-  assert.equal(this.$('.calc-input--playground').text().trim(), `${currency.symbol} 0`);
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0`);
+});
+
+test('it works also with keypress', function(assert) {
+  this.render(hbs`{{calc-input}}`);
+
+  Ember.run(() => {
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 49 }));
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 50 }));
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 110 }));
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 49 }));
+  });
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 12.1`);
+
+  Ember.run(() => {
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 8 }));
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 55 }));
+  });
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 12.7`);
+
+  Ember.run(() => {
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 109 }));
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 50 }));
+  });
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 12.7 - 2`);
+
+  Ember.run(() => {
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 13 }));
+  });
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 10.7`);
+
+  Ember.run(() => {
+    this.$('.calc-input--playground input').trigger(Ember.$.Event('keydown', { keyCode: 46 }));
+  });
+  assert.equal(this.$('.calc-input--playground input').val(), `${currency.symbol} 0`);
 });
