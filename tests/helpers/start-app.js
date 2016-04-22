@@ -4,6 +4,7 @@ import config from '../../config/environment';
 import './create-list';
 import './create';
 import './find-latest-in-db';
+import './fill-transaction-value';
 
 export default function startApp(attrs) {
   let application;

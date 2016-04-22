@@ -24,7 +24,8 @@
     "currentRouteName",
     "create",
     "createList",
-    "findLatestInDb"
+    "findLatestInDb",
+    "fillTransactionValue"
   ],
   "node": false,
   "browser": false,
