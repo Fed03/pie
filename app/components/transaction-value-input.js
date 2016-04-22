@@ -9,6 +9,7 @@ const typeClasses = {
 };
 
 export default Ember.Component.extend({
+  classNameBindings: ['calcOpened:input-focused'],
   calcOpened: false,
   value: 0,
   _value: Ember.computed.oneWay('value'),

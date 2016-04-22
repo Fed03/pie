@@ -43,6 +43,14 @@ test('it adds the sign according to transactionType', function(assert) {
   assert.equal(this.$('[data-test-selector=transaction-value]').text().trim(), "-0.00", "It has the minus sign");
 });
 
+test('it adds a class on click', function(assert) {
+  this.render(hbs`{{transaction-value-input}}`);
+
+  assert.equal(this.$('.input-focused').length, 0);
+  this.$('[data-test-selector=transaction-value]').click();
+  assert.equal(this.$('.input-focused').length, 1);
+});
+
 test('it opens an overlay on click', function(assert) {
   this.render(hbs`{{transaction-value-input}}`);
 
