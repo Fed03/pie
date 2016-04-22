@@ -1,28 +1,12 @@
 import Ember from 'ember';
+import groupBy from 'ember-group-by';
 
 export default Ember.Component.extend({
   classNames: ['category--selector'],
-  filteredCategories: Ember.Object.create(),
+  categoriesByType: groupBy('categories', 'type'),
   actions: {
     selectedCategory(category) {
       this.get('onSelection')(category);
     }
-  },
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this._initCategoryProperties();
-  },
-  _initCategoryProperties() {
-    let categoryTypes = this.get('categories').reduce((types, category) => {
-      types.push(category.get('type'));
-      return types;
-    }, Ember.A([])).uniq();
-
-    categoryTypes.forEach(type => {
-      let categories = this.get('categories').filterBy('type', type);
-      this.get(`filteredCategories`).set(type, categories);
-    });
-
-    this.set('categoryTypes', categoryTypes);
   }
 });

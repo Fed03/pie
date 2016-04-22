@@ -2,10 +2,10 @@
   <h2 class="mui--appbar-line-height appbar-brand">Choose category</h2>
 </div>
 <div class="main">
-  {{#each categoryTypes as |type index|}}
-    <div class="mui-tabs__pane {{if (eq index 0) 'mui--is-active'}}" id="{{type}}-categories-pane">
-      <ul class="mui-list--unstyled" data-test-selector="{{type}}-list">
-        {{#each (get filteredCategories type) as |category|}}
+  {{#each categoriesByType as |categorySet index|}}
+    <div class="mui-tabs__pane {{if (eq index 0) 'mui--is-active'}}" id="{{categorySet.value}}-categories-pane">
+      <ul class="mui-list--unstyled" data-test-selector="{{categorySet.value}}-list">
+        {{#each (get categorySet 'items') as |category|}}
           <li class="list-item" data-category="{{category.id}}-{{category.name}}" {{action "selectedCategory" category}}>
             <div class="list-item--info">
               {{category-badge category=category}}
@@ -18,9 +18,9 @@
   {{/each}}
 </div>
 <ul class="mui-tabs__bar mui-tabs__bar--justified">
-  {{#each categoryTypes as |type index|}}
+  {{#each categoriesByType as |categorySet index|}}
     <li class="{{if (eq index 0) 'mui--is-active'}}">
-      <a data-mui-toggle="tab" data-mui-controls="{{type}}-categories-pane">{{type}}</a>
+      <a data-mui-toggle="tab" data-mui-controls="{{categorySet.value}}-categories-pane">{{categorySet.value}}</a>
     </li>
   {{/each}}
 </ul>
