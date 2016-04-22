@@ -11,29 +11,39 @@ export default Ember.Controller.extend({
   transactionType: Ember.computed.readOnly('transactionCategory.type'),
   actions: {
     createTransaction() {
-      return this._findBelongingMonth().then(month => {
-        const category = this.get('transactionCategory');
-
-        const newTransaction = this.store.createRecord('transaction', {
-          value: this._getValueWithSign(),
-          description: this.get('transactionDescription'),
-          date: this._getDateWithoutTime(),
-          category: category,
-          month: month
-        });
-
-        month.get('transactions').pushObject(newTransaction);
-        category.get('transactions').pushObject(newTransaction);
-
-        return newTransaction.save().then(() => {
-          return month.save();
-        }).then(() => {
-          return category.save();
-        }).then(() => {
-          this.transitionToRoute('months');
-        });
+      return this._saveTransaction().then(() => {
+        return this._updateWallet();
+      }).then(() => {
+        this.transitionToRoute('months');
       });
     }
+  },
+  _updateWallet() {
+    let wallet = this.store.peekAll('wallet').get('firstObject');
+    wallet.incrementProperty('value', this._getValueWithSign());
+    return wallet.save();
+  },
+  _saveTransaction() {
+    return this._findBelongingMonth().then(month => {
+      const category = this.get('transactionCategory');
+
+      const newTransaction = this.store.createRecord('transaction', {
+        value: this._getValueWithSign(),
+        description: this.get('transactionDescription'),
+        date: this._getDateWithoutTime(),
+        category: category,
+        month: month
+      });
+
+      month.get('transactions').pushObject(newTransaction);
+      category.get('transactions').pushObject(newTransaction);
+
+      return newTransaction.save().then(() => {
+        return month.save();
+      }).then(() => {
+        return category.save();
+      });
+    });
   },
   _getDateWithoutTime() {
     const date = new Date(this.get('transactionDate').getTime());

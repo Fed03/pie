@@ -8,7 +8,8 @@ moduleForPouchAcceptance('Acceptance | create transaction', {
   beforeEach() {
     return Ember.RSVP.all([
       create('currentMonth'),
-      create('configuration', { installed: true })
+      create('configuration', { installed: true }),
+      create('wallet'),
     ]);
   }
 });

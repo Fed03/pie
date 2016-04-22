@@ -46,3 +46,22 @@ function(assert) {
     });
   });
 });
+
+test('it changes the wallet value after a transaction', function(assert) {
+  create('category', {name:'foo', type: 'outcome'});
+  create('currentMonth');
+  visit('/transactions/create');
+
+  andThen(() => {
+    fillTransactionValue(25);
+    fillIn('[name="transaction-description"]', 'An awesome book');
+    click('.list-item[data-category$="-foo"]');
+    click('[data-test-selector=submit-transaction]');
+    andThen(() => {
+      assert.equal(
+        findWithAssert('[data-test-selector="wallet-value"]').text().trim(),
+        '€ 12,320.67'
+      );
+    });
+  });
+});
