@@ -55,10 +55,10 @@ test('viewing a month will list its transactions', function(assert) {
   assert.expect(3);
   const todayDate = (new Date()).getUTCDate();
   Ember.RSVP.all([
-    createList('transaction', 2),
-    create('transaction', 'yesterday'),
-    create('transaction', 'yesterday'),
-    create('transaction', 'yesterday')
+    createList('transaction', 2, {month: this.currentMonth}),
+    create('transaction', 'yesterday', {month: this.currentMonth}),
+    create('transaction', 'yesterday', {month: this.currentMonth}),
+    create('transaction', 'yesterday', {month: this.currentMonth})
   ]).then(() => {
     this.currentMonth.get('transactions').pushObjects(this.store.peekAll('transaction'));
     return this.currentMonth.save();
@@ -90,9 +90,9 @@ test('clicking on the add button redirects to create-transaction', function(asse
 
 test('it computes the total balance', function(assert) {
   Ember.RSVP.all([
-    create('transaction', {value: 5}),
-    create('transaction', {value: -60}),
-    createList('transaction', 3, {value: 10})
+    create('transaction', {value: 5, month: this.currentMonth}),
+    create('transaction', {value: -60, month: this.currentMonth}),
+    createList('transaction', 3, {value: 10, month: this.currentMonth})
   ]).then(() => {
     this.currentMonth.get('transactions').pushObjects(this.store.peekAll('transaction'));
     this.currentMonth.set('openingBalance', 339);
