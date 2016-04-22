@@ -73,7 +73,7 @@ test('it displays the correct result', function(assert) {
 test('it fires an action if there are no operation involved', function(assert) {
   assert.expect(1);
   this.on('result', function(result) {
-    assert.equal(result, 9);
+    assert.deepEqual(result, 9);
   });
   this.render(hbs`{{calc-input onResult=(action 'result')}}`);
 
@@ -84,7 +84,7 @@ test('it fires an action if there are no operation involved', function(assert) {
 test('it fires an action after clicking twice on commit if there are op', function(assert) {
   assert.expect(1);
   this.on('result', function(result) {
-    assert.equal(result, 53);
+    assert.deepEqual(result, 53);
   });
   this.render(hbs`{{calc-input onResult=(action 'result')}}`);
 

@@ -200,7 +200,7 @@ export default Ember.Component.extend({
       this.set('hasPendingOperation', false);
       this.set('playgroundExpr', Ember.A([result.toString()]));
     } else {
-      this.get('onResult')(expr);
+      this.get('onResult')(Number(expr));
     }
   },
 
