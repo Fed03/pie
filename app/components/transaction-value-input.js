@@ -45,5 +45,10 @@ export default Ember.Component.extend({
         format: `${this.get('sign')}%v`,
       });
     }
-  })
+  }),
+  click(event) {
+    if (event.target === this.$('.overlay')[0]) {
+      this.toggleProperty('calcOpened');
+    }
+  }
 });
