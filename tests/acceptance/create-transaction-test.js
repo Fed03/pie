@@ -67,7 +67,7 @@ test('it change the value field class according to the category type', function(
 });
 
 test('create transaction', function(assert) {
-  assert.expect(5);
+  assert.expect(8);
   const today = new Date();
   today.setUTCHours(0,0,0,0);
 
@@ -80,6 +80,8 @@ test('create transaction', function(assert) {
     click('.list-item[data-category$="-foo"]');
     click('[data-test-selector=submit-transaction]');
     andThen(() => {
+      assert.equal(currentRouteName(), 'months.view');
+      assert.ok(find('.transaction--list-item-description').text().indexOf('An awesome book') !== -1);
       findLatestInDb('transaction').then(transaction => {
         assert.equal(transaction.get('value'), -25, 'The value is -25');
         assert.equal(transaction.get('description'), 'An awesome book', 'The desc is "An awesome book"');
@@ -89,6 +91,7 @@ test('create transaction', function(assert) {
         });
         transaction.get('month').then(month => {
           assert.equal(month.get('date').getTime(), getDateForCurrentMonth().getTime(), 'The transaction month is correct');
+          assert.equal(month.get('transactions.length'), 1, 'It has the transaction');
         });
       });
     });
