@@ -9,12 +9,18 @@ const typeClasses = {
 };
 
 export default Ember.Component.extend({
+  calcOpened: false,
   value: 0,
+  _value: Ember.computed.oneWay('value'),
   actions: {
-    updateValue(newValue) {
-      this.set('value', newValue);
+    toggleCalc() {
+      this.toggleProperty('calcOpened');
+    },
+    updateValue(result) {
+      this.toggleProperty('calcOpened');
+      this.set('_value', result);
       if (this.get('update')) {
-        this.get('update')(newValue);
+        this.get('update')(result);
       }
     }
   },
@@ -32,9 +38,9 @@ export default Ember.Component.extend({
       return typeClasses[this.get('transactionType')];
     }
   }),
-  formattedValue: computed('value', 'sign', {
+  formattedValue: computed('_value', 'sign', {
     get() {
-      return formatMoney(this.get('value'), {
+      return formatMoney(this.get('_value'), {
         format: `${this.get('sign')}%v`,
       });
     }
