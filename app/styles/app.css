@@ -1,3 +1,6 @@
+html, body {
+  height: 100%;
+}
 body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
   -webkit-font-smoothing: antialiased;
@@ -41,6 +44,7 @@ li.list-item:last-child {
 .appbar-brand {
   font-size: 20px;
   margin: 0;
+  display: inline-block;
 }
 .appbar-title {
   text-transform: uppercase;
@@ -167,12 +171,16 @@ li.transaction--list-item {
   background-color: #78909C;
   color: white;
 }
-#transaction-appbar > a.appbar-brand {
+#transaction-appbar a.appbar-brand {
   color: inherit;
+  cursor: pointer;
+  margin-right: 20px;
 }
 
 /* create transaction */
-
+#create-transaction-main {
+  padding-top: 20px;
+}
 #create-transaction-main .sidedrawer {
   background-color: #FAFAFA;
   border-left: 1px solid rgba(0, 0, 0, 0.26);
