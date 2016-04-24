@@ -54,6 +54,7 @@ li.list-item:last-child {
 }
 .month-summary-header {
   font-size: 18px;
+  text-transform: capitalize;
 }
 .month-summary-content .mui-table {
   margin-bottom: 0;
@@ -394,11 +395,13 @@ li.transaction--list-item {
 }
 
 /* end calc input */
+.transaction--panel:last-child {
+  margin-bottom: 90px;
+}
 
 .create-transaction-link {
-  bottom: 21px;
   display: block;
-  left: 0;
-  margin: 0 auto;
-  right: 0;
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
 }
