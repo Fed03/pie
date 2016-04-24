@@ -6,9 +6,11 @@ export default Ember.Controller.extend({
       return this.get('model').filterBy('type', 'outcome').get('firstObject');
     }
   }),
-  transactionValue: 0,
-  transactionDate: new Date(),
   transactionType: Ember.computed.readOnly('transactionCategory.type'),
+  init() {
+    this._super(...arguments);
+    this.resetToDefaultProperties();
+  },
   actions: {
     createTransaction() {
       return this._saveTransaction().then(() => {
@@ -17,6 +19,13 @@ export default Ember.Controller.extend({
         this.transitionToRoute('months');
       });
     }
+  },
+  resetToDefaultProperties() {
+    this.setProperties({
+      transactionValue: 0,
+      transactionDescription: null,
+      transactionDate: new Date()
+    });
   },
   _updateWallet() {
     let wallet = this.store.peekAll('wallet').get('firstObject');

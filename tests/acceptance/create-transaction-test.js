@@ -125,3 +125,22 @@ test('it has a back link', function(assert) {
     assert.equal(currentRouteName(), 'months.view', 'It has redirected to months.view');
   });
 });
+
+test('it resets value on route exit', function(assert) {
+  create('category', {name:'foo', type: 'outcome'});
+  visit('/transactions/create');
+
+  fillTransactionValue(25);
+  fillIn('[name="transaction-description"]', 'An awesome book');
+  fillIn('[name="transaction-date"]', moment().subtract(7, 'days').format('D/M/YYYY'));
+  click('.back-link');
+  andThen(() => {
+    visit('/transactions/create');
+    andThen(() => {
+      const today = moment().format('D/M/YYYY');
+      assert.equal(find('[data-test-selector=transaction-value]').text().trim(), "-0.00", 'Value resetted to "0"');
+      assert.equal(find('[name="transaction-description"]').val(), "", 'Description resetted to empty string');
+      assert.equal(find('[name="transaction-date"]').val(), today, 'Date resetted to today');
+    });
+  });
+});
