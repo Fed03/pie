@@ -4,28 +4,23 @@
       {{model.name}} overview
     </div>
     <div class="month-summary-content">
-      <table class="mui-table">
-        <tbody>
-          <tr>
-            <td>Opening balance</td>
-            <td class="month-summary-balance" data-test-selector="opening-balance-value">
-              {{format-money model.openingBalance format="%s %v"}}
-            </td>
-          </tr>
-          <tr>
-            <td>Current balance</td>
-            <td class="month-summary-balance" data-test-selector="current-balance-value">
-              {{format-money currentBalance format="%s %v"}}
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount" data-test-selector="month-balance-value">
-              {{format-money model.balance}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <span>Opening balance</span>
+        <span class="month-summary-balance" data-test-selector="opening-balance-value">
+          {{format-money model.openingBalance format="%s %v"}}
+        </span>
+      </div>
+      <div>
+        <span>Current balance</span>
+        <span class="month-summary-balance" data-test-selector="current-balance-value">
+          {{format-money currentBalance format="%s %v"}}
+        </span>
+      </div>
+      <div>
+        <span class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount" data-test-selector="month-balance-value">
+          {{format-money model.balance}}
+        </span>
+      </div>
     </div>
   </div>
 </div>

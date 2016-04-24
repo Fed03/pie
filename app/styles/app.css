@@ -56,19 +56,19 @@ li.list-item:last-child {
   font-size: 18px;
   text-transform: capitalize;
 }
-.month-summary-content .mui-table {
-  margin-bottom: 0;
-}
-.month-summary-content .mui-table > tbody > tr > td {
+.month-summary-content > div {
+  display: flex;
+  justify-content: space-between;
   padding: 5px;
 }
-td.month-summary-balance {
-  text-align: right;
-  width: 10%;
+.month-summary-content > div:last-child {
+  flex-direction: row-reverse;
 }
 .month-summary-balance-total {
   font-size: 17px;
   font-weight: 500;
+  width: 100px;
+  text-align: right;
 }
 .no-transactions {
   color: #737373;
