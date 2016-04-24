@@ -116,3 +116,12 @@ test('Sign is added to the value field', function(assert) {
     });
   });
 });
+
+test('it has a back link', function(assert) {
+  visit('/transactions/create');
+  click('.back-link');
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'months.view', 'It has redirected to months.view');
+  });
+});
