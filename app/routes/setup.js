@@ -9,5 +9,10 @@ export default Ember.Route.extend({
       }
       return config;
     });
+  },
+  afterModel(configurationModel) {
+    if (configurationModel.get('installed')) {
+      this.transitionTo('months');
+    }
   }
 });

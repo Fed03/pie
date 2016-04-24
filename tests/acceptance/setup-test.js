@@ -32,6 +32,16 @@ test('if installed property is false redirects to setup', function(assert) {
   });
 });
 
+test('visiting setup if installed property is true redirects to home', function(assert) {
+  create('configuration', { installed: true });
+  create('wallet');
+  visit('/setup');
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'months.view');
+  });
+});
+
 test('create wallet', function(assert) {
   assert.expect(3);
   visit('/setup');
