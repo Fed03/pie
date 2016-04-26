@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | setup', {
 
 test('visiting / when no configuration is present redirects to setup page',
 function(assert) {
-  assert.expect(3);
+  assert.expect(2);
   this.store.findAll('configuration').then(configs => {
     assert.deepEqual(configs.get('length'), 0, "Configuration does not exist");
   });
@@ -17,9 +17,6 @@ function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/setup');
-    findLatestInDb('configuration').then(config => {
-      assert.ok(config, "A config object has been created");
-    });
   });
 });
 

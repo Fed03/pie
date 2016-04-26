@@ -19,9 +19,9 @@ export default Ember.Controller.extend({
     }).save();
   },
   _markAsInstalled() {
-    let config = this.get('model');
-    config.set('installed', true);
-    return config.save();
+    return this.store.createRecord('configuration', {
+      installed: true
+    }).save();
   },
   _createBaseCategories() {
     const categoriesMap = [
