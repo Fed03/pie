@@ -18,7 +18,8 @@ module.exports = function(environment) {
       // when it is created
     },
     emberPouch: {
-      localDb: 'pie_db'
+      localDb: 'pie_db',
+      remoteDb: 'http://188.166.39.251:5984/pie_db'
     }
   };
 
