@@ -19,7 +19,7 @@ module.exports = function(environment) {
     },
     emberPouch: {
       localDb: 'pie_db',
-      remoteDb: 'http://188.166.39.251:5984/pie_db'
+      remoteDb: 'https://couchdb.eukaryot.com/pie_db'
     }
   };
 
