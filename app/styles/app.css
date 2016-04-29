@@ -216,7 +216,7 @@ li.transaction--list-item {
 }
 .category--selector .mui-tabs__bar > li.mui--is-active {
   border-bottom: none;
-  border-top: 2px solid #2196F3
+  border-top: 2px solid #2196F3;
 }
 .category--selector .list-item--info {
   position: relative;
@@ -412,4 +412,51 @@ li.transaction--list-item {
   position: fixed;
   bottom: 10px;
   right: 15px;
+}
+
+@keyframes fillup {
+  0% {
+    stroke-dasharray: 0 158;
+  }
+  50% {
+    stroke-dasharray: 158 158;
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(365deg);
+    stroke-dasharray: 0 158;
+  }
+}
+
+#pie-loading {
+  background-color: #2196F3;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#pie-loading > div {
+  color: white;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 30px;
+  letter-spacing: .1em;
+}
+
+#pie-loading circle {
+  fill: yellowgreen;
+  stroke: #FFB300;
+  transform-origin: center;
+  stroke-width: 50;
+  stroke-dasharray: 0 158; /* 2π × 25 ≈ 158 */
+  animation: fillup 2.4s ease-in-out infinite both;
+}
+
+#pie-loading svg {
+  background-color: yellowgreen;
+  border-radius: 50%;
+  transform: rotate(-90deg);
 }
