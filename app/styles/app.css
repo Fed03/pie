@@ -197,6 +197,9 @@ li.transaction--list-item {
 .pika-table {
   margin-bottom: 0;
 }
+#create-transaction-main input[name="transaction-date"] {
+  cursor: initial;
+}
 
 /* end pikaday */
 
