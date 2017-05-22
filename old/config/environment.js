@@ -1,19 +1,15 @@
-/* eslint-env node */
+/* jshint node: true */
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'pie',
+    modulePrefix: 'offline-app',
     environment: environment,
-    rootURL: '/',
+    baseURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
-      },
-      EXTEND_PROTOTYPES: {
-        // Prevent Ember Data from overriding Date.parse.
-        Date: false
       }
     },
 
@@ -24,6 +20,10 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
+    ENV.emberPouch = {
+      localDb: 'local_pie_db',
+      remoteDb: 'https://couchdb.eukaryot.com/local_pie_db'
+    };
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -33,6 +33,7 @@ module.exports = function(environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
+    ENV.baseURL = '/';
     ENV.locationType = 'none';
 
     // keep test console output quieter
@@ -40,10 +41,17 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    ENV.emberPouch = {
+      localDb: 'testing'
+    };
   }
 
   if (environment === 'production') {
-
+    ENV.emberPouch = {
+      localDb: 'pie_db',
+      remoteDb: 'https://couchdb.eukaryot.com/pie_db'
+    };
   }
 
   return ENV;
