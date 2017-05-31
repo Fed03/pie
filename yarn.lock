@@ -2412,10 +2412,6 @@ ember-factory-for-polyfill@^1.1.0:
     ember-cli-babel "^5.1.7"
     ember-cli-version-checker "^1.2.0"
 
-ember-faker@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ember-faker/-/ember-faker-1.1.1.tgz#90ca83edef385d8f43bed3ceaed263b59f68773c"
-
 ember-fetch@^1.4.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ember-fetch/-/ember-fetch-1.6.0.tgz#cf93d3f7049c593f14d11b6f0924b746303b7812"
