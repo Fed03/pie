@@ -8,6 +8,9 @@ module.exports = function(defaults) {
         srcDir: 'dist',
         import: ['css/mui.min.css', 'js/mui.min.js']
       }
+    },
+    'ember-cli-babel': {
+      includePolyfill: true
     }
   });
 
