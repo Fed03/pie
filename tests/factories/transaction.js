@@ -9,12 +9,12 @@ FactoryGuy.define('transaction', {
   },
   traits: {
     yesterday: {
-      date: function() {
+      date: () => {
         const yesterday = new Date();
         yesterday.setUTCHours(0,0,0,0);
         yesterday.setUTCDate(yesterday.getUTCDate() - 1);
         return yesterday;
-      }()
+      }
     }
   }
 });

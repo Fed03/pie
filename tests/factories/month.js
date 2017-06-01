@@ -3,19 +3,21 @@ import faker from 'faker';
 
 FactoryGuy.define('month', {
   default: {
-    date: FactoryGuy.generate(() => {
+    date: () => {
       let date = faker.date.past();
       date.setUTCDate(1);
       date.setUTCHours(0,0,0,0);
       return date;
-    })
+    },
+    transations: {}
   },
   currentMonth: {
-    date: FactoryGuy.generate(() => {
+    date: () => {
       let date = new Date();
       date.setUTCDate(1);
       date.setUTCHours(0,0,0,0);
       return date;
-    })
+    },
+    transations: {}
   }
 });
