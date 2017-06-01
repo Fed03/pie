@@ -2027,6 +2027,12 @@ ember-ajax@^3.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
 
+ember-cli-accounting@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-accounting/-/ember-cli-accounting-2.0.1.tgz#7f9c5ca780fa567774b0a037125be8987403a065"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
 ember-cli-app-version@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-app-version/-/ember-cli-app-version-3.0.0.tgz#d67a33aeec7bd03187fbe72c5663dadec4c3368a"
