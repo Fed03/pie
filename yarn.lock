@@ -2027,6 +2027,17 @@ ember-ajax@^3.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
 
+ember-awesome-macros@Fed03/ember-awesome-macros#groupBy-macro:
+  version "0.36.1"
+  resolved "https://codeload.github.com/Fed03/ember-awesome-macros/tar.gz/d3ce9a238460a9031235142e1f86c9c151052463"
+  dependencies:
+    broccoli-file-creator "^1.1.1"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.0.0"
+    ember-cli-string-utils "^1.1.0"
+    ember-macro-helpers "^0.15.0"
+    ember-string-ishtmlsafe-polyfill "^1.1.0"
+
 ember-cli-accounting@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-cli-accounting/-/ember-cli-accounting-2.0.1.tgz#7f9c5ca780fa567774b0a037125be8987403a065"
@@ -2449,6 +2460,15 @@ ember-load-initializers@^1.0.0:
   dependencies:
     ember-cli-babel "^6.0.0-beta.7"
 
+ember-macro-helpers@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/ember-macro-helpers/-/ember-macro-helpers-0.15.0.tgz#2205fd7c1e74d39940a9d5cefe565f82bc895e93"
+  dependencies:
+    ember-cli-babel "^6.0.0"
+    ember-cli-string-utils "^1.1.0"
+    ember-cli-test-info "^1.0.0"
+    ember-weakmap "^2.0.0"
+
 ember-pouch@^4.2.5:
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/ember-pouch/-/ember-pouch-4.2.5.tgz#1384d52e6276db9af9e576188e07409f001d443f"
@@ -2528,6 +2548,13 @@ ember-source@~2.13.0:
     simple-dom "^0.3.0"
     simple-html-tokenizer "^0.3.0"
 
+ember-string-ishtmlsafe-polyfill@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-string-ishtmlsafe-polyfill/-/ember-string-ishtmlsafe-polyfill-1.1.0.tgz#ecde33419ff912b91dd8acf0640eb74b9758408e"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-cli-version-checker "^1.2.0"
+
 ember-test-helpers@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/ember-test-helpers/-/ember-test-helpers-0.6.3.tgz#f864cdf6f4e75f3f8768d6537785b5ab6e82d907"
@@ -2559,6 +2586,12 @@ ember-try@^0.2.14:
     rsvp "^3.0.17"
     semver "^5.1.0"
     sync-exec "^0.6.2"
+
+ember-weakmap@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-weakmap/-/ember-weakmap-2.0.0.tgz#71c6819a8bfd0b077ae17ca1d9053fc5db06e4ac"
+  dependencies:
+    ember-cli-babel "^5.1.6"
 
 ember-welcome-page@^3.0.0:
   version "3.0.0"
