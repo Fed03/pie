@@ -1,3 +1,4 @@
+import Ember from "ember";
 import { moduleFor, test } from "ember-qunit";
 import { make, manualSetup } from "ember-data-factory-guy";
 
@@ -35,10 +36,10 @@ test("it groups transactions by date", function(assert) {
   const randomDate = new Date(2017, 1, 1);
   randomDate.setUTCHours(0, 0, 0, 0);
 
-  const trns1 = make("transaction", { date: today1 });
-  const trns2 = make("transaction", { date: today2 });
-  const trns3 = make("transaction", { date: randomDate });
-  const month = make("month", { transactions: [trns1, trns2, trns3] });
+  const trns1 = Ember.Object.create({ date: today1 });
+  const trns2 = Ember.Object.create({ date: today2 });
+  const trns3 = Ember.Object.create({ date: randomDate });
+  const month = Ember.Object.create({ transactions: [trns1, trns2, trns3] });
 
   let transactionsByDate = this.subject({ model: month }).get(
     "transactionsByDate"
