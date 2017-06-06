@@ -1,12 +1,13 @@
-import Model from 'ember-pouch/model';
-import DS from 'ember-data';
+import Model from "ember-pouch/model";
+import DS from "ember-data";
 
 const {
-  attr,
+  attr
   // hasMany,
   // belongsTo
 } = DS;
 
 export default Model.extend({
-  value: attr('number')
+  value: attr("number"),
+  date: attr("date")
 });
