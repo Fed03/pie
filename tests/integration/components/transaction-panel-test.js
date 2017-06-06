@@ -1,9 +1,8 @@
+import Ember from "ember";
+import hbs from "htmlbars-inline-precompile";
+import { currency } from "accounting/settings";
 import { moduleForComponent, test } from "ember-qunit";
 import { make, manualSetup } from "ember-data-factory-guy";
-import moment from "moment";
-import Ember from "ember";
-import { currency } from "accounting/settings";
-import hbs from "htmlbars-inline-precompile";
 
 const stringContains = function(string, containing) {
   containing = containing.split(" ").join("\\s+");

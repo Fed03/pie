@@ -1,0 +1,28 @@
+<div class="mui--divider-bottom transaction--list-header">
+  <div class="transaction--list-date">
+    <span class="number">{{moment-format momentDate "D"}}</span>
+    <span>
+      {{moment-format momentDate "dddd"}}
+      <small>{{moment-format momentDate "MMMM YYYY"}}</small>
+    </span>
+  </div>
+  <span class="transaction--list-total-balance {{balanceClass}}">{{format-money balance}}</span>
+</div>
+<ul class="mui-list--unstyled transaction--list-box">
+  {{#each transactions as |transaction|}}
+    <li class="list-item transaction--list-item">
+      <div class="list-item--info transaction--list-item-info">
+        {{category-badge category=transaction.category}}
+        <h3 class="list-item--description transaction--list-item-description">
+          {{transaction.description}}
+          <small>{{transaction.category.name}}</small>
+        </h3>
+      </div>
+      <span
+        class="transaction--list-item-balance {{if (gt transaction.value 0) 'income-amount' 'outcome-amount'}}"
+      >
+        {{format-money transaction.value}}
+      </span>
+    </li>
+  {{/each}}
+</ul>

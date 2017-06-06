@@ -28,7 +28,7 @@
   <div class="mui-row">
     <div class="mui-col-xs-12 transactions-container">
       {{#each transactionsByDate as |transactionsSet|}}
-        {{!-- {{transaction-panel transactions=transactionsSet.items date=transactionsSet.value}} --}}
+        {{transaction-panel transactions=transactionsSet.items date=transactionsSet.value}}
       {{else}}
         <div class="no-transactions">
           No transactions.
