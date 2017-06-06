@@ -25,32 +25,31 @@ test("it computes transactions balance", function(assert) {
   );
 });
 
-// test("it groups transactions by date", function(assert) {
-//   const today1 = new Date();
-//   today1.setUTCHours(0, 0, 0, 0);
-//
-//   const today2 = new Date();
-//   today2.setUTCHours(0, 0, 0, 0);
-//
-//   const randomDate = new Date(2017, 1, 1);
-//   randomDate.setUTCHours(0, 0, 0, 0);
-//
-//   const trns1 = make("transaction", { date: today1 });
-//   const trns2 = make("transaction", { date: today2 });
-//   const trns3 = make("transaction", { date: randomDate });
-//   const month = make("month", { transactions: [trns1, trns2, trns3] });
-//
-//   let transactionsByDate = this.subject({
-//     model: month,
-//     lollo: [{ name: "ci" }, { name: "s" }]
-//   }).get("transactionsByDate");
-//   assert.expect(0);
-//   // assert.equal(transactionsByDate.length, 2, "Array has 2 groups");
-//   // assert.deepEqual(transactionsByDate.findBy("value", today1).items, [
-//   //   trns1,
-//   //   trns2
-//   // ]);
-//   // assert.deepEqual(transactionsByDate.findBy("value", randomDate).items, [
-//   //   trns3
-//   // ]);
-// });
+test("it groups transactions by date", function(assert) {
+  const today1 = new Date();
+  today1.setUTCHours(0, 0, 0, 0);
+
+  const today2 = new Date();
+  today2.setUTCHours(0, 0, 0, 0);
+
+  const randomDate = new Date(2017, 1, 1);
+  randomDate.setUTCHours(0, 0, 0, 0);
+
+  const trns1 = make("transaction", { date: today1 });
+  const trns2 = make("transaction", { date: today2 });
+  const trns3 = make("transaction", { date: randomDate });
+  const month = make("month", { transactions: [trns1, trns2, trns3] });
+
+  let transactionsByDate = this.subject({ model: month }).get(
+    "transactionsByDate"
+  );
+
+  assert.equal(transactionsByDate.length, 2, "Array has 2 groups");
+  assert.deepEqual(transactionsByDate.findBy("value", today1).items, [
+    trns1,
+    trns2
+  ]);
+  assert.deepEqual(transactionsByDate.findBy("value", randomDate).items, [
+    trns3
+  ]);
+});
