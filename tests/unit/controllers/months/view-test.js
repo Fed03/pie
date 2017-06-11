@@ -4,7 +4,7 @@ import { make, manualSetup } from "ember-data-factory-guy";
 
 moduleFor("controller:months/view", "Unit | Controller | months.view", {
   // Specify the other units that are required for this test.
-  needs: ["model:transaction", "model:month"],
+  needs: ["model:transaction", "model:month", "model:category"],
   beforeEach() {
     manualSetup(this.container);
   }

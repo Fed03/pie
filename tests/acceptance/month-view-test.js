@@ -89,21 +89,17 @@ test("viewing a month will list its transactions", async function(assert) {
     "The month has 2 days with transactions"
   );
   assert.equal(
-    findWithAssert(
-      testSelector("transaction-panel-for-day", todayDate).querySelector(
-        testSelector("transaction-item")
-      )
+    find(testSelector("transaction-panel-for-day", todayDate)).querySelectorAll(
+      testSelector("transaction-item")
     ).length,
     2,
     "Today panel has 2 transactions"
   );
   assert.equal(
-    findWithAssert(
+    find(
       //BUG: today - 1
-      testSelector("transaction-panel-for-day", todayDate - 1).querySelector(
-        testSelector("transaction-item")
-      )
-    ).length,
+      testSelector("transaction-panel-for-day", todayDate - 1)
+    ).querySelectorAll(testSelector("transaction-item")).length,
     3,
     "Yesterday panel has 3 transactions"
   );
