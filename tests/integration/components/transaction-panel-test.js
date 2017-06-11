@@ -1,3 +1,4 @@
+import { find, findAll } from "ember-native-dom-helpers";
 import Ember from "ember";
 import moment from "moment";
 import hbs from "htmlbars-inline-precompile";
@@ -34,7 +35,7 @@ test("it renders with the correct attrs", function(assert) {
   this.set("transactions", Ember.A([]));
   this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
-  assert.equal(this.$("div.transaction--panel.mui-panel").length, 1);
+  assert.equal(findAll("div.transaction--panel.mui-panel").length, 1);
 });
 
 test("it renders the date", function(assert) {
@@ -45,7 +46,7 @@ test("it renders the date", function(assert) {
 
   assert.ok(
     stringContains(
-      this.$(testSelector("panel-date")).text(),
+      find(testSelector("panel-date")).textContent,
       moment().format("D dddd MMMM YYYY")
     )
   );
@@ -60,7 +61,10 @@ test("it prints the sum of transactions", function(assert) {
   ]);
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
-  assert.equal(this.$(testSelector("panel-balance")).text().trim(), "€ +2.50");
+  assert.equal(
+    find(testSelector("panel-balance")).textContent.trim(),
+    "€ +2.50"
+  );
 });
 
 test("it sets a class according to the total balance", function(assert) {
@@ -71,11 +75,11 @@ test("it sets a class according to the total balance", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.ok(
-    this.$(testSelector("panel-balance")).hasClass("income-amount"),
+    find(testSelector("panel-balance")).classList.contains("income-amount"),
     'It has the ".income-amount" class'
   );
   assert.notOk(
-    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
+    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -83,11 +87,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -5.2);
   });
   assert.notOk(
-    this.$(testSelector("panel-balance")).hasClass("income-amount"),
+    find(testSelector("panel-balance")).classList.contains("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.notOk(
-    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
+    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -95,11 +99,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -8.2);
   });
   assert.notOk(
-    this.$(testSelector("panel-balance")).hasClass("income-amount"),
+    find(testSelector("panel-balance")).classList.contains("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.ok(
-    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
+    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
     'It has the ".outcome-amount" class'
   );
 });
@@ -120,7 +124,7 @@ test("it renders the transactions", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.equal(
-    this.$(testSelector("transaction-item")).length,
+    findAll(testSelector("transaction-item")).length,
     3,
     "It contains 3 transactions"
   );
