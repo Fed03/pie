@@ -35,11 +35,6 @@ test("it renders with the correct attrs", function(assert) {
   this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
   assert.equal(this.$("div.transaction--panel.mui-panel").length, 1);
-  assert.ok(
-    this.$("div.transaction--panel.mui-panel").is(
-      `[data-test-selector=${today.getUTCDate()}-day]`
-    )
-  );
 });
 
 test("it renders the date", function(assert) {
@@ -57,12 +52,13 @@ test("it renders the date", function(assert) {
 });
 
 test("it prints the sum of transactions", function(assert) {
+  this.set("date", new Date());
   this.set("transactions", [
     make("transaction", { value: 5.2 }),
     make("transaction", { value: -3.1 }),
     make("transaction", { value: 0.4 })
   ]);
-  this.render(hbs`{{transaction-panel transactions=transactions}}`);
+  this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.equal(this.$(testSelector("panel-balance")).text().trim(), "€ +2.50");
 });
@@ -71,7 +67,8 @@ test("it sets a class according to the total balance", function(assert) {
   const transaction1 = make("transaction", { value: 5.2 });
   const transaction2 = make("transaction", { value: 5.2 });
   this.set("transactions", [transaction1, transaction2]);
-  this.render(hbs`{{transaction-panel transactions=transactions}}`);
+  this.set("date", new Date());
+  this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.ok(
     this.$(testSelector("panel-balance")).hasClass("income-amount"),
@@ -119,15 +116,21 @@ test("it renders the transactions", function(assert) {
     make("transaction", { value: -3.1 }),
     make("transaction", { value: 0.4 })
   ]);
-  this.render(hbs`{{transaction-panel transactions=transactions}}`);
+  this.set("date", new Date());
+  this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
-  assert.equal(this.$(testSelector("transaction-item")).length, 3);
+  assert.equal(
+    this.$(testSelector("transaction-item")).length,
+    3,
+    "It contains 3 transactions"
+  );
 
   const firstTransactionEl = this.$(testSelector("transaction-item")).first();
   assert.ok(
     firstTransactionEl
       .find(testSelector("category-badge"))
-      .hasClass("category--badge-income")
+      .hasClass("category--badge-income"),
+    "It sets the class on the category badge"
   );
   assert.ok(
     stringContains(
@@ -136,17 +139,20 @@ test("it renders the transactions", function(assert) {
         .text()
         .trim(),
       "Coffee Food"
-    )
+    ),
+    "It shows the transaction description"
   );
   assert.equal(
     firstTransactionEl.find(testSelector("transaction-amount")).text().trim(),
-    "€ +5.20"
+    "€ +5.20",
+    "it shows the transaction amount"
   );
 
   assert.ok(
     firstTransactionEl
       .find(testSelector("transaction-amount"))
-      .hasClass("income-amount")
+      .hasClass("income-amount"),
+    "It sets the `income` class for transaction"
   );
   Ember.run(() => {
     firstTransaction.set("value", -4);
@@ -154,6 +160,7 @@ test("it renders the transactions", function(assert) {
   assert.ok(
     firstTransactionEl
       .find(testSelector("transaction-amount"))
-      .hasClass("outcome-amount")
+      .hasClass("outcome-amount"),
+    "It sets the `outcome` class for transaction"
   );
 });
