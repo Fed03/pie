@@ -12,7 +12,7 @@
   {{#each transactions as |transaction|}}
     <li class="list-item transaction--list-item" data-test-transaction-item>
       <div class="list-item--info transaction--list-item-info">
-        {{category-badge category=transaction.category data-test-category-badge}}
+        {{category-badge data-test-category-badge category=transaction.category}}
         <h3 class="list-item--description transaction--list-item-description" data-test-transaction-description>
           {{transaction.description}}
           <small>{{transaction.category.name}}</small>

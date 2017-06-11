@@ -1,8 +1,8 @@
 import { test } from "qunit";
 import testSelector from "ember-test-selectors";
+import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
-// import { visit, click, find, findWithAssert } from 'ember-native-dom-helpers';
 
 function getCurrentMonthName() {
   const months = [
@@ -39,11 +39,10 @@ test("visiting `/` redirects to the current month", async function(assert) {
   assert.equal(currentRouteName(), "months.view");
   assert.equal(currentURL(), `/months/${currentMonth.get("id")}`);
   assert.ok(
-    find(testSelector("month-name"))
-      .text()
+    find(testSelector("month-name")).textContent
       .trim()
       .toLowerCase()
-      .indexOf(getCurrentMonthName()) !== -1,
+      .includes(getCurrentMonthName()),
     "The page shows the current month name"
   );
 });
@@ -64,7 +63,7 @@ test("viewing a month without transaction will result in an empty page", async f
       .join(" "),
     "No transactions. Add (+) some!"
   );
-  assert.equal(find(".transaction--list-item").length, 0);
+  assert.equal(findAll(testSelector("transaction-item")).length, 0);
 });
 
 test("viewing a month will list its transactions", async function(assert) {
@@ -85,14 +84,14 @@ test("viewing a month will list its transactions", async function(assert) {
 
   await visit(`/months/${currentMonth.get("id")}`);
   assert.equal(
-    find(".transaction--panel").length,
+    findAll(testSelector("transaction-panel-for-day")).length,
     2,
     "The month has 2 days with transactions"
   );
   assert.equal(
     findWithAssert(
       testSelector("transaction-panel-for-day", todayDate).querySelector(
-        ".transaction--list-item"
+        testSelector("transaction-item")
       )
     ).length,
     2,
@@ -102,7 +101,7 @@ test("viewing a month will list its transactions", async function(assert) {
     findWithAssert(
       //BUG: today - 1
       testSelector("transaction-panel-for-day", todayDate - 1).querySelector(
-        ".transaction--list-item"
+        testSelector("transaction-item")
       )
     ).length,
     3,
