@@ -1,6 +1,8 @@
 import Ember from "ember";
+import moment from "moment";
 import hbs from "htmlbars-inline-precompile";
 import { currency } from "accounting/settings";
+import testSelector from "ember-test-selectors";
 import { moduleForComponent, test } from "ember-qunit";
 import { make, manualSetup } from "ember-data-factory-guy";
 
@@ -48,7 +50,7 @@ test("it renders the date", function(assert) {
 
   assert.ok(
     stringContains(
-      this.$(".transaction--list-date").text(),
+      this.$(testSelector("panel-date")).text(),
       moment().format("D dddd MMMM YYYY")
     )
   );
@@ -62,10 +64,7 @@ test("it prints the sum of transactions", function(assert) {
   ]);
   this.render(hbs`{{transaction-panel transactions=transactions}}`);
 
-  assert.equal(
-    this.$(".transaction--list-total-balance").text().trim(),
-    "€ +2.50"
-  );
+  assert.equal(this.$(testSelector("panel-balance")).text().trim(), "€ +2.50");
 });
 
 test("it sets a class according to the total balance", function(assert) {
@@ -75,11 +74,11 @@ test("it sets a class according to the total balance", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions}}`);
 
   assert.ok(
-    this.$(".transaction--list-total-balance").hasClass("income-amount"),
+    this.$(testSelector("panel-balance")).hasClass("income-amount"),
     'It has the ".income-amount" class'
   );
   assert.notOk(
-    this.$(".transaction--list-total-balance").hasClass("outcome-amount"),
+    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -87,11 +86,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -5.2);
   });
   assert.notOk(
-    this.$(".transaction--list-total-balance").hasClass("income-amount"),
+    this.$(testSelector("panel-balance")).hasClass("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.notOk(
-    this.$(".transaction--list-total-balance").hasClass("outcome-amount"),
+    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -99,11 +98,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -8.2);
   });
   assert.notOk(
-    this.$(".transaction--list-total-balance").hasClass("income-amount"),
+    this.$(testSelector("panel-balance")).hasClass("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.ok(
-    this.$(".transaction--list-total-balance").hasClass("outcome-amount"),
+    this.$(testSelector("panel-balance")).hasClass("outcome-amount"),
     'It has the ".outcome-amount" class'
   );
 });
@@ -122,31 +121,31 @@ test("it renders the transactions", function(assert) {
   ]);
   this.render(hbs`{{transaction-panel transactions=transactions}}`);
 
-  assert.equal(this.$(".transaction--list-item").length, 3);
+  assert.equal(this.$(testSelector("transaction-item")).length, 3);
 
-  const firstTransactionEl = this.$(".transaction--list-item").first();
+  const firstTransactionEl = this.$(testSelector("transaction-item")).first();
   assert.ok(
     firstTransactionEl
-      .find(".category--badge")
+      .find(testSelector("category-badge"))
       .hasClass("category--badge-income")
   );
   assert.ok(
     stringContains(
       firstTransactionEl
-        .find(".transaction--list-item-description")
+        .find(testSelector("transaction-description"))
         .text()
         .trim(),
       "Coffee Food"
     )
   );
   assert.equal(
-    firstTransactionEl.find(".transaction--list-item-balance").text().trim(),
+    firstTransactionEl.find(testSelector("transaction-amount")).text().trim(),
     "€ +5.20"
   );
 
   assert.ok(
     firstTransactionEl
-      .find(".transaction--list-item-balance")
+      .find(testSelector("transaction-amount"))
       .hasClass("income-amount")
   );
   Ember.run(() => {
@@ -154,7 +153,7 @@ test("it renders the transactions", function(assert) {
   });
   assert.ok(
     firstTransactionEl
-      .find(".transaction--list-item-balance")
+      .find(testSelector("transaction-amount"))
       .hasClass("outcome-amount")
   );
 });

@@ -1,23 +1,23 @@
 <div class="mui-col-xs-12">
   <div class="month-summary mui-panel">
-    <div class="mui--divider-bottom month-summary-header">
+    <div class="mui--divider-bottom month-summary-header" data-test-month-name>
       {{model.name}} overview
     </div>
     <div class="month-summary-content">
       <div>
         <span>Opening balance</span>
-        <span class="month-summary-balance" data-test-selector="opening-balance-value">
+        <span class="month-summary-balance" data-test-opening-balance-value>
           {{format-money model.openingBalance}}
         </span>
       </div>
       <div>
         <span>Current balance</span>
-        <span class="month-summary-balance" data-test-selector="current-balance-value">
+        <span class="month-summary-balance" data-test-current-balance-value>
           {{format-money currentBalance}}
         </span>
       </div>
       <div>
-        <span class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount" data-test-selector="month-balance-value">
+        <span class="mui--divider-top month-summary-balance month-summary-balance-total expense-amount" data-test-month-balance-value>
           {{format-money model.balance}}
         </span>
       </div>
@@ -26,7 +26,7 @@
 </div>
 <div class="mui-col-xs-12">
   <div class="mui-row">
-    <div class="mui-col-xs-12 transactions-container">
+    <div class="mui-col-xs-12 transactions-container" data-test-transactions-container>
       {{#each transactionsByDate as |transactionsSet|}}
         {{transaction-panel transactions=transactionsSet.items date=transactionsSet.value}}
       {{else}}
@@ -38,6 +38,6 @@
     </div>
   </div>
 </div>
-{{#link-to 'transactions.create' class="mui-btn mui-btn--fab mui-btn--primary create-transaction-link"}}
+{{#link-to 'transactions.create' class="mui-btn mui-btn--fab mui-btn--primary create-transaction-link" data-test-new-transaction-btn}}
   <i class="fa fa-plus" aria-hidden="true"></i>
 {{/link-to}}

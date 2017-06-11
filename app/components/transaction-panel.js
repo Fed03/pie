@@ -5,10 +5,9 @@ const { computed } = Ember;
 
 export default Ember.Component.extend({
   classNames: ["transaction--panel", "mui-panel"],
-  attributeBindings: ["testSelector:data-test-selector"],
-  testSelector: computed("momentDate", {
+  "data-test-transaction-panel-for-day": computed("momentDate", {
     get() {
-      return `${this.get("momentDate").date()}-day`;
+      return this.get("momentDate").date();
     }
   }),
   momentDate: momentComputed("date"),
