@@ -14,6 +14,10 @@ addons:
     packages:
       - g++-4.8
 
+notifications:
+  email:
+    on_failure: change
+
 cache:
   yarn: true
 
