@@ -1,1 +1,44 @@
-{{outlet}}
+<header>
+  <nav id="transaction-appbar" class="mui-appbar">
+    <div>
+      <a class="back-link mui--appbar-line-height appbar-brand" {{action 'smartGoBack'}}>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </a>
+      <h1 class="mui--appbar-line-height appbar-brand">Create a new transaction</h1>
+    </div>
+  </nav>
+</header>
+<div class="mui--appbar-height"></div>
+<main id="create-transaction-main" data-test-transaction-main-container>
+  <div class="mui-container-fluid sidedrawer-sibling">
+    <div class="mui-row">
+      <div class="mui-col-xs-12">
+        <form {{action 'createTransaction' on='submit'}}>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{transaction-value-input
+              value=transactionValue
+              class="transaction-value-input"
+              update=(action (mut transactionValue))
+              transactionType=transactionType}}
+              <label for="transaction-value">Value</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{one-way-input value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
+            <label for="transaction-description">Description</label>
+          </div>
+          <div class="mui-textfield mui-textfield--float-label">
+            {{category-selector-input
+              categories=model selectedCategory=transactionCategory
+              onSelection=(action (mut transactionCategory))
+            }}
+            <label for="transaction-category">Category</label>
+          </div>
+          {{!-- {{#datepicker-input class="mui-textfield mui-textfield--float-label" value=transactionDate onSelection=(action (mut transactionDate))}}
+            <label for="transaction-date">Date</label>
+          {{/datepicker-input}} --}}
+          <button type="submit" class="mui-btn mui-btn--raised" data-test-selector="submit-transaction">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
