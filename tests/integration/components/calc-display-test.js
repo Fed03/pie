@@ -26,25 +26,25 @@ test("it displays the correct value", function(assert) {
     "If value is undefined it starts at 0"
   );
 
-  this.set("value", 123);
+  this.set("value", "123");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "123"
   );
 
-  this.set("value", 123.5);
+  this.set("value", "123.5");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "123.5"
   );
 
-  this.set("value", -123.5);
+  this.set("value", "-123.5");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "-123.5"
   );
 
-  this.set("value", -12345.6);
+  this.set("value", "-12345.6");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "-12,345.6"
