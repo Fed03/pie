@@ -68,3 +68,37 @@ test("it display value depending on click", async function(assert) {
   );
   assert.equal(this.get("value"), undefined);
 });
+
+test("it displays the previous value when using an operand", async function(
+  assert
+) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", 8));
+  await click(testSelector("calc-key", "sum"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "98"
+  );
+
+  await click(testSelector("calc-key", 1));
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1"
+  );
+});
+
+test("it displays the correct result", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", 8));
+  await click(testSelector("calc-key", "sum"));
+  await click(testSelector("calc-key", 1));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "99"
+  );
+});
