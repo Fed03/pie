@@ -102,3 +102,23 @@ test("it displays the correct result", async function(assert) {
     "99"
   );
 });
+
+test("it deletes the display", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", "delete"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  await click(testSelector("calc-key", 2));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "delete"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "2"
+  );
+});
