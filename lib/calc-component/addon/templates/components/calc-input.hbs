@@ -17,6 +17,6 @@
 <button data-test-calc-key="subtract" {{action 'operation' "subtract"}}>-</button>
 <button data-test-calc-key="equals" {{action 'operation' "equals"}}>=</button>
 
-<button data-test-calc-key="clear" {{action 'clear'}}>C</button>
+<button data-test-calc-key="clear" {{action 'clear'}}>{{if (eq displayValue "0") "AC" "C"}}</button>
 <button data-test-calc-key="toggle-sign" {{action 'toggleSign'}}>±</button>
 <button data-test-calc-key="deleteDigit" {{action 'deleteLastDigit'}}>⌫</button>

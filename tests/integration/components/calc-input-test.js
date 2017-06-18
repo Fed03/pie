@@ -228,3 +228,25 @@ test("it deletes the last digit", async function(assert) {
     "8"
   );
 });
+
+test("It changes the clear btn text", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  assert.equal(
+    findWithAssert(testSelector("calc-key", "clear")).textContent.trim(),
+    "AC"
+  );
+
+  await click(testSelector("calc-key", 9));
+
+  assert.equal(
+    findWithAssert(testSelector("calc-key", "clear")).textContent.trim(),
+    "C"
+  );
+
+  await click(testSelector("calc-key", "clear"));
+
+  assert.equal(
+    findWithAssert(testSelector("calc-key", "clear")).textContent.trim(),
+    "AC"
+  );
+});
