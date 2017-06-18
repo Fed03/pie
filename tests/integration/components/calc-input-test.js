@@ -189,3 +189,22 @@ test("it clear the display", async function(assert) {
     "7"
   );
 });
+
+test("it toggles sign", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "toggle-sign"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "-93"
+  );
+
+  await click(testSelector("calc-key", "toggle-sign"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "93"
+  );
+});
