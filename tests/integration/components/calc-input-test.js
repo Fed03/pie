@@ -101,12 +101,57 @@ test("it displays the correct result", async function(assert) {
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "99"
   );
+
+  await click(testSelector("calc-key", "subtract"));
+  await click(testSelector("calc-key", 4));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "95"
+  );
+
+  await click(testSelector("calc-key", "divide"));
+  await click(testSelector("calc-key", 5));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "19"
+  );
+
+  await click(testSelector("calc-key", "multiply"));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "57"
+  );
+
+  await click(testSelector("calc-key", "sum"));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "divide"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "60"
+  );
+
+  await click(testSelector("calc-key", 2));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "30"
+  );
 });
 
-test("it deletes the display", async function(assert) {
+test("it clear the display", async function(assert) {
   this.render(hbs`{{calc-input}}`);
   await click(testSelector("calc-key", 9));
-  await click(testSelector("calc-key", "delete"));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "clear"));
 
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
@@ -115,10 +160,32 @@ test("it deletes the display", async function(assert) {
 
   await click(testSelector("calc-key", 2));
   await click(testSelector("calc-key", 3));
-  await click(testSelector("calc-key", "delete"));
+  await click(testSelector("calc-key", "subtract"));
+  await click(testSelector("calc-key", 3));
+  await click(testSelector("calc-key", "clear"));
 
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
-    "2"
+    "0"
+  );
+
+  await click(testSelector("calc-key", 4));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "19"
+  );
+
+  await click(testSelector("calc-key", "multiply"));
+  await click(testSelector("calc-key", 1));
+  await click(testSelector("calc-key", "clear"));
+  await click(testSelector("calc-key", "clear"));
+  await click(testSelector("calc-key", 7));
+  await click(testSelector("calc-key", "equals"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "7"
   );
 });
