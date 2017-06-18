@@ -208,3 +208,23 @@ test("it toggles sign", async function(assert) {
     "93"
   );
 });
+
+test("it deletes the last digit", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", "deleteDigit"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  await click(testSelector("calc-key", 8));
+  await click(testSelector("calc-key", 2));
+  await click(testSelector("calc-key", "deleteDigit"));
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "8"
+  );
+});
