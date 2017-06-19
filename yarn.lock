@@ -2486,6 +2486,12 @@ ember-invoke-action@1.4.0:
   dependencies:
     ember-cli-babel "^5.1.6"
 
+ember-keyboard@^2.1.10:
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-2.1.10.tgz#b885a572a560c52b9d52a1053c59d548d4100fbe"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+
 ember-load-initializers@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-1.0.0.tgz#4919eaf06f6dfeca7e134633d8c05a6c9921e6e7"

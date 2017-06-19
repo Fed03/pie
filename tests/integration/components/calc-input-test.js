@@ -2,9 +2,13 @@ import { findWithAssert, click } from "ember-native-dom-helpers";
 import { moduleForComponent, test } from "ember-qunit";
 import testSelector from "ember-test-selectors";
 import hbs from "htmlbars-inline-precompile";
+import { initialize, triggerKeyDown } from "ember-keyboard";
 
 moduleForComponent("calc-input", "Integration | Component | calc input", {
-  integration: true
+  integration: true,
+  beforeEach() {
+    initialize();
+  }
 });
 
 test("it renders", function(assert) {
