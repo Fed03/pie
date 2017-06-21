@@ -73,6 +73,21 @@ test("it display value depending on click", async function(assert) {
   assert.equal(this.get("value"), undefined);
 });
 
+test("it shows the dot even with leading zero", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click(testSelector("calc-key", "dot"));
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0."
+  );
+
+  await click(testSelector("calc-key", 5));
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0.5"
+  );
+});
+
 test("it displays the previous value when using an operand", async function(
   assert
 ) {
@@ -87,9 +102,10 @@ test("it displays the previous value when using an operand", async function(
   );
 
   await click(testSelector("calc-key", 1));
+  await click(testSelector("calc-key", 2));
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
-    "1"
+    "12"
   );
 });
 
@@ -294,18 +310,49 @@ test("it listens for numpad events", async function(assert) {
 
   triggerKeyDown("NumpadSubtract");
   triggerKeyDown("Numpad6");
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "62"
+  );
+
+  triggerKeyDown("NumpadMultiply");
   triggerKeyDown("Numpad7");
   triggerKeyDown("NumpadEnter");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
-    "1"
+    "434"
   );
 
-  triggerKeyDown("NumpadMultiply");
+  triggerKeyDown("NumpadDivide");
   triggerKeyDown("Numpad8");
   triggerKeyDown("NumpadEnter");
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
-    "8"
+    "54.25"
+  );
+
+  triggerKeyDown("Delete");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  triggerKeyDown("NumpadDecimal");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0."
+  );
+
+  triggerKeyDown("Numpad0");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0.0"
+  );
+
+  triggerKeyDown("Numpad9");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0.09"
   );
 });
