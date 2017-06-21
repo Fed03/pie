@@ -2,9 +2,13 @@ import { findWithAssert, click } from "ember-native-dom-helpers";
 import { moduleForComponent, test } from "ember-qunit";
 import testSelector from "ember-test-selectors";
 import hbs from "htmlbars-inline-precompile";
+import { initialize, triggerKeyDown } from "ember-keyboard";
 
 moduleForComponent("calc-input", "Integration | Component | calc input", {
-  integration: true
+  integration: true,
+  beforeEach() {
+    initialize();
+  }
 });
 
 test("it renders", function(assert) {
@@ -248,5 +252,60 @@ test("It changes the clear btn text", async function(assert) {
   assert.equal(
     findWithAssert(testSelector("calc-key", "clear")).textContent.trim(),
     "AC"
+  );
+});
+
+test("it listens for numpad events", async function(assert) {
+  assert.expect(0);
+  this.render(hbs`{{calc-input}}`);
+
+  triggerKeyDown("Numpad1");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1"
+  );
+
+  triggerKeyDown("Backspace");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  triggerKeyDown("Numpad2");
+  triggerKeyDown("Numpad3");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "23"
+  );
+
+  triggerKeyDown("NumpadAdd");
+  triggerKeyDown("Numpad4");
+  triggerKeyDown("Numpad5");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "45"
+  );
+
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "68"
+  );
+
+  triggerKeyDown("NumpadSubtract");
+  triggerKeyDown("Numpad6");
+  triggerKeyDown("Numpad7");
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1"
+  );
+
+  triggerKeyDown("NumpadMultiply");
+  triggerKeyDown("Numpad8");
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "8"
   );
 });
