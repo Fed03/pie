@@ -126,3 +126,58 @@ test("it deletes the display", async function(assert) {
     "2"
   );
 });
+
+test("it listens for numpad events", async function(assert) {
+  assert.expect(0);
+  this.render(hbs`{{calc-input}}`);
+
+  triggerKeyDown("Numpad1");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1"
+  );
+
+  triggerKeyDown("Backspace");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  triggerKeyDown("Numpad2");
+  triggerKeyDown("Numpad3");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "23"
+  );
+
+  triggerKeyDown("NumpadAdd");
+  triggerKeyDown("Numpad4");
+  triggerKeyDown("Numpad5");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "45"
+  );
+
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "68"
+  );
+
+  triggerKeyDown("NumpadSubtract");
+  triggerKeyDown("Numpad6");
+  triggerKeyDown("Numpad7");
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1"
+  );
+
+  triggerKeyDown("NumpadMultiply");
+  triggerKeyDown("Numpad8");
+  triggerKeyDown("NumpadEnter");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "8"
+  );
+});
