@@ -49,4 +49,34 @@ test("it displays the correct value", function(assert) {
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "-12,345.6"
   );
+
+  this.set("value", "1.");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1."
+  );
+
+  this.set("value", "0.");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0."
+  );
+
+  this.set("value", "");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "0"
+  );
+
+  this.set("value", "1.0");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1.0"
+  );
+
+  this.set("value", "1.30000");
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "1.30000"
+  );
 });
