@@ -271,8 +271,7 @@ test("It changes the clear btn text", async function(assert) {
   );
 });
 
-test("it listens for numpad events", async function(assert) {
-  assert.expect(0);
+test("it listens for numpad events", function(assert) {
   this.render(hbs`{{calc-input}}`);
 
   triggerKeyDown("Numpad1");
