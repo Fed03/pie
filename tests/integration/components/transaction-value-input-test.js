@@ -14,8 +14,7 @@ moduleForComponent(
 test("It renders the element", function(assert) {
   assert.expect(0);
   this.render(hbs`{{transaction-value-input}}`);
-  let componentEl = findWithAssert(testSelector("transaction-value-input"));
-  findWithAssert(testSelector("value-display"), componentEl);
+  findWithAssert(testSelector("transaction-value-input"));
 });
 
 test("it sets the correct class based on the transaction type", function(
@@ -26,22 +25,30 @@ test("it sets the correct class based on the transaction type", function(
   this.render(hbs`{{transaction-value-input transactionType=transactionType}}`);
 
   assert.ok(
-    find(testSelector("value-display")).classList.contains("income-amount"),
+    find(testSelector("transaction-value-input")).classList.contains(
+      "income-amount"
+    ),
     "It has the 'income-amount' class"
   );
   assert.notOk(
-    find(testSelector("value-display")).classList.contains("outcome-amount"),
+    find(testSelector("transaction-value-input")).classList.contains(
+      "outcome-amount"
+    ),
     "It has not the 'outcome-amount' class"
   );
 
   this.set("transactionType", "outcome");
 
   assert.ok(
-    find(testSelector("value-display")).classList.contains("outcome-amount"),
+    find(testSelector("transaction-value-input")).classList.contains(
+      "outcome-amount"
+    ),
     "It has the 'outcome-amount' class"
   );
   assert.notOk(
-    find(testSelector("value-display")).classList.contains("income-amount"),
+    find(testSelector("transaction-value-input")).classList.contains(
+      "income-amount"
+    ),
     "It has not the 'income-amount' class"
   );
 });

@@ -7,7 +7,12 @@ const TypeSignMap = {
 
 export default Ember.Component.extend({
   "data-test-transaction-value-input": true,
-  classNameBindings: ["inputFocused"],
+  classNameBindings: ["inputFocused", "transactionTypeClass"],
+  transactionTypeClass: Ember.computed("transactionType", {
+    get() {
+      return `${this.get("transactionType")}-amount`;
+    }
+  }),
   inputFocused: false,
   displayValue: Ember.computed("value", "transactionType", {
     get() {
