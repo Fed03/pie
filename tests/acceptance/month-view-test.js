@@ -31,11 +31,35 @@ moduleForAcceptance("Acceptance | month view", {
   }
 });
 
+//TODO: balance in the following tests
+
 test("visiting `/` redirects to the current month", async function(assert) {
   authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
 
   await visit("/");
+
+  assert.equal(currentRouteName(), "months.view");
+  assert.equal(currentURL(), `/months/${currentMonth.get("id")}`);
+  assert.ok(
+    find(testSelector("month-name")).textContent
+      .trim()
+      .toLowerCase()
+      .includes(getCurrentMonthName()),
+    "The page shows the current month name"
+  );
+});
+
+test("it creates current month if not present", async function(assert) {
+  authenticateSession(this.application);
+  let months = await this.store.findAll("month");
+  assert.equal(months.get("length"), 0, "There are no months");
+
+  await visit("/");
+  months = await this.store.findAll("month");
+  assert.equal(months.get("length"), 1, "There is a month");
+
+  const currentMonth = months.get("firstObject");
 
   assert.equal(currentRouteName(), "months.view");
   assert.equal(currentURL(), `/months/${currentMonth.get("id")}`);
