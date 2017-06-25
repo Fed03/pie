@@ -1,4 +1,5 @@
 import { test } from "qunit";
+import moment from "moment";
 import testSelector from "ember-test-selectors";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
@@ -70,7 +71,8 @@ test("viewing a month will list its transactions", async function(assert) {
   assert.expect(3);
   authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
-  const todayDate = new Date().getUTCDate();
+  const today = moment().utc();
+  const todayDate = today.date();
 
   await createList("transaction", 2, { month: currentMonth });
   await create("transaction", "yesterday", { month: currentMonth });
@@ -97,8 +99,10 @@ test("viewing a month will list its transactions", async function(assert) {
   );
   assert.equal(
     find(
-      //BUG: today - 1
-      testSelector("transaction-panel-for-day", todayDate - 1)
+      testSelector(
+        "transaction-panel-for-day",
+        today.subtract(1, "days").date()
+      )
     ).querySelectorAll(testSelector("transaction-item")).length,
     3,
     "Yesterday panel has 3 transactions"
