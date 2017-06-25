@@ -23,7 +23,7 @@ test("it requires authentication", async function(assert) {
   assert.equal(currentRouteName(), "transactions.create");
 });
 
-test("it renders he right template", async function(assert) {
+test("it renders the right template", async function(assert) {
   assert.expect(0);
   await authenticateSession(this.application);
   await visit("/transactions/create");
@@ -36,13 +36,13 @@ test("the selected category is the first in the outcome ordered set", async func
 ) {
   await createList("category", 2, { type: "income" });
   await create("category", { name: "foo", type: "outcome" });
-  await create("category", { nameç: "bar", type: "outcome" });
+  await create("category", { name: "bar", type: "outcome" });
   await authenticateSession(this.application);
 
   await visit("/transactions/create");
 
   assert.equal(
-    findWithAssert("[data-test-selector=selected-category-name]").textContent,
+    findWithAssert(testSelector("selected-category-name")).textContent,
     "bar"
   );
 });
@@ -53,17 +53,17 @@ test("the fields are prefilled with default values", async function(assert) {
   await visit("/transactions/create");
 
   assert.ok(
-    find("[data-test-selector=transaction-value]").textContent
+    findWithAssert(testSelector("transaction-value")).textContent
       .trim()
       .includes("0.00"),
     "Transaction value field is prefilled with 0"
   );
   assert.notOk(
-    find('[name="transaction-description"]').value,
+    findWithAssert(testSelector("transaction-description")).value,
     "Transaction desc field is empty"
   );
   assert.equal(
-    find('[name="transaction-date"]').value,
+    findWithAssert(testSelector("transaction-date")).value,
     today,
     "Transaction date field is prefilled with today date"
   );
@@ -77,31 +77,29 @@ test("it change the value field class according to the category type", async fun
   await authenticateSession(this.application);
 
   await visit("/transactions/create");
-  await click("li[data-category=1-foo]");
+  await click(testSelector("transaction-category"));
+  await click(testSelector("category-list-item", "1-foo"));
 
   assert.ok(
-    find("[data-test-selector=transaction-value]").classList.contains(
+    find(testSelector("transaction-value")).classList.contains(
       "outcome-amount"
     ),
     "Transaction value field has outcome-amount class"
   );
   assert.notOk(
-    find("[data-test-selector=transaction-value]").classList.contains(
-      "income-amount"
-    ),
+    find(testSelector("transaction-value")).classList.contains("income-amount"),
     "Transaction value field has not income-amount class"
   );
 
-  await click("li[data-category=2-bar]");
+  await click(testSelector("transaction-category"));
+  await click(testSelector("category-list-item", "2-bar"));
 
   assert.ok(
-    find("[data-test-selector=transaction-value]").classList.contains(
-      "income-amount"
-    ),
+    find(testSelector("transaction-value")).classList.contains("income-amount"),
     "Transaction value field has income-amount class"
   );
   assert.notOk(
-    find("[data-test-selector=transaction-value]").classList.contains(
+    find(testSelector("transaction-value")).classList.contains(
       "outcome-amount"
     ),
     "Transaction value field has not outcome-amount class"
@@ -159,27 +157,27 @@ test("create transaction", async function(assert) {
 });
 
 test("Sign is added to the value field", async function(assert) {
-  await create("category", { name: "foo", type: "outcome" });
-  await create("category", { name: "bar", type: "income" });
+  await create("category", { name: "foo", type: "outcome", id: 1 });
+  await create("category", { name: "bar", type: "income", id: 2 });
   await authenticateSession(this.application);
   await visit("/transactions/create");
 
   assert.equal(
-    find("[data-test-selector=transaction-value]").textContent.trim(),
+    find(testSelector("transaction-value")).textContent.trim(),
     "-0.00",
     "The value is set negative"
   );
 
-  await click('.list-item[data-category$="-bar"]');
+  await click(testSelector("category-list-item", "2-bar"));
   assert.equal(
-    find("[data-test-selector=transaction-value]").textContent.trim(),
+    find(testSelector("transaction-value")).textContent.trim(),
     "+0.00",
     "The value is set positive"
   );
 
   await fillTransactionValue(12345);
   assert.equal(
-    find("[data-test-selector=transaction-value]").textContent.trim(),
+    find(testSelector("transaction-value")).textContent.trim(),
     "+12,345.00",
     "The value is formatted"
   );

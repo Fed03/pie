@@ -15,7 +15,7 @@
       <div class="mui-col-xs-12">
         <form {{action 'createTransaction' on='submit'}}>
           <div class="mui-textfield mui-textfield--float-label">
-            {{transaction-value-input
+            {{transaction-value-input data-test-transaction-value
               value=transactionValue
               class="transaction-value-input"
               update=(action (mut transactionValue))
@@ -23,11 +23,11 @@
               <label for="transaction-value">Value</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
-            {{one-way-input value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
+            {{one-way-input data-test-transaction-description value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
             <label for="transaction-description">Description</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
-            {{category-selector-input
+            {{category-selector-input data-test-transaction-category
               categories=model selectedCategory=transactionCategory
               onSelection=(action (mut transactionCategory))
             }}
