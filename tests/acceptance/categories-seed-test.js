@@ -17,5 +17,5 @@ test("it seeds default categories", async function(assert) {
 
   await visit("/");
   categories = await this.store.findAll("category");
-  assert.ok(categories.length > 0, "There are few categories seeded");
+  assert.ok(categories.get("length") > 0, "There are few categories seeded");
 });
