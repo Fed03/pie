@@ -186,7 +186,7 @@ test("Sign is added to the value field", async function(assert) {
 test("it has a back link", async function(assert) {
   await visit("/transactions/create");
   await authenticateSession(this.application);
-  await click(".back-link");
+  await click(testSelector("go-back"));
 
   assert.equal(
     currentRouteName(),
