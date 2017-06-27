@@ -1,0 +1,5 @@
+{{one-way-input value data-test-date-picker-input update=(action (mut value)) onclick=(action "toggleModal")}}
+{{#if modalOpened}}
+  {{#modal-dialog onClose="toggleModal"}}
+  {{/modal-dialog}}
+{{/if}}
