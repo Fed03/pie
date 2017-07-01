@@ -11,16 +11,6 @@
     "@glimmer/wire-format" "^0.22.1"
     simple-html-tokenizer "^0.3.0"
 
-"@glimmer/compiler@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@glimmer/compiler/-/compiler-0.25.1.tgz#81fb9f51349f819525da737ae953a5f8461fdef1"
-  dependencies:
-    "@glimmer/interfaces" "^0.25.1"
-    "@glimmer/syntax" "^0.25.1"
-    "@glimmer/util" "^0.25.1"
-    "@glimmer/wire-format" "^0.25.1"
-    simple-html-tokenizer "^0.3.0"
-
 "@glimmer/di@^0.1.8":
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/@glimmer/di/-/di-0.1.11.tgz#a6878c07a13a2c2c76fcde598a5c97637bfc4280"
@@ -34,12 +24,6 @@
   resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.22.1.tgz#56410f35cc3097314c9c56eca01223714354a2f6"
   dependencies:
     "@glimmer/wire-format" "^0.22.1"
-
-"@glimmer/interfaces@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@glimmer/interfaces/-/interfaces-0.25.1.tgz#234abbbf7021a73ec576943443768d0e2801ad13"
-  dependencies:
-    "@glimmer/wire-format" "^0.25.1"
 
 "@glimmer/node@^0.22.1":
   version "0.22.1"
@@ -92,34 +76,15 @@
     handlebars "^4.0.6"
     simple-html-tokenizer "^0.3.0"
 
-"@glimmer/syntax@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@glimmer/syntax/-/syntax-0.25.1.tgz#05bbc219af98adc447195d4d74bba6fb9f5fd3d5"
-  dependencies:
-    "@glimmer/interfaces" "^0.25.1"
-    "@glimmer/util" "^0.25.1"
-    handlebars "^4.0.6"
-    simple-html-tokenizer "^0.3.0"
-
 "@glimmer/util@^0.22.1":
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.22.1.tgz#7be751f77325ac857327f9c786ee2d02fba4d4e1"
-
-"@glimmer/util@^0.25.1":
-  version "0.25.2"
-  resolved "https://registry.yarnpkg.com/@glimmer/util/-/util-0.25.2.tgz#a79e7100f7c38181be026dddf2d3b4ce8a8c8421"
 
 "@glimmer/wire-format@^0.22.1":
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.22.1.tgz#2673bbb1e89805194e9870064c6905af21406ffb"
   dependencies:
     "@glimmer/util" "^0.22.1"
-
-"@glimmer/wire-format@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.yarnpkg.com/@glimmer/wire-format/-/wire-format-0.25.1.tgz#cd69f3595a08954fa68a3f1df4feafffa1c3f3de"
-  dependencies:
-    "@glimmer/util" "^0.25.1"
 
 abbrev@1:
   version "1.1.0"
@@ -370,7 +335,7 @@ async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
 
-async@^1.3.0, async@^1.4.0, async@^1.5.2:
+async@^1.4.0, async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
@@ -1587,13 +1552,6 @@ center-align@^0.1.1:
     align-text "^0.1.3"
     lazy-cache "^1.0.3"
 
-chai-as-promised@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-7.0.0.tgz#c87ee613eaa196766393da6fbb4052f112acf675"
-  dependencies:
-    check-error "^1.0.2"
-    eslint "^3.19.0"
-
 chalk@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-0.5.1.tgz#663b3a648b68b55d04690d49167aa837858f2174"
@@ -1619,10 +1577,6 @@ charm@^1.0.0:
   resolved "https://registry.yarnpkg.com/charm/-/charm-1.0.2.tgz#8add367153a6d9a581331052c4090991da995e35"
   dependencies:
     inherits "^2.0.1"
-
-check-error@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
 
 chokidar@1.6.1:
   version "1.6.1"
@@ -1942,7 +1896,7 @@ debug@2.6.7:
   dependencies:
     ms "2.0.0"
 
-debug@^2.1.0, debug@^2.1.1, debug@^2.1.3, debug@^2.2.0, debug@^2.4.0, debug@^2.6.8:
+debug@^2.1.0, debug@^2.1.1, debug@^2.1.3, debug@^2.2.0, debug@^2.4.0:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -2146,7 +2100,7 @@ ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7:
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9, ember-cli-babel@^6.1.0:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.7:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.1.0.tgz#d9c83a7d0c67cc8a3ccb9bd082971c3593e54fad"
   dependencies:
@@ -2161,7 +2115,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     clone "^2.0.0"
     ember-cli-version-checker "^1.2.0"
 
-ember-cli-babel@^6.4.1:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.9, ember-cli-babel@^6.1.0:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.4.1.tgz#785a1c24fe3250eb0776b1ab3cee857863b44542"
   dependencies:
@@ -2359,25 +2313,6 @@ ember-cli-sri@^2.1.0:
 ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
-
-ember-cli-template-lint@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-0.7.0.tgz#70785fffe2973cd0c82d72e6ac4285f72a806c91"
-  dependencies:
-    aot-test-generators "^0.1.0"
-    broccoli-concat "^3.2.2"
-    broccoli-persistent-filter "^1.2.0"
-    chai-as-promised "^7.0.0"
-    chalk "^1.1.1"
-    debug "^2.6.8"
-    ember-cli-babel "^6.4.1"
-    ember-cli-version-checker "^2.0.0"
-    ember-template-lint "^0.7.0"
-    exists-sync "0.0.4"
-    hash-for-dep "^1.0.2"
-    json-stable-stringify "^1.0.1"
-    md5-hex "^2.0.0"
-    walk-sync "^0.3.2"
 
 ember-cli-test-info@^1.0.0:
   version "1.0.0"
@@ -2697,6 +2632,17 @@ ember-pouch@^4.2.5:
     pouchdb-find "^0.10.3"
     relational-pouch "^1.4.5"
 
+ember-power-calendar@Fed03/ember-power-calendar#test-helpers:
+  version "0.5.1"
+  resolved "https://codeload.github.com/Fed03/ember-power-calendar/tar.gz/d36218bbeb91b09253e43c136a025f3475590c68"
+  dependencies:
+    ember-assign-helper "0.1.2"
+    ember-cli-babel "^6.1.0"
+    ember-cli-htmlbars "^1.1.1"
+    ember-cli-moment-shim "^3.1.0"
+    ember-concurrency "^0.8.1"
+    ember-moment "^7.3.0"
+
 ember-qunit@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ember-qunit/-/ember-qunit-2.1.3.tgz#b3d9d4ddbcdb157cbd89ce6ad9caf51e3775f282"
@@ -2779,18 +2725,6 @@ ember-string-ishtmlsafe-polyfill@^1.1.0:
   dependencies:
     ember-cli-babel "^5.1.7"
     ember-cli-version-checker "^1.2.0"
-
-ember-template-lint@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-0.7.1.tgz#291e3f628a0a1b59965df14c2424d05dbc8e29af"
-  dependencies:
-    "@glimmer/compiler" "^0.25.1"
-    "@glimmer/syntax" "^0.25.1"
-    chalk "^1.1.3"
-    lodash "^4.11.1"
-    minimatch "^3.0.4"
-    node-glob "^1.2.0"
-    resolve "^1.1.3"
 
 ember-test-helpers@^0.6.3:
   version "0.6.3"
@@ -3018,7 +2952,7 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^3.0.0, eslint@^3.19.0:
+eslint@^3.0.0:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-3.19.0.tgz#c8fc6201c7f40dd08941b87c085767386a679acc"
   dependencies:
@@ -3612,10 +3546,6 @@ glob-parent@^2.0.0:
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-2.0.0.tgz#81383d72db054fcccf5336daa902f182f6edbb28"
   dependencies:
     is-glob "^2.0.0"
-
-glob-to-regexp@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.1.0.tgz#e0369d426578fd456d47dc23b09de05c1da9ea5d"
 
 "glob@3 || 4 || 5 || 6 || 7", glob@7.1.1, glob@^7.0.0, glob@^7.0.3, glob@^7.0.4, glob@^7.0.5:
   version "7.1.1"
@@ -4664,7 +4594,7 @@ lodash@^3.10.0, lodash@^3.10.1, lodash@^3.9.3:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.11.1, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4830,7 +4760,7 @@ mime@^1.2.11:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.6.tgz#591d84d3653a6b0b4a3b9df8de5aa8108e72e5e0"
 
-"minimatch@2 || 3", minimatch@3, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3, minimatch@^3.0.4:
+"minimatch@2 || 3", minimatch@3, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
@@ -4940,13 +4870,6 @@ node-fetch@^2.0.0-alpha.3:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.0.0-alpha.4.tgz#ae3fe092fef710a7e565e68d5fcccefabad674b6"
   dependencies:
     encoding "^0.1.11"
-
-node-glob@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/node-glob/-/node-glob-1.2.0.tgz#5240ffedefc6d663ce8515e5796a4d47a750c0d5"
-  dependencies:
-    async "^1.3.0"
-    glob-to-regexp "^0.1.0"
 
 node-gyp@^3.0.3:
   version "3.6.1"
@@ -5793,7 +5716,7 @@ resolve-from@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-1.0.1.tgz#26cbfe935d1aeeeabb29bc3fe5aeb01e93d44226"
 
-resolve@^1.1.2, resolve@^1.1.3, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.3.0, resolve@^1.3.2, resolve@^1.3.3:
+resolve@^1.1.2, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.3.0, resolve@^1.3.2, resolve@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.3.3.tgz#655907c3469a8680dc2de3a275a8fdd69691f0e5"
   dependencies:
@@ -6606,7 +6529,7 @@ vuvuzela@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vuvuzela/-/vuvuzela-1.0.3.tgz#3be145e58271c73ca55279dd851f12a682114b0b"
 
-walk-sync@0.3.1, walk-sync@^0.3.0, walk-sync@^0.3.1:
+walk-sync@0.3.1, walk-sync@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-0.3.1.tgz#558a16aeac8c0db59c028b73c66f397684ece465"
   dependencies:
@@ -6624,7 +6547,7 @@ walk-sync@^0.2.5, walk-sync@^0.2.7:
     ensure-posix-path "^1.0.0"
     matcher-collection "^1.0.0"
 
-walk-sync@^0.3.2:
+walk-sync@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/walk-sync/-/walk-sync-0.3.2.tgz#4827280afc42d0e035367c4a4e31eeac0d136f75"
   dependencies:
