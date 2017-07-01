@@ -20,7 +20,7 @@
               class="transaction-value-input"
               update=(action (mut transactionValue))
               transactionType=transactionType}}
-              <label for="transaction-value">Value</label>
+            <label for="transaction-value">Value</label>
           </div>
           <div class="mui-textfield mui-textfield--float-label">
             {{one-way-input data-test-transaction-description value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
@@ -36,7 +36,8 @@
           {{!-- {{#datepicker-input class="mui-textfield mui-textfield--float-label" value=transactionDate onSelection=(action (mut transactionDate))}}
             <label for="transaction-date">Date</label>
           {{/datepicker-input}} --}}
-          <button type="submit" class="mui-btn mui-btn--raised" data-test-selector="submit-transaction">Submit</button>
+          {{date-picker data-test-transaction-date value=transactionDate}}
+            <button type="submit" class="mui-btn mui-btn--raised" data-test-selector="submit-transaction">Submit</button>
         </form>
       </div>
     </div>
