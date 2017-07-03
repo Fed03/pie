@@ -1,10 +1,9 @@
-import Ember from 'ember';
-import Application from '../../app';
-import config from '../../config/environment';
-import './create';
-import './create-list';
-import './fill-transaction-value';
-import './find-latest-in-db';
+import Ember from "ember";
+import Application from "../../app";
+import config from "../../config/environment";
+import "./create";
+import "./create-list";
+import "./find-latest-in-db";
 
 export default function startApp(attrs) {
   let attributes = Ember.merge({}, config.APP);

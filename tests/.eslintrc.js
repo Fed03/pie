@@ -5,7 +5,6 @@ module.exports = {
   globals: {
     createList: false,
     create: false,
-    findLatestInDb: false,
-    fillTransactionValue: false
+    findLatestInDb: false
   }
 };

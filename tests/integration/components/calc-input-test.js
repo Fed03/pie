@@ -3,6 +3,7 @@ import { moduleForComponent, test } from "ember-qunit";
 import testSelector from "ember-test-selectors";
 import hbs from "htmlbars-inline-precompile";
 import { initialize, triggerKeyDown } from "ember-keyboard";
+import { fillCalcValue } from "calc-component/test-support/fill-calc-value";
 
 moduleForComponent("calc-input", "Integration | Component | calc input", {
   integration: true,
@@ -353,5 +354,15 @@ test("it listens for numpad events", function(assert) {
   assert.equal(
     findWithAssert(testSelector("calculator-display")).textContent.trim(),
     "0.09"
+  );
+});
+
+test("fillCalcValue helper", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await fillCalcValue(345);
+
+  assert.equal(
+    findWithAssert(testSelector("calculator-display")).textContent.trim(),
+    "345"
   );
 });
