@@ -357,6 +357,23 @@ test("it listens for numpad events", function(assert) {
   );
 });
 
+test("it sends an action on equals", async function(assert) {
+  assert.expect(1);
+
+  this.on("equals", result => {
+    assert.equal(result, 987.5);
+  });
+  this.render(hbs`{{calc-input onEquals=(action 'equals')}}`);
+
+  await click(testSelector("calc-key", 9));
+  await click(testSelector("calc-key", 8));
+  await click(testSelector("calc-key", 7));
+  await click(testSelector("calc-key", "dot"));
+  await click(testSelector("calc-key", 5));
+
+  await click(testSelector("calc-key", "equals"));
+});
+
 test("fillCalcValue helper", async function(assert) {
   this.render(hbs`{{calc-input}}`);
   await fillCalcValue(345);
