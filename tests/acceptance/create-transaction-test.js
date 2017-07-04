@@ -1,9 +1,10 @@
-import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moment from "moment";
 import { test, todo } from "qunit";
 import testSelector from "ember-test-selectors";
 import getDateForCurrentMonth from "pie/utils/get-date-for-current-month";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
+import { fillCalcValue } from "calc-component/test-support/fill-calc-value";
+import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
 moduleForPouchAcceptance("Acceptance | create transaction");
@@ -74,10 +75,7 @@ test("it change the value field class according to the category type", async fun
   await click(testSelector("transaction-category"));
   await click(testSelector("category-list-item", "2-bar"));
 
-  assert.ok(
-    find(testSelector("transaction-value")).classList.contains("income-amount"),
-    "Transaction value field has income-amount class"
-  );
+  assert.ok(find(testSelector("transaction-value")).classList.contains("income-amount"), "Transaction value field has income-amount class");
   assert.notOk(
     find(testSelector("transaction-value")).classList.contains("outcome-amount"),
     "Transaction value field has not outcome-amount class"
@@ -93,7 +91,7 @@ todo("create transaction", async function(assert) {
   await authenticateSession(this.application);
   await visit("/transactions/create");
 
-  await fillTransactionValue(25);
+  await fillCalcValue(25);
   await fillIn('[name="transaction-description"]', "An awesome book");
   await click('.list-item[data-category$="-foo"]');
   await click("[data-test-selector=submit-transaction]");
@@ -125,7 +123,8 @@ test("Sign is added to the value field", async function(assert) {
   await click(testSelector("category-list-item", "2-bar"));
   assert.equal(find(testSelector("transaction-value")).textContent.trim(), "+0.00", "The value is set positive");
 
-  await fillTransactionValue(12345);
+  await fillCalcValue(12345);
+  await click(testSelector("calc-key", "equals"));
   assert.equal(find(testSelector("transaction-value")).textContent.trim(), "+12,345.00", "The value is formatted");
 });
 
