@@ -18,6 +18,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
     "ember-awesome-macros": "^0.37.0",
+    "ember-chrome-devtools": "^0.1.1",
     "ember-cli": "2.13.2",
     "ember-cli-accounting": "^2.0.1",
     "ember-cli-app-version": "^3.0.0",
