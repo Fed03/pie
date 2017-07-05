@@ -14,21 +14,23 @@ export default Ember.Component.extend({
     }
   }),
   inputFocused: false,
-  displayValue: Ember.computed("value", "transactionType", {
+  modalOpened: Ember.computed.alias("inputFocused"),
+  internalValue: Ember.computed.oneWay("value"),
+  displayValue: Ember.computed("internalValue", "transactionType", {
     get() {
-      let { value, transactionType } = this.getProperties(
-        "value",
-        "transactionType"
-      );
+      let { internalValue: value, transactionType } = this.getProperties("internalValue", "transactionType");
       let displayValue = Ember.isPresent(value) ? value : 0;
-      return `${TypeSignMap[
-        transactionType
-      ]}${displayValue.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
+      return `${TypeSignMap[transactionType]}${displayValue.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
     }
   }),
   actions: {
-    toggleSelector() {
-      this.toggleProperty("inputFocused");
+    toggleModal() {
+      this.toggleProperty("modalOpened");
+    },
+    calc(result) {
+      this.set("internalValue", result);
+      this.send("toggleModal");
+      this.sendAction("update", result);
     }
   }
 });
