@@ -1,6 +1,7 @@
-import moment from "moment";
 import { test, todo } from "qunit";
 import testSelector from "ember-test-selectors";
+import selectCategory from "pie/tests/helpers/select-category";
+import { calendarSelect } from "ember-power-calendar/test-support";
 import getDateForCurrentMonth from "pie/utils/get-date-for-current-month";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 import { fillCalcValue } from "calc-component/test-support/fill-calc-value";
@@ -55,13 +56,12 @@ test("the fields are prefilled with default values", async function(assert) {
 });
 
 test("it change the value field class according to the category type", async function(assert) {
-  await create("category", { name: "foo", type: "outcome", id: 1 });
-  await create("category", { name: "bar", type: "income", id: 2 });
+  let outcomeCat = await create("category", { name: "foo", type: "outcome", id: 1 });
+  let incomeCat = await create("category", { name: "bar", type: "income", id: 2 });
   await authenticateSession(this.application);
 
   await visit("/transactions/create");
-  await click(testSelector("transaction-category"));
-  await click(testSelector("category-list-item", "1-foo"));
+  await selectCategory(outcomeCat);
 
   assert.ok(
     find(testSelector("transaction-value")).classList.contains("outcome-amount"),
@@ -72,13 +72,9 @@ test("it change the value field class according to the category type", async fun
     "Transaction value field has not income-amount class"
   );
 
-  await click(testSelector("transaction-category"));
-  await click(testSelector("category-list-item", "2-bar"));
+  await selectCategory(incomeCat);
 
-  assert.ok(
-    find(testSelector("transaction-value")).classList.contains("income-amount"),
-    "Transaction value field has income-amount class"
-  );
+  assert.ok(find(testSelector("transaction-value")).classList.contains("income-amount"), "Transaction value field has income-amount class");
   assert.notOk(
     find(testSelector("transaction-value")).classList.contains("outcome-amount"),
     "Transaction value field has not outcome-amount class"
@@ -117,13 +113,13 @@ todo("create transaction", async function(assert) {
 
 test("Sign is added to the value field", async function(assert) {
   await create("category", { name: "foo", type: "outcome", id: 1 });
-  await create("category", { name: "bar", type: "income", id: 2 });
+  let cat = await create("category", { name: "bar", type: "income", id: 2 });
   await authenticateSession(this.application);
   await visit("/transactions/create");
 
   assert.equal(find(testSelector("transaction-value")).textContent.trim(), "-0.00", "The value is set negative");
 
-  await click(testSelector("category-list-item", "2-bar"));
+  await selectCategory(cat);
   assert.equal(find(testSelector("transaction-value")).textContent.trim(), "+0.00", "The value is set positive");
 
   await click(testSelector("value-display"));
@@ -142,18 +138,31 @@ todo("it has a back link", async function(assert) {
 });
 
 test("it resets value on route exit", async function(assert) {
-  await create("category", { name: "foo", type: "outcome" });
+  let defaultCat = await create("category", { name: "foo", type: "outcome", id: 2 });
+  let selectCat = await create("category", { name: "bar", type: "income", id: 3 });
   await authenticateSession(this.application);
   await visit("/transactions/create");
 
-  await fillTransactionValue(25);
-  await fillIn('[name="transaction-description"]', "An awesome book");
-  await fillIn('[name="transaction-date"]', moment().subtract(7, "days").format("D/M/YYYY"));
-  await click(".back-link");
+  await click(testSelector("value-display"));
+  await fillCalcValue("12345");
+  await click(testSelector("calc-key", "equals"));
+
+  await fillIn(testSelector("transaction-description"), "An awesome book");
+
+  await click(testSelector("date-picker-input"));
+  await calendarSelect(".ember-power-calendar", new Date(2017, 6, 2));
+
+  await selectCategory(selectCat);
+
+  assert.equal(find(testSelector("value-display")).textContent.trim(), "+12,345.00");
+  assert.equal(find(`${testSelector("transaction-date")} input`).value, new Date(2017, 6, 2).toLocaleDateString("en-US"));
+  assert.equal(find(testSelector("selected-category-name")).textContent.trim(), "bar");
+
+  await visit("/");
   await visit("/transactions/create");
 
-  const today = moment().format("D/M/YYYY");
-  assert.equal(find("[data-test-selector=transaction-value]").textContent.trim(), "-0.00", 'Value resetted to "0"');
-  assert.equal(find('[name="transaction-description"]').value, "", "Description resetted to empty string");
-  assert.equal(find('[name="transaction-date"]').value, today, "Date resetted to today");
+  assert.equal(find(testSelector("value-display")).textContent.trim(), "-0.00", 'Value resetted to "0"');
+  assert.equal(find(testSelector("transaction-description")).value, "", "Description resetted to empty string");
+  assert.equal(find(`${testSelector("transaction-date")} input`).value, new Date().toLocaleDateString("en-US"), "Date resetted to today");
+  assert.equal(find(testSelector("selected-category-name")).textContent.trim(), defaultCat.get("name"), "Category resetted to default one");
 });
