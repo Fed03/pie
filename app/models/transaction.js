@@ -8,5 +8,6 @@ export default Model.extend({
   date: attr("date"),
   description: attr("string"),
 
-  category: belongsTo("category")
+  category: belongsTo("category"),
+  month: belongsTo("month")
 });

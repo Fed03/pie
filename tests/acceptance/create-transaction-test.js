@@ -81,22 +81,24 @@ test("it change the value field class according to the category type", async fun
   );
 });
 
-todo("create transaction", async function(assert) {
-  assert.expect(8);
+test("create transaction", async function(assert) {
+  assert.expect(7);
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
 
-  await create("category", { name: "foo", type: "outcome" });
+  let selectCat = await create("category", { name: "foo", type: "outcome" });
   await authenticateSession(this.application);
   await visit("/transactions/create");
 
-  await fillCalcValue(25);
-  await fillIn('[name="transaction-description"]', "An awesome book");
-  await click('.list-item[data-category$="-foo"]');
-  await click("[data-test-selector=submit-transaction]");
+  await click(testSelector("value-display"));
+  await fillCalcValue("25");
+  await click(testSelector("calc-key", "equals"));
+  await fillIn(testSelector("transaction-description"), "An awesome book");
+  await selectCategory(selectCat);
+
+  await click(testSelector("submit-transaction"));
 
   assert.equal(currentRouteName(), "months.view");
-  assert.ok(find(".transaction--list-item-description").textContent.includes("An awesome book"));
 
   let transaction = await findLatestInDb("transaction");
   assert.equal(transaction.get("value"), -25, "The value is -25");
@@ -104,11 +106,11 @@ todo("create transaction", async function(assert) {
   assert.equal(transaction.get("date").getTime(), today.getTime(), "The transaction date is today without hours");
 
   let category = await transaction.get("category");
-  assert.equal(category.get("name"), "foo", 'The transaction category name is "foo"');
+  assert.deepEqual(category, selectCat, "The transaction category is correct");
 
   let month = await transaction.get("month");
   assert.equal(month.get("date").getTime(), getDateForCurrentMonth().getTime(), "The transaction month is correct");
-  assert.equal(month.get("transactions.length"), 1, "It has the transaction");
+  assert.equal(month.get("transactions.length"), 1, "The month has the transaction");
 });
 
 test("Sign is added to the value field", async function(assert) {
