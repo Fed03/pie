@@ -2,7 +2,6 @@ import { test } from "qunit";
 import moment from "moment";
 import testSelector from "ember-test-selectors";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
-// import { await authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
 function getCurrentMonthName() {
@@ -13,15 +12,15 @@ function getCurrentMonthName() {
 }
 
 moduleForAcceptance("Acceptance | month view", {
-  beforeEach() {
+  async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
+    await create("user");
   }
 });
 
 //TODO: balance in the following tests
 
 test("visiting `/` redirects to the current month", async function(assert) {
-  // await authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
 
   await visit("/");
@@ -35,7 +34,6 @@ test("visiting `/` redirects to the current month", async function(assert) {
 });
 
 test("it creates current month if not present", async function(assert) {
-  // await authenticateSession(this.application);
   let months = await this.store.findAll("month");
   assert.equal(months.get("length"), 0, "There are no months");
 
@@ -54,7 +52,6 @@ test("it creates current month if not present", async function(assert) {
 });
 
 test("viewing a month without transaction will result in an empty page", async function(assert) {
-  // await authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
 
   await visit(`/months/${currentMonth.get("id")}`);
@@ -65,7 +62,6 @@ test("viewing a month without transaction will result in an empty page", async f
 
 test("viewing a month will list its transactions", async function(assert) {
   assert.expect(3);
-  // await authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
   const today = moment().utc();
   const todayDate = today.date();
@@ -95,7 +91,6 @@ test("viewing a month will list its transactions", async function(assert) {
 
 test("clicking on the add button redirects to transaction.create", async function(assert) {
   assert.expect(1);
-  // await authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
 
   await visit(`/months/${currentMonth.get("id")}`);
@@ -105,7 +100,6 @@ test("clicking on the add button redirects to transaction.create", async functio
 });
 
 test("it computes the total balance", async function(assert) {
-  // await authenticateSession(this.application);
   const currentMonth = await create("currentMonth");
 
   await create("transaction", { value: 5, month: currentMonth });

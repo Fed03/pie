@@ -3,25 +3,18 @@ import testSelector from "ember-test-selectors";
 import selectCategory from "pie/tests/helpers/select-category";
 import { calendarSelect } from "ember-power-calendar/test-support";
 import getDateForCurrentMonth from "pie/utils/get-date-for-current-month";
-// import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 import { fillCalcValue } from "calc-component/test-support/fill-calc-value";
 import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
-moduleForPouchAcceptance("Acceptance | create transaction");
-
-// skip("it requires authentication", async function(assert) {
-//   await visit("/transactions/create");
-//   assert.equal(currentRouteName(), "login");
-//
-// await authenticateSession(this.application);
-//   await visit("/transactions/create");
-//   assert.equal(currentRouteName(), "transactions.create");
-// });
+moduleForPouchAcceptance("Acceptance | create transaction", {
+  async beforeEach() {
+    await create("user");
+  }
+});
 
 test("it renders the right template", async function(assert) {
   assert.expect(0);
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
 
   findWithAssert(testSelector("transaction-main-container"));
@@ -31,7 +24,6 @@ test("the selected category is the first in the outcome ordered set", async func
   await createList("category", 2, { type: "income" });
   await create("category", { name: "foo", type: "outcome" });
   await create("category", { name: "bar", type: "outcome" });
-  // await authenticateSession(this.application);
 
   await visit("/transactions/create");
 
@@ -40,7 +32,6 @@ test("the selected category is the first in the outcome ordered set", async func
 
 test("the fields are prefilled with default values", async function(assert) {
   const today = new Date().toLocaleDateString("en-US");
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
 
   assert.ok(
@@ -58,7 +49,6 @@ test("the fields are prefilled with default values", async function(assert) {
 test("it change the value field class according to the category type", async function(assert) {
   let outcomeCat = await create("category", { name: "foo", type: "outcome", id: 1 });
   let incomeCat = await create("category", { name: "bar", type: "income", id: 2 });
-  // await authenticateSession(this.application);
 
   await visit("/transactions/create");
   await selectCategory(outcomeCat);
@@ -87,7 +77,6 @@ test("create transaction", async function(assert) {
   today.setUTCHours(0, 0, 0, 0);
 
   let selectCat = await create("category", { name: "foo", type: "outcome" });
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
 
   await click(testSelector("value-display"));
@@ -116,7 +105,6 @@ test("create transaction", async function(assert) {
 test("Sign is added to the value field", async function(assert) {
   await create("category", { name: "foo", type: "outcome", id: 1 });
   let cat = await create("category", { name: "bar", type: "income", id: 2 });
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
 
   assert.equal(find(testSelector("transaction-value")).textContent.trim(), "-0.00", "The value is set negative");
@@ -132,7 +120,6 @@ test("Sign is added to the value field", async function(assert) {
 
 // TODO: this must handles only app specific urls and respects ids
 skip("it has a back link", async function(assert) {
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
   await click(testSelector("go-back"));
 
@@ -142,7 +129,6 @@ skip("it has a back link", async function(assert) {
 test("it resets value on route exit", async function(assert) {
   let defaultCat = await create("category", { name: "foo", type: "outcome", id: 2 });
   let selectCat = await create("category", { name: "bar", type: "income", id: 3 });
-  // await authenticateSession(this.application);
   await visit("/transactions/create");
 
   await click(testSelector("value-display"));
