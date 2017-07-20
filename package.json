@@ -47,7 +47,6 @@
     "ember-pouch": "^4.2.5",
     "ember-power-calendar": "Fed03/ember-power-calendar#test-helpers",
     "ember-resolver": "^4.0.0",
-    "ember-simple-auth": "^1.3.0",
     "ember-source": "~2.13.0",
     "ember-test-selectors": "^0.3.4",
     "ember-truth-helpers": "^1.3.0",

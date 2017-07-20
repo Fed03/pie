@@ -1,6 +1,6 @@
 import { test } from "qunit";
 import { visit } from "ember-native-dom-helpers";
-import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
+// import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
 moduleForPouchAcceptance("Acceptance | categories seed", {
@@ -10,7 +10,7 @@ moduleForPouchAcceptance("Acceptance | categories seed", {
 });
 
 test("it seeds default categories", async function(assert) {
-  authenticateSession(this.application);
+  // authenticateSession(this.application);
 
   let categories = await this.store.findAll("category");
   assert.equal(categories.get("length"), 0, "There are no categories in store");
