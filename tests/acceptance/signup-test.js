@@ -1,6 +1,6 @@
 import { test } from "qunit";
 import testSelector from "ember-test-selectors";
-import { findWithAssert, visit, fillIn, click } from "ember-native-dom-helpers";
+import { findWithAssert, visit, fillIn, click, find, currentRouteName } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
 moduleForPouchAcceptance("Acceptance | signup", {
@@ -29,4 +29,21 @@ test("it create a new user", async function(assert) {
   assert.equal(user.get("name"), "john", "The username is correctly saved");
   assert.equal(user.get("initialBalance"), 12368.53, "The initialBalance is correctly saved");
   assert.equal(user.get("currentBalance"), 12368.53, "The value of currentBalance is equal to initialBalance");
+});
+
+test("the balance is formatted", async function(assert) {
+  await visit("/signup");
+
+  fillIn(testSelector("initial-balance-input"), 12368.53);
+  assert.equal(find(testSelector("initial-balance-input")).value, "12,368.53");
+});
+
+test("after user creation, redirects to /", async function(assert) {
+  await visit("/signup");
+
+  fillIn(testSelector("username-input"), "john");
+  fillIn(testSelector("initial-balance-input"), 12368.53);
+  await click(testSelector("create-user-btn"));
+
+  assert.equal(currentRouteName(), "months.view");
 });

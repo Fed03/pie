@@ -1,4 +1,5 @@
 <form {{action "createUser" on="submit"}}>
-  {{one-way-input data-test-username-input}} {{one-way-input data-test-initial-balance-input}}
+  {{one-way-input data-test-username-input required=true value=username update=(action (mut username))}}
+  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut balance))}}
   <button type="submit" data-test-create-user-btn></button>
 </form>
