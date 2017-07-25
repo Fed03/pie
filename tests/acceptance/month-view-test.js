@@ -1,8 +1,11 @@
-import { test } from "qunit";
+import Ember from "ember";
 import moment from "moment";
+import { test } from "qunit";
 import testSelector from "ember-test-selectors";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
+
+const { run } = Ember;
 
 function getCurrentMonthName() {
   const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -106,9 +109,11 @@ test("it computes the total balance", async function(assert) {
   await create("transaction", { value: -60, month: currentMonth });
   await createList("transaction", 3, { value: 10, month: currentMonth });
 
-  currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
-  currentMonth.set("openingBalance", 339);
-  await currentMonth.save();
+  await run(() => {
+    currentMonth.set("openingBalance", 339);
+    currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
+    return currentMonth.save();
+  });
 
   await visit(`/months/${currentMonth.get("id")}`);
   assert.equal(
