@@ -1,5 +1,23 @@
 <form {{action "createUser" on="submit"}}>
-  {{one-way-input data-test-username-input required=true value=username update=(action (mut username))}}
-  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut balance))}}
-  <button type="submit" data-test-create-user-btn></button>
+  {{one-way-input data-test-username-input required=true value=changeset.name update=(action (mut changeset.name))}}
+  {{#if changeset.error.name}}
+    <ul>
+      {{#with changeset.error.name.validation as |errors|}}
+        {{#each errors as |error|}}
+          <li data-test-input-error="username">{{error}}</li>
+        {{/each}}
+      {{/with}}
+    </ul>
+  {{/if}}
+  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut changeset.initialBalance))}}
+  {{#if changeset.error.initialBalance}}
+    <ul>
+      {{#with changeset.error.initialBalance.validation as |errors|}}
+        {{#each errors as |error|}}
+          <li data-test-input-error="initial-balance">{{error}}</li>
+        {{/each}}
+      {{/with}}
+    </ul>
+  {{/if}}
+  <button type="submit" data-test-create-user-btn disabled={{formHasErrors}}></button>
 </form>
