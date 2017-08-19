@@ -1,5 +1,5 @@
 <form {{action "createUser" on="submit"}}>
-  {{one-way-input data-test-username-input required=true value=changeset.name update=(action (mut changeset.name))}}
+  {{one-way-input data-test-username-input required=true value=changeset.name update=(action (mut changeset.name)) onblur=(action "validateProperty" "name")}}
   {{#if changeset.error.name}}
     <ul>
       {{#with changeset.error.name.validation as |errors|}}
@@ -9,7 +9,7 @@
       {{/with}}
     </ul>
   {{/if}}
-  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut changeset.initialBalance))}}
+  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut changeset.initialBalance)) onblur=(action "validateProperty" "initialBalance")}}
   {{#if changeset.error.initialBalance}}
     <ul>
       {{#with changeset.error.initialBalance.validation as |errors|}}

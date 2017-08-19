@@ -1,5 +1,5 @@
 import Ember from "ember";
-import { and, not } from "ember-awesome-macros";
+import { or, not } from "ember-awesome-macros";
 import UserValidation from "pie/validations/user";
 import lookupValidator from "ember-changeset-validations";
 import Changeset from "ember-changeset";
@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
     this._super(...arguments);
     this.changeset = new Changeset(this, lookupValidator(UserValidation), UserValidation);
   },
-  formHasErrors: not(and("changeset.name", "changeset.initialBalance")),
+  formHasErrors: or(not("changeset.initialBalance"), not("changeset.name"), "changeset.isInvalid"),
   displayBalance: Ember.computed("changeset.initialBalance", {
     get() {
       let balance = Number(this.get("changeset.initialBalance"));
@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
 
         const { name, initialBalance } = this.getProperties("name", "initialBalance");
         await run(() => {
-          this.store
+          return this.store
             .createRecord("user", {
               name,
               initialBalance,
@@ -36,6 +36,9 @@ export default Ember.Controller.extend({
 
         this.transitionToRoute("/");
       }
+    },
+    validateProperty(key) {
+      this.changeset.validate(key);
     }
   }
 });

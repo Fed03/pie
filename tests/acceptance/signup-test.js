@@ -1,6 +1,6 @@
 import { test } from "qunit";
 import testSelector from "ember-test-selectors";
-import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll } from "ember-native-dom-helpers";
+import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
 moduleForPouchAcceptance("Acceptance | signup", {
@@ -74,4 +74,28 @@ test("it has validation", async function(assert) {
 
   fillIn(testSelector("initial-balance-input"), 123.65);
   assert.equal(findAll(testSelector("input-error", "initial-balance")).length, 0);
+});
+
+test("it disables the submit btn if there are any validation errors", async function(assert) {
+  await visit("/signup");
+
+  fillIn(testSelector("username-input"), "john");
+  fillIn(testSelector("initial-balance-input"), "foo");
+  assert.ok(find(testSelector("create-user-btn")).disabled, "The button is disabled");
+
+  fillIn(testSelector("initial-balance-input"), 123.65);
+  assert.notOk(find(testSelector("create-user-btn")).disabled, "The button is enabled");
+});
+
+test("errors are displayed after blur", async function(assert) {
+  await visit("/signup");
+  assert.equal(findAll(testSelector("input-error")).length, 0, "No errors displayed");
+
+  focus(testSelector("username-input"));
+  blur(testSelector("username-input"));
+  assert.ok(findAll(testSelector("input-error", "username")).length > 0, "Username input error");
+
+  focus(testSelector("initial-balance-input"));
+  blur(testSelector("initial-balance-input"));
+  assert.ok(findAll(testSelector("input-error", "initial-balance")).length > 0, "Initial balance input error");
 });
