@@ -16,6 +16,13 @@ test("it shows inputs for name and initial balance", async function(assert) {
   assert.equal(findWithAssert(testSelector("initial-balance-input")).tagName, "input".toUpperCase());
 });
 
+test("the inputs are black by default", async function(assert) {
+  await visit("/signup");
+
+  assert.equal(findWithAssert(testSelector("username-input")).value, "");
+  assert.equal(findWithAssert(testSelector("initial-balance-input")).value, "");
+});
+
 test("it create a new user", async function(assert) {
   await visit("/signup");
 
@@ -36,6 +43,12 @@ test("the balance is formatted", async function(assert) {
 
   fillIn(testSelector("initial-balance-input"), 12368.53);
   assert.equal(find(testSelector("initial-balance-input")).value, "12,368.53");
+
+  fillIn(testSelector("initial-balance-input"), 0);
+  assert.equal(find(testSelector("initial-balance-input")).value, "");
+
+  fillIn(testSelector("initial-balance-input"), "12.");
+  assert.equal(find(testSelector("initial-balance-input")).value, "12.");
 });
 
 test("after user creation, redirects to /", async function(assert) {

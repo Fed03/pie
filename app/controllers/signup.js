@@ -12,13 +12,29 @@ export default Ember.Controller.extend({
     this.changeset = new Changeset(this, lookupValidator(UserValidation), UserValidation);
   },
   formHasErrors: or(not("changeset.initialBalance"), not("changeset.name"), "changeset.isInvalid"),
-  displayBalance: Ember.computed("changeset.initialBalance", {
-    get() {
-      let balance = Number(this.get("changeset.initialBalance"));
-      return balance.toLocaleString("en-US");
-    }
-  }),
+  // displayBalance: Ember.computed("changeset.initialBalance", {
+  //   get() {
+  //     let balance = Number(this.get("changeset.initialBalance"));
+  //     return Number.isNaN(balance) ? "" : balance.toLocaleString("en-US");
+  //   }
+  // }),
+  displayBalance: "",
   actions: {
+    updateBalance(inputBalance) {
+      // const lastChar = inputBalance.slice(-1);
+      // if (lastChar === '.') {
+      //
+      // }
+
+      let number = Number(inputBalance);
+      if (number === 0) {
+        this.set("displayBalance", "");
+      } else {
+        this.set("displayBalance", number);
+      }
+
+      this.changeset.set("initialBalance", number);
+    },
     async createUser() {
       if (this.changeset.isValid) {
         await this.changeset.save();
