@@ -2750,7 +2750,7 @@ ember-pouch@^4.2.5:
 
 ember-power-calendar@Fed03/ember-power-calendar#test-helpers:
   version "0.5.1"
-  resolved "https://codeload.github.com/Fed03/ember-power-calendar/tar.gz/de580ceea88b7b65cf091f77ebe67956ba52aa71"
+  resolved "https://codeload.github.com/Fed03/ember-power-calendar/tar.gz/6a321ed942772d4606c27318b891ec5e14819070"
   dependencies:
     ember-assign-helper "0.1.2"
     ember-cli-babel "^6.1.0"
@@ -4861,9 +4861,9 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-muicss@^0.9.16:
-  version "0.9.18"
-  resolved "https://registry.yarnpkg.com/muicss/-/muicss-0.9.18.tgz#3ad57a3daa3c6fe0e7b73deab8de6873bc8064a4"
+muicss@^0.9.24:
+  version "0.9.24"
+  resolved "https://registry.yarnpkg.com/muicss/-/muicss-0.9.24.tgz#30918e19905e12701f54cf2b370c74ceec8db699"
 
 mustache@^2.2.1:
   version "2.3.0"
@@ -5809,6 +5809,10 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.3.2, rimraf@^2.3.4, rimraf@^2.4.3, rimraf@^2.
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+roboto-fontface@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/roboto-fontface/-/roboto-fontface-0.8.0.tgz#031a83c8f79932801a57d83bf743f37250163499"
 
 rollup@^0.41.4:
   version "0.41.6"
