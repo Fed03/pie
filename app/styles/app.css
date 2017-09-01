@@ -1,18 +1,23 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 body {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, .004);
-  background-color: #F5F5F5;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  background-color: #f5f5f5;
 }
 header {
   position: fixed;
   right: 0;
   left: 0;
   z-index: 1;
+}
+
+main {
+  margin-top: 5px;
 }
 
 /* List item */
@@ -52,7 +57,8 @@ li.list-item:last-child {
 
 /* month view */
 
-.month-summary-header, .transaction--list-header {
+.month-summary-header,
+.transaction--list-header {
   font-weight: 600;
   padding: 0 5px 5px;
 }
@@ -88,10 +94,10 @@ li.list-item:last-child {
 /* end month view */
 
 .outcome-amount {
-  color: #E53935 !important;
+  color: #e53935 !important;
 }
 .income-amount {
-  color: #2E7D32 !important;
+  color: #2e7d32 !important;
 }
 .transaction--list-header {
   display: flex;
@@ -110,7 +116,8 @@ li.list-item:last-child {
   flex-direction: column;
   padding: 0 8px;
 }
-.transaction--list-date > span:not(.number) > small, .transaction--list-item-description > small {
+.transaction--list-date > span:not(.number) > small,
+.transaction--list-item-description > small {
   font-weight: 400;
   color: #616161;
 }
@@ -129,8 +136,8 @@ li.transaction--list-item {
   flex-direction: column;
 }
 .category--badge {
-  background-color: #00C853;
-  margin: .4em .6em .4em 0;
+  background-color: #00c853;
+  margin: 0.4em 0.6em 0.4em 0;
   border-radius: 50%;
   font-size: 19px;
   color: white;
@@ -147,7 +154,7 @@ li.transaction--list-item {
   width: 2em;
   height: 2em;
   border-radius: 50%;
-  font: normal normal normal .6em/1 FontAwesome;
+  font: normal normal normal 0.6em/1 FontAwesome;
   border: 2px solid white;
   position: absolute;
   top: -.6em;
@@ -157,18 +164,18 @@ li.transaction--list-item {
   justify-content: center;
 }
 .category--badge.category--badge-income::after {
-  background-color: #2E7D32;
+  background-color: #2e7d32;
   content: "\f067";
 }
 .category--badge.category--badge-outcome::after {
-  background-color: #E53935;
+  background-color: #e53935;
   content: "\f068";
 }
 .category--badge > span {
   line-height: 0;
 }
 #transaction-appbar {
-  background-color: #78909C;
+  background-color: #78909c;
   color: white;
 }
 #transaction-appbar a.appbar-brand {
@@ -182,12 +189,11 @@ li.transaction--list-item {
   padding-top: 20px;
 }
 #create-transaction-main .sidedrawer {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border-left: 1px solid rgba(0, 0, 0, 0.26);
 }
 
 /* end create transaction */
-
 
 /* pikaday */
 
@@ -202,7 +208,6 @@ li.transaction--list-item {
 }
 
 /* end pikaday */
-
 
 /* category-selector component */
 
@@ -219,7 +224,7 @@ li.transaction--list-item {
 }
 .category--selector .mui-tabs__bar > li.mui--is-active {
   border-bottom: none;
-  border-top: 2px solid #2196F3;
+  border-top: 2px solid #2196f3;
 }
 .category--selector .list-item--info {
   position: relative;
@@ -242,14 +247,14 @@ li.transaction--list-item {
   bottom: 0;
   left: 0;
   z-index: 99999999;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
   overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .transaction-value-input .overlay > div {
-  box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
 /* category-selector-input component */
 
@@ -267,12 +272,13 @@ li.transaction--list-item {
 .transaction-value-input.input-focused > span {
   min-height: 33px;
   margin-bottom: -1px;
-  border-color: #2196F3;
-  border-width: 2px
+  border-color: #2196f3;
+  border-width: 2px;
 }
-.category-selector-input.category-selector-input-focused ~ label, .category-selector-input.category-selector-input-full ~ label,
+.category-selector-input.category-selector-input-focused ~ label,
+.category-selector-input.category-selector-input-full ~ label,
 .transaction-value-input ~ label {
-  color: #2196F3;
+  color: #2196f3;
   transform: translate(0px, 0px);
   font-size: 12px;
   line-height: 15px;
@@ -283,10 +289,9 @@ li.transaction--list-item {
   color: rgba(0, 0, 0, 0.54);
 }
 .transaction-value-input.input-focused ~ label {
-  color: #2196F3;
+  color: #2196f3;
 }
 /* end category-selector-input component */
-
 
 /* Sidedrawer */
 
@@ -320,13 +325,14 @@ li.transaction--list-item {
 
 /* end Sidedrawer */
 
-
 /* calc input */
 
 .calc-input {
   max-width: 400px;
 }
-.calc-input--actions, .calc-input--actions button, .calc-input--playground input {
+.calc-input--actions,
+.calc-input--actions button,
+.calc-input--playground input {
   border: 1px solid rgba(0, 0, 0, 0.26);
 }
 .calc-input--playground input {
@@ -334,42 +340,44 @@ li.transaction--list-item {
   width: 100%;
   font-size: 2.3em;
   line-height: 3;
-  padding-left: .3em;
+  padding-left: 0.3em;
 }
 .calc-input--actions button {
   height: 50px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   padding: 0;
   border-top: none;
   border-left: none;
   outline: none;
 }
 .calc-input--actions button:active {
-  background-color: #BDBDBD;
+  background-color: #bdbdbd;
 }
-.calc-input--actions .calc-input--op-btn, .calc-input--actions .calc-input--del-btn {
-  background-color: #E0E0E0;
+.calc-input--actions .calc-input--op-btn,
+.calc-input--actions .calc-input--del-btn {
+  background-color: #e0e0e0;
 }
-.calc-input--actions .calc-input--op-btn:active, .calc-input--actions .calc-input--del-btn:active {
+.calc-input--actions .calc-input--op-btn:active,
+.calc-input--actions .calc-input--del-btn:active {
   background-color: #757575;
 }
 .calc-input--actions .calc-input--reset-btn {
-  background-color: #F9A825;
+  background-color: #f9a825;
 }
 .calc-input--actions .calc-input--reset-btn:active {
-  background-color: #F57F17;
+  background-color: #f57f17;
 }
 .calc-input--actions .calc-input--commit-btn.commit {
-  background-color: #00C853;
+  background-color: #00c853;
 }
 .calc-input--actions .calc-input--commit-btn.commit:active {
-  background-color: #43A047;
+  background-color: #43a047;
 }
 .calc-input--actions .calc-input--commit-btn.calculate {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 .calc-input--actions .calc-input--commit-btn.calculate:active {
-  background-color: #1976D2;
+  background-color: #1976d2;
 }
 .calc-input--actions {
   display: flex;
@@ -417,6 +425,14 @@ li.transaction--list-item {
   right: 15px;
 }
 
+ul.input-validation-errors {
+  list-style-position: inside;
+  padding-left: 3%;
+  margin-top: 10px;
+  color: hsla(4, 90%, 48%, 1);
+  font-weight: 300;
+}
+
 @keyframes fillup {
   0% {
     stroke-dasharray: 0 158;
@@ -433,7 +449,7 @@ li.transaction--list-item {
 }
 
 #pie-loading {
-  background-color: #2196F3;
+  background-color: #2196f3;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -446,12 +462,12 @@ li.transaction--list-item {
   margin-bottom: 20px;
   font-weight: 300;
   font-size: 30px;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 
 #pie-loading circle {
   fill: yellowgreen;
-  stroke: #FFB300;
+  stroke: #ffb300;
   transform-origin: center;
   stroke-width: 50;
   stroke-dasharray: 0 158; /* 2π × 25 ≈ 158 */

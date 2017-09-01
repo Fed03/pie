@@ -1,23 +1,32 @@
-<form {{action "createUser" on="submit"}}>
-  {{one-way-input data-test-username-input required=true value=changeset.name update=(action (mut changeset.name)) onblur=(action "validateProperty" "name")}}
-  {{#if changeset.error.name}}
-    <ul>
-      {{#with changeset.error.name.validation as |errors|}}
-        {{#each errors as |error|}}
-          <li data-test-input-error="username">{{error}}</li>
-        {{/each}}
-      {{/with}}
-    </ul>
-  {{/if}}
-  {{one-way-input data-test-initial-balance-input required=true value=displayBalance update=(action (mut changeset.initialBalance)) onblur=(action "validateProperty" "initialBalance")}}
-  {{#if changeset.error.initialBalance}}
-    <ul>
-      {{#with changeset.error.initialBalance.validation as |errors|}}
-        {{#each errors as |error|}}
-          <li data-test-input-error="initial-balance">{{error}}</li>
-        {{/each}}
-      {{/with}}
-    </ul>
-  {{/if}}
-  <button type="submit" data-test-create-user-btn disabled={{formHasErrors}}></button>
-</form>
+<div class="mui-col-xs-4 mui-col-xs-offset-4">
+  <h2>Create your Wallet!</h2>
+  <div class="mui-panel">
+    <form {{action "createUser" on="submit"}}>
+      <div class="mui-textfield">
+        {{one-way-input data-test-username-input placeholder="Your name" required=true value=changeset.name update=(action (mut changeset.name)) onblur=(action "validateProperty" "name")}}
+        {{#if changeset.error.name}}
+          <ul class="input-validation-errors">
+            {{#with changeset.error.name.validation as |errors|}}
+              {{#each errors as |error|}}
+                <li data-test-input-error="username">{{error}}</li>
+              {{/each}}
+            {{/with}}
+          </ul>
+        {{/if}}
+      </div>
+      <div class="mui-textfield">
+        {{one-way-input data-test-initial-balance-input placeholder="Your current balance" required=true value=displayBalance update=(action 'updateBalance') onblur=(action "validateProperty" "initialBalance")}}
+        {{#if changeset.error.initialBalance}}
+          <ul class="input-validation-errors">
+            {{#with changeset.error.initialBalance.validation as |errors|}}
+              {{#each errors as |error|}}
+                <li data-test-input-error="initial-balance">{{error}}</li>
+              {{/each}}
+            {{/with}}
+          </ul>
+        {{/if}}
+      </div>
+      <button class="mui-btn mui-btn--primary" type="submit" data-test-create-user-btn disabled={{formHasErrors}}>Create Wallet</button>
+    </form>
+  </div>
+</div>
