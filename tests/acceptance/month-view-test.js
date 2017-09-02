@@ -1,7 +1,6 @@
 import Ember from "ember";
 import moment from "moment";
 import { test } from "qunit";
-import testSelector from "ember-test-selectors";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 
@@ -31,7 +30,10 @@ test("visiting `/` redirects to the current month", async function(assert) {
   assert.equal(currentRouteName(), "months.view");
   assert.equal(currentURL(), `/months/${currentMonth.get("id")}`);
   assert.ok(
-    find(testSelector("month-name")).textContent.trim().toLowerCase().includes(getCurrentMonthName()),
+    find("[data-test-month-name]")
+      .textContent.trim()
+      .toLowerCase()
+      .includes(getCurrentMonthName()),
     "The page shows the current month name"
   );
 });
@@ -49,7 +51,10 @@ test("it creates current month if not present", async function(assert) {
   assert.equal(currentRouteName(), "months.view");
   assert.equal(currentURL(), `/months/${currentMonth.get("id")}`);
   assert.ok(
-    find(testSelector("month-name")).textContent.trim().toLowerCase().includes(getCurrentMonthName()),
+    find("[data-test-month-name]")
+      .textContent.trim()
+      .toLowerCase()
+      .includes(getCurrentMonthName()),
     "The page shows the current month name"
   );
 });
@@ -59,8 +64,15 @@ test("viewing a month without transaction will result in an empty page", async f
 
   await visit(`/months/${currentMonth.get("id")}`);
 
-  assert.ok(findWithAssert(testSelector("transactions-container")).text().trim().split(" ").join(" "), "No transactions. Add (+) some!");
-  assert.equal(findAll(testSelector("transaction-item")).length, 0);
+  assert.ok(
+    findWithAssert("[data-test-transactions-container]")
+      .text()
+      .trim()
+      .split(" ")
+      .join(" "),
+    "No transactions. Add (+) some!"
+  );
+  assert.equal(findAll("[data-test-transaction-item]").length, 0);
 });
 
 test("viewing a month will list its transactions", async function(assert) {
@@ -78,15 +90,17 @@ test("viewing a month will list its transactions", async function(assert) {
   await currentMonth.save();
 
   await visit(`/months/${currentMonth.get("id")}`);
-  assert.equal(findAll(testSelector("transaction-panel-for-day")).length, 2, "The month has 2 days with transactions");
+  assert.equal(findAll("[data-test-transaction-panel-for-day]").length, 2, "The month has 2 days with transactions");
+
   assert.equal(
-    find(testSelector("transaction-panel-for-day", todayDate)).querySelectorAll(testSelector("transaction-item")).length,
+    find(`[data-test-transaction-panel-for-day="${todayDate}"]`).querySelectorAll("[data-test-transaction-item]").length,
     2,
     "Today panel has 2 transactions"
   );
+
+  let yesterday = today.subtract(1, "days").date();
   assert.equal(
-    find(testSelector("transaction-panel-for-day", today.subtract(1, "days").date())).querySelectorAll(testSelector("transaction-item"))
-      .length,
+    find(`[data-test-transaction-panel-for-day="${yesterday}"]`).querySelectorAll("[data-test-transaction-item]").length,
     3,
     "Yesterday panel has 3 transactions"
   );
@@ -97,7 +111,7 @@ test("clicking on the add button redirects to transaction.create", async functio
   const currentMonth = await create("currentMonth");
 
   await visit(`/months/${currentMonth.get("id")}`);
-  await click(testSelector("new-transaction-btn"));
+  await click("[data-test-new-transaction-btn]");
 
   assert.equal(currentRouteName(), "transactions.create");
 });
@@ -117,14 +131,24 @@ test("it computes the total balance", async function(assert) {
 
   await visit(`/months/${currentMonth.get("id")}`);
   assert.equal(
-    findWithAssert(testSelector("opening-balance-value")).text().trim(),
+    findWithAssert("[data-test-opening-balance-value]")
+      .text()
+      .trim(),
     "€ 339.00",
     "The opening balance is correctly displayed"
   );
   assert.equal(
-    findWithAssert(testSelector("month-balance-value")).text().trim(),
+    findWithAssert("[data-test-month-balance-value]")
+      .text()
+      .trim(),
     "€ -25.00",
     "The month balance is the sum of transactions value"
   );
-  assert.equal(findWithAssert(testSelector("current-balance-value")).text().trim(), "€ 314.00", "The current balance");
+  assert.equal(
+    findWithAssert("[data-test-current-balance-value]")
+      .text()
+      .trim(),
+    "€ 314.00",
+    "The current balance"
+  );
 });

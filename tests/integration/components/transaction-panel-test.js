@@ -3,7 +3,6 @@ import Ember from "ember";
 import moment from "moment";
 import hbs from "htmlbars-inline-precompile";
 import { currency } from "accounting/settings";
-import testSelector from "ember-test-selectors";
 import { moduleForComponent, test } from "ember-qunit";
 import { make, manualSetup } from "ember-data-factory-guy";
 
@@ -46,7 +45,7 @@ test("it renders the date", function(assert) {
 
   assert.ok(
     stringContains(
-      find(testSelector("panel-date")).textContent,
+      find('[data-test-panel-date]').textContent,
       moment().format("D dddd MMMM YYYY")
     )
   );
@@ -62,7 +61,7 @@ test("it prints the sum of transactions", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.equal(
-    find(testSelector("panel-balance")).textContent.trim(),
+    find('[data-test-panel-balance]').textContent.trim(),
     "€ +2.50"
   );
 });
@@ -75,11 +74,11 @@ test("it sets a class according to the total balance", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.ok(
-    find(testSelector("panel-balance")).classList.contains("income-amount"),
+    find('[data-test-panel-balance]').classList.contains("income-amount"),
     'It has the ".income-amount" class'
   );
   assert.notOk(
-    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
+    find('[data-test-panel-balance]').classList.contains("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -87,11 +86,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -5.2);
   });
   assert.notOk(
-    find(testSelector("panel-balance")).classList.contains("income-amount"),
+    find('[data-test-panel-balance]').classList.contains("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.notOk(
-    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
+    find('[data-test-panel-balance]').classList.contains("outcome-amount"),
     'It has not the ".outcome-amount" class'
   );
 
@@ -99,11 +98,11 @@ test("it sets a class according to the total balance", function(assert) {
     transaction2.set("value", -8.2);
   });
   assert.notOk(
-    find(testSelector("panel-balance")).classList.contains("income-amount"),
+    find('[data-test-panel-balance]').classList.contains("income-amount"),
     'It has not the ".income-amount" class'
   );
   assert.ok(
-    find(testSelector("panel-balance")).classList.contains("outcome-amount"),
+    find('[data-test-panel-balance]').classList.contains("outcome-amount"),
     'It has the ".outcome-amount" class'
   );
 });
@@ -124,22 +123,22 @@ test("it renders the transactions", function(assert) {
   this.render(hbs`{{transaction-panel transactions=transactions date=date}}`);
 
   assert.equal(
-    findAll(testSelector("transaction-item")).length,
+    findAll('[data-test-transaction-item]').length,
     3,
     "It contains 3 transactions"
   );
 
-  const firstTransactionEl = this.$(testSelector("transaction-item")).first();
+  const firstTransactionEl = this.$('[data-test-transaction-item]').first();
   assert.ok(
     firstTransactionEl
-      .find(testSelector("category-badge"))
+      .find('[data-test-category-badge]')
       .hasClass("category--badge-income"),
     "It sets the class on the category badge"
   );
   assert.ok(
     stringContains(
       firstTransactionEl
-        .find(testSelector("transaction-description"))
+        .find('[data-test-transaction-description]')
         .text()
         .trim(),
       "Coffee Food"
@@ -147,14 +146,14 @@ test("it renders the transactions", function(assert) {
     "It shows the transaction description"
   );
   assert.equal(
-    firstTransactionEl.find(testSelector("transaction-amount")).text().trim(),
+    firstTransactionEl.find('[data-test-transaction-amount]').text().trim(),
     "€ +5.20",
     "it shows the transaction amount"
   );
 
   assert.ok(
     firstTransactionEl
-      .find(testSelector("transaction-amount"))
+      .find('[data-test-transaction-amount]')
       .hasClass("income-amount"),
     "It sets the `income` class for transaction"
   );
@@ -163,7 +162,7 @@ test("it renders the transactions", function(assert) {
   });
   assert.ok(
     firstTransactionEl
-      .find(testSelector("transaction-amount"))
+      .find('[data-test-transaction-amount]')
       .hasClass("outcome-amount"),
     "It sets the `outcome` class for transaction"
   );

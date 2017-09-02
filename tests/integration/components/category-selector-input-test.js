@@ -1,5 +1,4 @@
 import hbs from "htmlbars-inline-precompile";
-import testSelector from "ember-test-selectors";
 import { moduleForComponent, test } from "ember-qunit";
 import { manualSetup, make, makeList } from "ember-data-factory-guy";
 import { click, find, findWithAssert, findAll } from "ember-native-dom-helpers";
@@ -19,7 +18,7 @@ test("it renders element", function(assert) {
   this.render(hbs`{{category-selector-input}}`);
 
   assert.ok(
-    findWithAssert(testSelector("category-selector-input")).classList.contains(
+    findWithAssert('[data-test-category-selector-input]').classList.contains(
       "category-selector-input"
     ),
     "It has the `.category-selector-input` class"
@@ -40,7 +39,7 @@ test("it shows the selected category", function(assert) {
   );
 
   assert.equal(
-    findWithAssert(testSelector("selected-category-name")).textContent.trim(),
+    findWithAssert('[data-test-selected-category-name]').textContent.trim(),
     "Food",
     "It shows `Food`"
   );
@@ -58,10 +57,10 @@ test("it sends an action when category is selected", async function(assert) {
     hbs`{{category-selector-input selectedCategory=selectedCategory categories=categories onSelection=(action (mut selectedCategory))}}`
   );
 
-  await click(testSelector("category-list-item", "foo-bar"));
+  await click('[data-test-category-list-item="foo-bar"]');
 
   assert.equal(
-    find(testSelector("selected-category-name")).textContent.trim(),
+    find('[data-test-selected-category-name]').textContent.trim(),
     "bar",
     "It shows `bar`"
   );
@@ -72,16 +71,16 @@ test("it toggle the sidedrawer when clicked", async function(assert) {
   this.set("categories", makeList("category", 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
-  await click(testSelector("toggle-category-selector"));
+  await click('[data-test-toggle-category-selector]');
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-opened"
     )
   );
 
-  await click(testSelector("toggle-category-selector"));
+  await click('[data-test-toggle-category-selector]');
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-closed"
     )
   );
@@ -91,10 +90,10 @@ test("it add a class when is clicked", async function(assert) {
   this.set("categories", makeList("category", 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
-  await click(testSelector("toggle-category-selector"));
+  await click('[data-test-toggle-category-selector]');
 
   assert.ok(
-    find(testSelector("category-selector-input")).classList.contains(
+    find('[data-test-category-selector-input]').classList.contains(
       "category-selector-input-focused"
     ),
     "It has the `category-selector-input-focused` class"
@@ -109,7 +108,7 @@ test("it adds a class if has a selected category", function(assert) {
   );
 
   assert.notOk(
-    find(testSelector("category-selector-input")).classList.contains(
+    find('[data-test-category-selector-input]').classList.contains(
       "category-selector-input-full"
     )
   );
@@ -122,7 +121,7 @@ test("it adds a class if has a selected category", function(assert) {
     })
   );
   assert.ok(
-    find(testSelector("category-selector-input")).classList.contains(
+    find('[data-test-category-selector-input]').classList.contains(
       "category-selector-input-full"
     )
   );
@@ -137,17 +136,17 @@ test("it closes the drawer when a category is selected", async function(
   );
 
   assert.ok(
-    find(testSelector("sidedrawer")).classList.contains("sidedrawer-closed")
+    find('[data-test-sidedrawer]').classList.contains("sidedrawer-closed")
   );
 
-  await click(testSelector("toggle-category-selector"));
+  await click('[data-test-toggle-category-selector]');
   assert.ok(
-    find(testSelector("sidedrawer")).classList.contains("sidedrawer-opened")
+    find('[data-test-sidedrawer]').classList.contains("sidedrawer-opened")
   );
 
-  let categoryListItemElement = findAll(testSelector("category-list-item"))[0];
+  let categoryListItemElement = findAll('[data-test-category-list-item]')[0];
   await click(categoryListItemElement);
   assert.ok(
-    find(testSelector("sidedrawer")).classList.contains("sidedrawer-closed")
+    find('[data-test-sidedrawer]').classList.contains("sidedrawer-closed")
   );
 });

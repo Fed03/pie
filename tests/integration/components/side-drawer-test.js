@@ -1,5 +1,4 @@
 import hbs from "htmlbars-inline-precompile";
-import testSelector from "ember-test-selectors";
 import { moduleForComponent, test } from "ember-qunit";
 import { /*find,*/ findWithAssert } from "ember-native-dom-helpers";
 
@@ -13,7 +12,7 @@ test("it renders as aside with `sidedrawer` class", function(assert) {
       template block text
     {{/side-drawer}}
   `);
-  let el = findWithAssert(testSelector("sidedrawer"));
+  let el = findWithAssert('[data-test-sidedrawer]');
   assert.equal(el.textContent.trim(), "template block text");
   assert.equal(el.tagName.toLowerCase(), "aside");
   assert.ok(el.classList.contains("sidedrawer"));
@@ -30,7 +29,7 @@ test("it sets position and class depending on position property", function(
   `);
 
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-left-positioned"
     ),
     "It has the `sidedrawer-left-positioned` class"
@@ -38,7 +37,7 @@ test("it sets position and class depending on position property", function(
 
   this.set("position", "right");
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-right-positioned"
     ),
     "It has the `sidedrawer-right-positioned` class"
@@ -54,13 +53,13 @@ test("it sets class depending on isOpen property", function(assert) {
   `);
 
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-opened"
     ),
     "It has the `sidedrawer-opened` class"
   );
   assert.notOk(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-closed"
     ),
     "It has not the `sidedrawer-closed` class"
@@ -68,13 +67,13 @@ test("it sets class depending on isOpen property", function(assert) {
 
   this.set("isOpen", false);
   assert.ok(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-closed"
     ),
     "It has the `sidedrawer-closed` class"
   );
   assert.notOk(
-    findWithAssert(testSelector("sidedrawer")).classList.contains(
+    findWithAssert('[data-test-sidedrawer]').classList.contains(
       "sidedrawer-opened"
     ),
     "It has not the `sidedrawer-opened` class"

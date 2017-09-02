@@ -1,5 +1,4 @@
 import hbs from "htmlbars-inline-precompile";
-import testSelector from "ember-test-selectors";
 import { moduleForComponent, test } from "ember-qunit";
 import { click, findAll, findWithAssert } from "ember-native-dom-helpers";
 import { manualSetup, make, makeList } from "ember-data-factory-guy";
@@ -19,7 +18,7 @@ test("it renders", function(assert) {
   this.render(hbs`{{category-selector}}`);
 
   assert.ok(
-    findWithAssert(testSelector("category-selector")).classList.contains(
+    findWithAssert('[data-test-category-selector]').classList.contains(
       "category--selector"
     ),
     "It has the `.category--selector` class"
@@ -32,7 +31,7 @@ test("it renders the categories list", function(assert) {
   this.render(hbs`{{category-selector categories=categories}}`);
 
   assert.equal(
-    findAll(testSelector("category-list-item")).length,
+    findAll('[data-test-category-list-item]').length,
     5,
     "It shows 5 category list items"
   );
@@ -55,7 +54,7 @@ test("it sends an action when a category is clicked", async function(assert) {
     hbs`{{category-selector categories=categories onSelection=(action 'categorySelected')}}`
   );
 
-  await click(testSelector("category-list-item", "2-bar"));
+  await click('[data-test-category-list-item="2-bar"]');
 });
 
 test("it divides the categories based on type", function(assert) {
@@ -68,15 +67,15 @@ test("it divides the categories based on type", function(assert) {
 
   assert.equal(
     findWithAssert(
-      testSelector("category-list-by-type", "income")
-    ).querySelectorAll(testSelector("category-list-item")).length,
+      '[data-test-category-list-by-type="income"]'
+    ).querySelectorAll('[data-test-category-list-item]').length,
     2,
     "The income categories are grouped together"
   );
   assert.equal(
     findWithAssert(
-      testSelector("category-list-by-type", "outcome")
-    ).querySelectorAll(testSelector("category-list-item")).length,
+      '[data-test-category-list-by-type="outcome"]'
+    ).querySelectorAll('[data-test-category-list-item]').length,
     4,
     "The outcome categories are grouped together"
   );
@@ -92,12 +91,12 @@ test("it lists the categories in alphabetical order", function(assert) {
   this.render(hbs`{{category-selector categories=categories}}`);
 
   let incomeList = findWithAssert(
-    testSelector("category-list-by-type", "income")
-  ).querySelectorAll(testSelector("category-name"));
+    '[data-test-category-list-by-type="income"]'
+  ).querySelectorAll('[data-test-category-name]');
 
   let outcomeList = findWithAssert(
-    testSelector("category-list-by-type", "outcome")
-  ).querySelectorAll(testSelector("category-name"));
+    '[data-test-category-list-by-type="outcome"]'
+  ).querySelectorAll('[data-test-category-name]');
 
   assert.equal(incomeList[0].textContent, "bar");
   assert.equal(incomeList[1].textContent, "foo");
