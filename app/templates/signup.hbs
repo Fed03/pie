@@ -15,7 +15,7 @@
         {{/if}}
       </div>
       <div class="mui-textfield">
-        {{one-way-input data-test-initial-balance-input placeholder="Your current balance" required=true value=displayBalance update=(action 'updateBalance') onblur=(action "validateProperty" "initialBalance")}}
+        {{one-way-input data-test-initial-balance-input placeholder="Your current balance" required=true value=changeset.initialBalance update=(action (mut changeset.initialBalance)) onblur=(action "validateProperty" "initialBalance")}}
         {{#if changeset.error.initialBalance}}
           <ul class="input-validation-errors">
             {{#with changeset.error.initialBalance.validation as |errors|}}

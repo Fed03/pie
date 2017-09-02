@@ -20,21 +20,20 @@ export default Ember.Controller.extend({
   // }),
   displayBalance: "",
   actions: {
-    updateBalance(inputBalance) {
-      // const lastChar = inputBalance.slice(-1);
-      // if (lastChar === '.') {
-      //
-      // }
-
-      let number = Number(inputBalance);
-      if (number === 0) {
-        this.set("displayBalance", "");
-      } else {
-        this.set("displayBalance", number);
-      }
-
-      this.changeset.set("initialBalance", number);
-    },
+    // updateBalance(inputBalance) {
+    //   let number = Number(inputBalance);
+    //   if (number === 0) {
+    //     this.set("displayBalance", "");
+    //   } else {
+    //     let display = number.toLocaleString("en-US");
+    //     if (inputBalance.slice(-1) === ".") {
+    //       display += ".";
+    //     }
+    //     this.set("displayBalance", display);
+    //   }
+    //
+    //   this.changeset.set("initialBalance", number);
+    // },
     async createUser() {
       if (this.changeset.isValid) {
         await this.changeset.save();

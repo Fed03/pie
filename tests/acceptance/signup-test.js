@@ -38,18 +38,18 @@ test("it create a new user", async function(assert) {
   assert.equal(user.get("currentBalance"), 12368.53, "The value of currentBalance is equal to initialBalance");
 });
 
-test("the balance is formatted", async function(assert) {
-  await visit("/signup");
-
-  fillIn(testSelector("initial-balance-input"), 12368.53);
-  assert.equal(find(testSelector("initial-balance-input")).value, "12,368.53");
-
-  fillIn(testSelector("initial-balance-input"), 0);
-  assert.equal(find(testSelector("initial-balance-input")).value, "");
-
-  fillIn(testSelector("initial-balance-input"), "12.");
-  assert.equal(find(testSelector("initial-balance-input")).value, "12.");
-});
+// test("the balance is formatted", async function(assert) {
+//   await visit("/signup");
+//
+//   fillIn(testSelector("initial-balance-input"), 12368.53);
+//   assert.equal(find(testSelector("initial-balance-input")).value, "12,368.53");
+//
+//   fillIn(testSelector("initial-balance-input"), 0);
+//   assert.equal(find(testSelector("initial-balance-input")).value, "");
+//
+//   fillIn(testSelector("initial-balance-input"), "12.");
+//   assert.equal(find(testSelector("initial-balance-input")).value, "12.");
+// });
 
 test("after user creation, redirects to /", async function(assert) {
   await visit("/signup");
