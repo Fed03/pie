@@ -77,17 +77,35 @@ test("viewing a month without transaction will result in an empty page", async f
 
 test("viewing a month will list its transactions", async function(assert) {
   assert.expect(3);
-  const currentMonth = await create("currentMonth");
   const today = moment().utc();
   const todayDate = today.date();
 
-  await createList("transaction", 2, { month: currentMonth });
-  await create("transaction", "yesterday", { month: currentMonth });
-  await create("transaction", "yesterday", { month: currentMonth });
-  await create("transaction", "yesterday", { month: currentMonth });
+  // const currentMonth = await create("currentMonth");
+  // await createList("transaction", 2, { month: currentMonth });
+  // await create("transaction", "yesterday", { month: currentMonth });
+  // await create("transaction", "yesterday", { month: currentMonth });
+  // await create("transaction", "yesterday", { month: currentMonth });
+  //
+  // currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
+  // await currentMonth.save();
 
-  currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
-  await currentMonth.save();
+  let transactions = [
+    await create("transaction", "yesterday"),
+    await create("transaction", "yesterday"),
+    await create("transaction", "yesterday"),
+    ...(await createList("transaction", 2))
+  ];
+
+  const currentMonth = await create("currentMonth", {
+    transactions
+  });
+
+  transactions.forEach(async transaction => {
+    await run(() => {
+      transaction.set("month", currentMonth);
+      return transaction.save();
+    });
+  });
 
   await visit(`/months/${currentMonth.get("id")}`);
   assert.equal(findAll("[data-test-transaction-panel-for-day]").length, 2, "The month has 2 days with transactions");
@@ -117,16 +135,34 @@ test("clicking on the add button redirects to transaction.create", async functio
 });
 
 test("it computes the total balance", async function(assert) {
-  const currentMonth = await create("currentMonth");
+  // const currentMonth = await create("currentMonth");
+  //
+  // await create("transaction", { value: 5, month: currentMonth });
+  // await create("transaction", { value: -60, month: currentMonth });
+  // await createList("transaction", 3, { value: 10, month: currentMonth });
+  //
+  // await run(() => {
+  //   currentMonth.set("openingBalance", 339);
+  //   currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
+  //   return currentMonth.save();
+  // });
 
-  await create("transaction", { value: 5, month: currentMonth });
-  await create("transaction", { value: -60, month: currentMonth });
-  await createList("transaction", 3, { value: 10, month: currentMonth });
+  let transactions = [
+    await create("transaction", { value: 5 }),
+    await create("transaction", { value: -60 }),
+    ...(await createList("transaction", 3, { value: 10 }))
+  ];
 
-  await run(() => {
-    currentMonth.set("openingBalance", 339);
-    currentMonth.get("transactions").pushObjects(this.store.peekAll("transaction"));
-    return currentMonth.save();
+  const currentMonth = await create("currentMonth", {
+    openingBalance: 339,
+    transactions
+  });
+
+  transactions.forEach(async transaction => {
+    await run(() => {
+      transaction.set("month", currentMonth);
+      return transaction.save();
+    });
   });
 
   await visit(`/months/${currentMonth.get("id")}`);
