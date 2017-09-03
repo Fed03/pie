@@ -1,20 +1,21 @@
-import Ember from 'ember';
-import PouchDB from 'pouchdb';
-import { module } from 'qunit';
-import startApp from '../helpers/start-app';
-import config from '../../config/environment';
-import destroyApp from '../helpers/destroy-app';
+import Ember from "ember";
+import { module } from "qunit";
+import startApp from "../helpers/start-app";
+import destroyPouchDb from "../helpers/destroy-db";
+import destroyApp from "../helpers/destroy-app";
 
 const { RSVP: { Promise } } = Ember;
 
 export default function(name, options = {}) {
   module(name, {
     beforeEach() {
-      let initPromise = Promise.resolve().then(() => {
-        return (new PouchDB(config.emberPouch.localDb)).destroy();
-      }).then(() => {
-        this.application = startApp();
-      });
+      let initPromise = Promise.resolve()
+        .then(() => {
+          return destroyPouchDb();
+        })
+        .then(() => {
+          this.application = startApp();
+        });
 
       if (options.beforeEach) {
         initPromise.then(() => options.beforeEach.apply(this, arguments));
