@@ -22,7 +22,7 @@ before_install:
   - yarn global add bower
 
 install:
-  - yarn install --no-lockfile
+  - yarn install --non-interactive
   - bower install
 
 script:

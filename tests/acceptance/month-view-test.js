@@ -20,10 +20,10 @@ moduleForAcceptance("Acceptance | month view", {
   }
 });
 
-//TODO: balance in the following tests
-
 test("visiting `/` redirects to the current month", async function(assert) {
-  const currentMonth = await create("currentMonth");
+  const currentMonth = await create("currentMonth", {
+    openingBalance: 342.58
+  });
 
   await visit("/");
 
@@ -36,9 +36,37 @@ test("visiting `/` redirects to the current month", async function(assert) {
       .includes(getCurrentMonthName()),
     "The page shows the current month name"
   );
+
+  assert.equal(
+    findWithAssert("[data-test-opening-balance-value]")
+      .text()
+      .trim(),
+    "€ 342.58",
+    "The opening balance is correctly displayed"
+  );
+  assert.equal(
+    findWithAssert("[data-test-month-balance-value]")
+      .text()
+      .trim(),
+    "€ 0.00",
+    "The month balance is zero"
+  );
+  assert.equal(
+    findWithAssert("[data-test-current-balance-value]")
+      .text()
+      .trim(),
+    "€ 342.58",
+    "The current balance"
+  );
 });
 
 test("it creates current month if not present", async function(assert) {
+  let user = (await this.store.findAll("user")).get("firstObject");
+  await Ember.run(() => {
+    user.set("currentBalance", 1233.98);
+    return user.save();
+  });
+
   let months = await this.store.findAll("month");
   assert.equal(months.get("length"), 0, "There are no months");
 
@@ -56,6 +84,28 @@ test("it creates current month if not present", async function(assert) {
       .toLowerCase()
       .includes(getCurrentMonthName()),
     "The page shows the current month name"
+  );
+
+  assert.equal(
+    findWithAssert("[data-test-opening-balance-value]")
+      .text()
+      .trim(),
+    "€ 1,233.98",
+    "The opening balance is correctly displayed"
+  );
+  assert.equal(
+    findWithAssert("[data-test-month-balance-value]")
+      .text()
+      .trim(),
+    "€ 0.00",
+    "The month balance is zero"
+  );
+  assert.equal(
+    findWithAssert("[data-test-current-balance-value]")
+      .text()
+      .trim(),
+    "€ 1,233.98",
+    "The current balance"
   );
 });
 

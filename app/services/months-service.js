@@ -26,8 +26,14 @@ export default Ember.Service.extend({
     });
 
     if (!monthByDate) {
+      const user = (await this.get("store").findAll("user")).get("firstObject");
       monthByDate = await run(() => {
-        return this.get("store").createRecord("month", { date }).save();
+        return this.get("store")
+          .createRecord("month", {
+            date,
+            openingBalance: user.get("currentBalance")
+          })
+          .save();
       });
     }
 

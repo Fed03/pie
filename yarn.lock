@@ -2685,21 +2685,12 @@ ember-pouch@Fed03/ember-pouch#test-waiter:
     pouchdb "^6.3.4"
     relational-pouch "^1.4.5"
 
-ember-pouch@^4.2.5:
-  version "4.2.8"
-  resolved "https://registry.yarnpkg.com/ember-pouch/-/ember-pouch-4.2.8.tgz#c0e16c77ac2b3c46f2a102c54f83af8502504fec"
-  dependencies:
-    broccoli-stew "^1.3.1"
-    ember-cli-babel "^6.3.0"
-    pouchdb "^6.3.4"
-    relational-pouch "^1.4.5"
-
 ember-power-calendar@Fed03/ember-power-calendar#test-helpers:
   version "0.5.1"
   resolved "https://codeload.github.com/Fed03/ember-power-calendar/tar.gz/6a321ed942772d4606c27318b891ec5e14819070"
   dependencies:
     ember-assign-helper "0.1.2"
-    ember-cli-babel "^6.1.0"
+    ember-cli-babel "^6.6.0"
     ember-cli-htmlbars "^1.1.1"
     ember-cli-moment-shim "^3.1.0"
     ember-concurrency "^0.8.1"
