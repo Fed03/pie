@@ -39,6 +39,7 @@
     "ember-data": "~2.14.9",
     "ember-data-factory-guy": "^2.13.1",
     "ember-export-application-global": "^2.0.0",
+    "ember-font-awesome": "^4.0.0-alpha.0",
     "ember-keyboard": "^2.1.10",
     "ember-load-initializers": "^1.0.0",
     "ember-macro-helpers": "^0.15.0",
