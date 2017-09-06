@@ -1,4 +1,4 @@
-<div class="mui-col-xs-12">
+<div class="mui-col-xs-6 mui-col-xs-offset-3">
   <div class="month-summary mui-panel">
     <div class="mui--divider-bottom month-summary-header" data-test-month-name>
       {{model.name}} overview
@@ -23,8 +23,6 @@
       </div>
     </div>
   </div>
-</div>
-<div class="mui-col-xs-12">
   <div class="mui-row">
     <div class="mui-col-xs-12 transactions-container" data-test-transactions-container>
       {{#each transactionsByDate as |transactionsSet|}}
@@ -39,5 +37,5 @@
   </div>
 </div>
 {{#link-to 'transactions.create' data-test-new-transaction-btn class="mui-btn mui-btn--fab mui-btn--primary create-transaction-link"}}
-  <i class="fa fa-plus" aria-hidden="true"></i>
+  {{fa-icon "plus"}}
 {{/link-to}}
