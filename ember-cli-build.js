@@ -5,10 +5,13 @@ const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
+    sassOptions: {
+      includePaths: ["node_modules/muicss/lib/sass"]
+    },
     nodeAssets: {
       muicss: {
         srcDir: "dist",
-        import: ["css/mui.min.css", "js/mui.min.js"]
+        import: ["js/mui.min.js"]
       },
       "roboto-fontface": {
         import: ["css/roboto/roboto-fontface.css"],
