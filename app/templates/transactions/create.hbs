@@ -1,4 +1,4 @@
-<div class="mui-col-xs-6 mui-col-xs-offset-3">
+<div class="mui-col-xs-6 mui-col-xs-offset-3" id="create-transaction-container" data-test-transaction-main-container>
   <h2>Create a Transaction</h2>
   <div class="mui-panel">
     <form {{action 'createTransaction' on='submit'}}>
@@ -16,6 +16,7 @@
       </div>
       <div class="mui-textfield mui-textfield--float-label">
         {{category-selector-input data-test-transaction-category
+          wormholeElementID="create-transaction-container"
           categories=model selectedCategory=transactionCategory
           onSelection=(action (mut transactionCategory))
         }}
