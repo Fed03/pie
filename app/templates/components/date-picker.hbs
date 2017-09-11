@@ -1,6 +1,9 @@
 {{one-way-input displayValue data-test-date-picker-input onclick=(action "toggleModal")}}
+{{#if label}}
+  <label>{{label}}</label>
+{{/if}}
 {{#if modalOpened}}
-  {{#modal-dialog onClose="toggleModal" }}
+  {{#modal-dialog onClose="toggleModal"}}
     {{power-calendar
       onSelect=(action "dateSelected" value="date")
       selected=internalValue

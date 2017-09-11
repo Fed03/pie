@@ -6,6 +6,9 @@
     </div>
   {{/if}}
 </span>
+{{#if label}}
+  <label>{{label}}</label>
+{{/if}}
 {{#ember-wormhole to=wormholeElementID renderInPlace=isTesting}}
   {{#side-drawer isOpen=drawerOpened position='right' parentSelector='#create-transaction-main'}}
     {{category-selector categories=categories onSelection=(action 'categorySelected')}}

@@ -1,6 +1,9 @@
 <span data-test-value-display {{action "toggleModal"}}>
   {{displayValue}}
 </span>
+{{#if label}}
+  <label>{{label}}</label>
+{{/if}}
 {{#if modalOpened}}
   {{#modal-dialog onClose="toggleModal" }}
     {{calc-input value=internalValue onEquals=(action 'calc')}}
