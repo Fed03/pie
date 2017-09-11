@@ -2,27 +2,30 @@
   <h2>Create a Transaction</h2>
   <div class="mui-panel">
     <form {{action 'createTransaction' on='submit'}}>
-      <div class="mui-textfield mui-textfield--float-label">
-        {{transaction-value-input data-test-transaction-value
-          value=transactionValue
-          class="transaction-value-input"
-          update=(action (mut transactionValue))
-          transactionType=transactionType}}
-        <label for="transaction-value">Value</label>
-      </div>
+      {{transaction-value-input data-test-transaction-value
+        value=transactionValue
+        class="transaction-value-input mui-textfield mui-textfield--float-label"
+        label="Value"
+        update=(action (mut transactionValue))
+        transactionType=transactionType
+      }}
       <div class="mui-textfield mui-textfield--float-label">
         {{one-way-input data-test-transaction-description value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
         <label for="transaction-description">Description</label>
       </div>
-      <div class="mui-textfield mui-textfield--float-label">
-        {{category-selector-input data-test-transaction-category
-          wormholeElementID="create-transaction-container"
-          categories=model selectedCategory=transactionCategory
-          onSelection=(action (mut transactionCategory))
-        }}
-        <label for="transaction-category">Category</label>
-      </div>
-      {{date-picker data-test-transaction-date value=transactionDate}}
+      {{category-selector-input data-test-transaction-category
+        class="mui-textfield mui-textfield--float-label"
+        label="Category"
+        wormholeElementID="create-transaction-container"
+        categories=model
+        selectedCategory=transactionCategory
+        onSelection=(action (mut transactionCategory))
+      }}
+      {{date-picker data-test-transaction-date
+        class="mui-textfield mui-textfield--float-label"
+        value=transactionDate
+        label="Date"
+      }}
       <button type="submit" class="mui-btn mui-btn--primary" data-test-submit-transaction>Create</button>
     </form>
   </div>
