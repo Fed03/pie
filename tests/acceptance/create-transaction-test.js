@@ -17,7 +17,7 @@ test("it renders the right template", async function(assert) {
   assert.expect(0);
   await visit("/transactions/create");
 
-  findWithAssert('[data-test-transaction-main-container]');
+  findWithAssert("[data-test-transaction-main-container]");
 });
 
 test("the selected category is the first in the outcome ordered set", async function(assert) {
@@ -27,7 +27,7 @@ test("the selected category is the first in the outcome ordered set", async func
 
   await visit("/transactions/create");
 
-  assert.equal(findWithAssert('[data-test-selected-category-name]').textContent, "bar");
+  assert.equal(findWithAssert("[data-test-selected-category-name]").textContent, "bar");
 });
 
 test("the fields are prefilled with default values", async function(assert) {
@@ -35,12 +35,14 @@ test("the fields are prefilled with default values", async function(assert) {
   await visit("/transactions/create");
 
   assert.ok(
-    findWithAssert('[data-test-transaction-value]').textContent.trim().includes("0.00"),
+    findWithAssert("[data-test-transaction-value]")
+      .textContent.trim()
+      .includes("0.00"),
     "Transaction value field is prefilled with 0"
   );
-  assert.notOk(findWithAssert('[data-test-transaction-description]').value, "Transaction desc field is empty");
+  assert.notOk(findWithAssert("[data-test-transaction-description]").value, "Transaction desc field is empty");
   assert.equal(
-    findWithAssert(`${'[data-test-transaction-date]'} input`).value,
+    findWithAssert(`${"[data-test-transaction-date]"} input`).value,
     today,
     "Transaction date field is prefilled with today date"
   );
@@ -53,20 +55,17 @@ test("it change the value field class according to the category type", async fun
   await visit("/transactions/create");
   await selectCategory(outcomeCat);
 
-  assert.ok(
-    find('[data-test-transaction-value]').classList.contains("outcome-amount"),
-    "Transaction value field has outcome-amount class"
-  );
+  assert.ok(find("[data-test-transaction-value]").classList.contains("outcome-amount"), "Transaction value field has outcome-amount class");
   assert.notOk(
-    find('[data-test-transaction-value]').classList.contains("income-amount"),
+    find("[data-test-transaction-value]").classList.contains("income-amount"),
     "Transaction value field has not income-amount class"
   );
 
   await selectCategory(incomeCat);
 
-  assert.ok(find('[data-test-transaction-value]').classList.contains("income-amount"), "Transaction value field has income-amount class");
+  assert.ok(find("[data-test-transaction-value]").classList.contains("income-amount"), "Transaction value field has income-amount class");
   assert.notOk(
-    find('[data-test-transaction-value]').classList.contains("outcome-amount"),
+    find("[data-test-transaction-value]").classList.contains("outcome-amount"),
     "Transaction value field has not outcome-amount class"
   );
 });
@@ -79,13 +78,13 @@ test("create transaction", async function(assert) {
   let selectCat = await create("category", { name: "foo", type: "outcome" });
   await visit("/transactions/create");
 
-  await click('[data-test-value-display]');
+  await click("[data-test-value-display]");
   await fillCalcValue("25");
   await click('[data-test-calc-key="equals"]');
-  await fillIn('[data-test-transaction-description]', "An awesome book");
+  await fillIn("[data-test-transaction-description]", "An awesome book");
   await selectCategory(selectCat);
 
-  await click('[data-test-submit-transaction]');
+  await click("[data-test-submit-transaction]");
 
   assert.equal(currentRouteName(), "months.view");
 
@@ -107,21 +106,21 @@ test("Sign is added to the value field", async function(assert) {
   let cat = await create("category", { name: "bar", type: "income", id: 2 });
   await visit("/transactions/create");
 
-  assert.equal(find('[data-test-transaction-value]').textContent.trim(), "-0.00", "The value is set negative");
+  assert.equal(find("[data-test-transaction-value] > span").textContent.trim(), "-0.00", "The value is set negative");
 
   await selectCategory(cat);
-  assert.equal(find('[data-test-transaction-value]').textContent.trim(), "+0.00", "The value is set positive");
+  assert.equal(find("[data-test-transaction-value] > span").textContent.trim(), "+0.00", "The value is set positive");
 
-  await click('[data-test-value-display]');
+  await click("[data-test-value-display]");
   await fillCalcValue("12345");
   await click('[data-test-calc-key="equals"]');
-  assert.equal(find('[data-test-transaction-value]').textContent.trim(), "+12,345.00", "The value is formatted");
+  assert.equal(find("[data-test-transaction-value] > span").textContent.trim(), "+12,345.00", "The value is formatted");
 });
 
 // TODO: this must handles only app specific urls and respects ids
 skip("it has a back link", async function(assert) {
   await visit("/transactions/create");
-  await click('[data-test-go-back]');
+  await click("[data-test-go-back]");
 
   assert.equal(currentRouteName(), "months.view", "It has redirected to months.view");
 });
@@ -131,26 +130,26 @@ test("it resets value on route exit", async function(assert) {
   let selectCat = await create("category", { name: "bar", type: "income", id: 3 });
   await visit("/transactions/create");
 
-  await click('[data-test-value-display]');
+  await click("[data-test-value-display]");
   await fillCalcValue("12345");
   await click('[data-test-calc-key="equals"]');
 
-  await fillIn('[data-test-transaction-description]', "An awesome book");
+  await fillIn("[data-test-transaction-description]", "An awesome book");
 
-  await click('[data-test-date-picker-input]');
+  await click("[data-test-date-picker-input]");
   await calendarSelect(".ember-power-calendar", new Date(2017, 6, 2));
 
   await selectCategory(selectCat);
 
-  assert.equal(find('[data-test-value-display]').textContent.trim(), "+12,345.00");
-  assert.equal(find(`${'[data-test-transaction-date]'} input`).value, new Date(2017, 6, 2).toLocaleDateString("en-US"));
-  assert.equal(find('[data-test-selected-category-name]').textContent.trim(), "bar");
+  assert.equal(find("[data-test-value-display]").textContent.trim(), "+12,345.00");
+  assert.equal(find(`${"[data-test-transaction-date]"} input`).value, new Date(2017, 6, 2).toLocaleDateString("en-US"));
+  assert.equal(find("[data-test-selected-category-name]").textContent.trim(), "bar");
 
   await visit("/");
   await visit("/transactions/create");
 
-  assert.equal(find('[data-test-value-display]').textContent.trim(), "-0.00", 'Value resetted to "0"');
-  assert.equal(find('[data-test-transaction-description]').value, "", "Description resetted to empty string");
-  assert.equal(find(`${'[data-test-transaction-date]'} input`).value, new Date().toLocaleDateString("en-US"), "Date resetted to today");
-  assert.equal(find('[data-test-selected-category-name]').textContent.trim(), defaultCat.get("name"), "Category resetted to default one");
+  assert.equal(find("[data-test-value-display]").textContent.trim(), "-0.00", 'Value resetted to "0"');
+  assert.equal(find("[data-test-transaction-description]").value, "", "Description resetted to empty string");
+  assert.equal(find(`${"[data-test-transaction-date]"} input`).value, new Date().toLocaleDateString("en-US"), "Date resetted to today");
+  assert.equal(find("[data-test-selected-category-name]").textContent.trim(), defaultCat.get("name"), "Category resetted to default one");
 });

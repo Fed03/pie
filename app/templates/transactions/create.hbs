@@ -4,7 +4,7 @@
     <form {{action 'createTransaction' on='submit'}}>
       {{transaction-value-input data-test-transaction-value
         value=transactionValue
-        class="transaction-value-input mui-textfield mui-textfield--float-label"
+        class="transaction-value-input"
         label="Value"
         update=(action (mut transactionValue))
         transactionType=transactionType
@@ -14,7 +14,6 @@
         <label for="transaction-description">Description</label>
       </div>
       {{category-selector-input data-test-transaction-category
-        class="mui-textfield mui-textfield--float-label"
         label="Category"
         wormholeElementID="create-transaction-container"
         categories=model
