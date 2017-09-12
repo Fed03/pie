@@ -3,7 +3,7 @@
   <label>{{label}}</label>
 {{/if}}
 {{#if modalOpened}}
-  {{#modal-dialog onClose="toggleModal"}}
+  {{#modal-dialog onClose="toggleModal" translucentOverlay=true}}
     {{power-calendar
       onSelect=(action "dateSelected" value="date")
       selected=internalValue
