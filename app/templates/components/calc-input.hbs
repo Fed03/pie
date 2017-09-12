@@ -1,28 +1,30 @@
 {{calc-display value=displayValue}}
-<div class="digits">
-  <button data-test-calc-key="0" {{action 'inputDigit' 0}}>0</button>
-  <button data-test-calc-key="1" {{action 'inputDigit' 1}}>1</button>
-  <button data-test-calc-key="2" {{action 'inputDigit' 2}}>2</button>
-  <button data-test-calc-key="3" {{action 'inputDigit' 3}}>3</button>
-  <button data-test-calc-key="4" {{action 'inputDigit' 4}}>4</button>
-  <button data-test-calc-key="5" {{action 'inputDigit' 5}}>5</button>
-  <button data-test-calc-key="6" {{action 'inputDigit' 6}}>6</button>
-  <button data-test-calc-key="7" {{action 'inputDigit' 7}}>7</button>
-  <button data-test-calc-key="8" {{action 'inputDigit' 8}}>8</button>
-  <button data-test-calc-key="9" {{action 'inputDigit' 9}}>9</button>
-  <button data-test-calc-key="dot" {{action 'inputDot'}}>●</button>
-</div>
-
-<div class="operations">
-  <button data-test-calc-key="sum" {{action 'operation' "sum"}}>+</button>
-  <button data-test-calc-key="divide" {{action 'operation' "divide"}}>÷</button>
-  <button data-test-calc-key="multiply" {{action 'operation' "multiply"}}>×</button>
-  <button data-test-calc-key="subtract" {{action 'operation' "subtract"}}>-</button>
-  <button data-test-calc-key="equals" {{action "equals"}}>=</button>
-</div>
-
-<div class="actions">
-  <button data-test-calc-key="clear" {{action 'clear'}}>{{if (eq displayValue "0") "AC" "C"}}</button>
-  <button data-test-calc-key="toggle-sign" {{action 'toggleSign'}}>±</button>
-  <button data-test-calc-key="deleteDigit" {{action 'deleteLastDigit'}}>⌫</button>
+<div class="buttons">
+  <div>
+    <div class="actions">
+      <button data-test-calc-key="clear" {{action 'clear'}}>{{if (eq displayValue "0") "AC" "C"}}</button>
+      <button data-test-calc-key="toggle-sign" {{action 'toggleSign'}}>±</button>
+      <button data-test-calc-key="deleteDigit" {{action 'deleteLastDigit'}}>⌫</button>
+    </div>
+    <div class="digits">
+      <button data-test-calc-key="dot" {{action 'inputDot'}}>●</button>
+      <button class="zero-digit" data-test-calc-key="0" {{action 'inputDigit' 0}}>0</button>
+      <button data-test-calc-key="1" {{action 'inputDigit' 1}}>1</button>
+      <button data-test-calc-key="2" {{action 'inputDigit' 2}}>2</button>
+      <button data-test-calc-key="3" {{action 'inputDigit' 3}}>3</button>
+      <button data-test-calc-key="4" {{action 'inputDigit' 4}}>4</button>
+      <button data-test-calc-key="5" {{action 'inputDigit' 5}}>5</button>
+      <button data-test-calc-key="6" {{action 'inputDigit' 6}}>6</button>
+      <button data-test-calc-key="7" {{action 'inputDigit' 7}}>7</button>
+      <button data-test-calc-key="8" {{action 'inputDigit' 8}}>8</button>
+      <button data-test-calc-key="9" {{action 'inputDigit' 9}}>9</button>
+    </div>
+  </div>
+  <div class="operations">
+    <button data-test-calc-key="sum" {{action 'operation' "sum"}}>+</button>
+    <button data-test-calc-key="divide" {{action 'operation' "divide"}}>÷</button>
+    <button data-test-calc-key="multiply" {{action 'operation' "multiply"}}>×</button>
+    <button data-test-calc-key="subtract" {{action 'operation' "subtract"}}>-</button>
+    <button data-test-calc-key="equals" {{action "equals"}}>=</button>
+  </div>
 </div>
