@@ -1,5 +1,4 @@
 import Ember from "ember";
-import layout from "../templates/components/calc-input";
 import { EKMixin, keyDown, getCode } from "ember-keyboard";
 
 // TODO: must be refactored entirely
@@ -31,7 +30,6 @@ const CalcOperations = {
 };
 
 export default Ember.Component.extend(EKMixin, {
-  layout,
   "data-test-calculator": true,
   classNames: ["calculator"],
 
@@ -89,11 +87,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   performOperation(operator) {
-    const { internalValue, lastOperator, displayValue } = this.getProperties(
-      "internalValue",
-      "lastOperator",
-      "displayValue"
-    );
+    const { internalValue, lastOperator, displayValue } = this.getProperties("internalValue", "lastOperator", "displayValue");
     let inputValue = parseFloat(displayValue);
     if (internalValue === 0) {
       this.set("internalValue", inputValue);

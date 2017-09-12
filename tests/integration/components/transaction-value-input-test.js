@@ -1,7 +1,7 @@
 import hbs from "htmlbars-inline-precompile";
 import { moduleForComponent, test } from "ember-qunit";
 import { click, find, findWithAssert } from "ember-native-dom-helpers";
-import { fillCalcValue } from "calc-component/test-support/fill-calc-value";
+import { fillCalcValue } from "pie/tests/helpers/fill-calc-value";
 
 moduleForComponent("transaction-value-input", "Integration | Component | transaction value input", {
   integration: true
