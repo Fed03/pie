@@ -5,7 +5,7 @@
   <label>{{label}}</label>
 {{/if}}
 {{#if modalOpened}}
-  {{#modal-dialog onClose="toggleModal" }}
+  {{#modal-dialog onClose="toggleModal" translucentOverlay=true}}
     {{calc-input value=internalValue onEquals=(action 'calc')}}
   {{/modal-dialog}}
 {{/if}}
