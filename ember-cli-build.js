@@ -11,7 +11,7 @@ module.exports = function(defaults) {
     nodeAssets: {
       muicss: {
         srcDir: "dist",
-        import: ["js/mui.min.js"]
+        import: ["js/mui.js"]
       },
       "roboto-fontface": {
         import: ["css/roboto/roboto-fontface.css"],

@@ -4,15 +4,11 @@ import config from "pie/config/environment";
 export default Ember.Component.extend({
   "data-test-category-selector-input": true,
   classNames: ["category-selector-input"],
-  classNameBindings: [
-    "isFocused:category-selector-input-focused",
-    "hasCategory:category-selector-input-full"
-  ],
+  classNameBindings: ["focused"],
 
   isTesting: config.environment === "test",
-  hasCategory: Ember.computed.bool("selectedCategory"),
-  drawerOpened: Ember.computed.alias("isFocused"),
-  isFocused: false,
+  drawerOpened: Ember.computed.alias("focused"),
+  focused: false,
 
   actions: {
     categorySelected(category) {
@@ -20,7 +16,7 @@ export default Ember.Component.extend({
       this.set("drawerOpened", false);
     },
     selectCategory() {
-      this.toggleProperty("isFocused");
+      this.toggleProperty("focused");
     }
   }
 });

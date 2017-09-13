@@ -40,9 +40,9 @@ test("it adds the sign according to transactionType", function(assert) {
 test("it adds a class on click", async function(assert) {
   this.render(hbs`{{transaction-value-input}}`);
 
-  assert.notOk(findWithAssert("[data-test-transaction-value-input]").classList.contains("input-focused"));
+  assert.notOk(findWithAssert("[data-test-transaction-value-input]").classList.contains("focused"));
   await click("[data-test-value-display]");
-  assert.ok(findWithAssert("[data-test-transaction-value-input]").classList.contains("input-focused"));
+  assert.ok(findWithAssert("[data-test-transaction-value-input]").classList.contains("focused"));
 });
 
 test("it opens a modal on input click", async function(assert) {
