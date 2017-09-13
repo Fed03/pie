@@ -4,24 +4,25 @@
     <form {{action 'createTransaction' on='submit'}}>
       {{transaction-value-input data-test-transaction-value
         value=transactionValue
-        class="transaction-value-input"
+        class="mui-textfield"
         label="Value"
         update=(action (mut transactionValue))
         transactionType=transactionType
       }}
-      <div class="mui-textfield mui-textfield--float-label">
+      <div class="mui-textfield">
         {{one-way-input data-test-transaction-description value=transactionDescription name="transaction-description" update=(action (mut transactionDescription))}}
         <label for="transaction-description">Description</label>
       </div>
       {{category-selector-input data-test-transaction-category
         label="Category"
+        class="mui-textfield"
         wormholeElementID="create-transaction-container"
         categories=model
         selectedCategory=transactionCategory
         onSelection=(action (mut transactionCategory))
       }}
       {{date-picker data-test-transaction-date
-        class="mui-textfield mui-textfield--float-label"
+        class="mui-textfield"
         value=transactionDate
         label="Date"
       }}
