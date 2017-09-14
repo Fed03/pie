@@ -1525,7 +1525,7 @@ broccoli-sri-hash@^2.1.0:
     sri-toolbox "^0.2.0"
     symlink-or-copy "^1.0.1"
 
-broccoli-stew@^1.2.0, broccoli-stew@^1.3.1, broccoli-stew@^1.3.3, broccoli-stew@^1.4.0:
+broccoli-stew@^1.2.0, broccoli-stew@^1.3.1, broccoli-stew@^1.3.3, broccoli-stew@^1.4.0, broccoli-stew@^1.4.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/broccoli-stew/-/broccoli-stew-1.5.0.tgz#d7af8c18511dce510e49d308a62e5977f461883c"
   dependencies:
@@ -2714,6 +2714,13 @@ ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
+ember-hash-helper-polyfill@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ember-hash-helper-polyfill/-/ember-hash-helper-polyfill-0.1.2.tgz#bc8ee6fa59e9541fce07d2cf4f263cf785e9e1db"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-cli-version-checker "^1.2.0"
+
 ember-ignore-children-helper@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-ignore-children-helper/-/ember-ignore-children-helper-1.0.0.tgz#7645d769377779ff292235725b5b1f5c2e4c16ab"
@@ -2943,7 +2950,7 @@ ember-validators@^1.0.0:
     ember-cli-babel "^5.1.6"
     ember-require-module "^0.1.2"
 
-ember-weakmap@^2.0.0:
+ember-weakmap@2.0.0, ember-weakmap@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ember-weakmap/-/ember-weakmap-2.0.0.tgz#71c6819a8bfd0b077ae17ca1d9053fc5db06e4ac"
   dependencies:
@@ -4558,6 +4565,31 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
+liquid-fire@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/liquid-fire/-/liquid-fire-0.28.0.tgz#2db5058d30656449f54b6ab4fe85ef6572ecdec2"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.0.0"
+    broccoli-stew "^1.4.2"
+    ember-cli-babel "^6.3.0"
+    ember-cli-htmlbars "^2.0.1"
+    ember-cli-version-checker "^2.0.0"
+    ember-getowner-polyfill "^2.0.1"
+    ember-hash-helper-polyfill "^0.1.2"
+    match-media "^0.2.0"
+    velocity-animate ">= 0.11.8"
+
+liquid-wormhole@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/liquid-wormhole/-/liquid-wormhole-2.0.7.tgz#239abb12a031a3c9ca979efcf7417115b75f1895"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-cli-htmlbars "^1.1.1"
+    ember-getowner-polyfill "^2.0.1"
+    ember-weakmap "2.0.0"
+    perf-primitives "0.0.4"
+
 livereload-js@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.2.2.tgz#6c87257e648ab475bc24ea257457edcc1f8d0bc2"
@@ -4997,6 +5029,10 @@ markdown-it@^8.3.0, markdown-it@^8.3.1:
     linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.3"
+
+match-media@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/match-media/-/match-media-0.2.0.tgz#ea4e09742e7253cc7d7e1599ba627e0fa29fbc50"
 
 matcher-collection@^1.0.0:
   version "1.0.4"
@@ -5620,6 +5656,12 @@ path-type@^1.0.0:
     graceful-fs "^4.1.2"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+
+perf-primitives@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/perf-primitives/-/perf-primitives-0.0.4.tgz#f07e7f33ef3e200393aa218f591918fb3abe46e8"
+  dependencies:
+    ember-cli-babel "^5.1.6"
 
 performance-now@^0.2.0:
   version "0.2.0"
@@ -7170,6 +7212,10 @@ validate.io-undefined@^1.0.3:
 vary@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.1.tgz#67535ebb694c1d52257457984665323f587e8d37"
+
+"velocity-animate@>= 0.11.8":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/velocity-animate/-/velocity-animate-1.5.0.tgz#fc8771d8dfe1136ff02a707e10fbb0957c4b030f"
 
 verror@1.10.0:
   version "1.10.0"
