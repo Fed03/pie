@@ -1,5 +1,5 @@
 import hbs from "htmlbars-inline-precompile";
-import { moduleForComponent, test } from "ember-qunit";
+import { moduleForComponent, test, skip } from "ember-qunit";
 import { manualSetup, make, makeList } from "ember-data-factory-guy";
 import { click, find, findWithAssert, findAll } from "ember-native-dom-helpers";
 
@@ -51,7 +51,7 @@ test("it sends an action when category is selected", async function(assert) {
   assert.deepEqual(this.get("selectedCategory"), singleCategory);
 });
 
-test("it toggle the sidedrawer when clicked", async function(assert) {
+skip("it toggle the sidedrawer when clicked", async function(assert) {
   this.set("categories", makeList("category", 3));
   this.render(hbs`{{category-selector-input categories=categories}}`);
 
@@ -89,7 +89,7 @@ test("it add a class when is clicked", async function(assert) {
 //   assert.ok(find("[data-test-category-selector-input]").classList.contains("category-selector-input-full"));
 // });
 
-test("it closes the drawer when a category is selected", async function(assert) {
+skip("it closes the drawer when a category is selected", async function(assert) {
   this.set("categories", makeList("category", 3));
   this.render(hbs`{{category-selector-input selectedCategoty=dummy categories=categories onSelection=(action (mut dummy))}}`);
 
