@@ -1,7 +1,7 @@
 import hbs from "htmlbars-inline-precompile";
-import { moduleForComponent, test, skip } from "ember-qunit";
-import { manualSetup, make, makeList } from "ember-data-factory-guy";
-import { click, find, findWithAssert, findAll } from "ember-native-dom-helpers";
+import { moduleForComponent, test } from "ember-qunit";
+import { manualSetup, make } from "ember-data-factory-guy";
+import { click, find, findWithAssert } from "ember-native-dom-helpers";
 
 moduleForComponent("category-selector-input", "Integration | Component | category selector input", {
   integration: true,
@@ -20,7 +20,6 @@ test("it renders element", function(assert) {
 });
 
 test("it shows the selected category", function(assert) {
-  this.set("categories", makeList("category", 3));
   this.set(
     "selectedCategory",
     make("category", {
@@ -28,79 +27,27 @@ test("it shows the selected category", function(assert) {
       type: "income"
     })
   );
-  this.render(hbs`{{category-selector-input selectedCategory=selectedCategory categories=categories}}`);
+  this.render(hbs`{{category-selector-input selectedCategory=selectedCategory}}`);
 
   assert.equal(findWithAssert("[data-test-selected-category-name]").textContent.trim(), "Food", "It shows `Food`");
 });
 
-test("it sends an action when category is selected", async function(assert) {
-  let categories = makeList("category", 3);
-  let singleCategory = make("category", {
-    id: "foo",
-    name: "bar"
+test("it sends an action when clicked", async function(assert) {
+  assert.expect(1);
+  this.on("clicked", () => {
+    assert.ok(true);
   });
-  categories.push(singleCategory);
-  this.set("categories", categories);
-  this.render(
-    hbs`{{category-selector-input selectedCategory=selectedCategory categories=categories onSelection=(action (mut selectedCategory))}}`
-  );
+  this.render(hbs`{{category-selector-input onClick=(action 'clicked')}}`);
 
-  await click('[data-test-category-list-item="foo-bar"]');
-
-  assert.equal(find("[data-test-selected-category-name]").textContent.trim(), "bar", "It shows `bar`");
-  assert.deepEqual(this.get("selectedCategory"), singleCategory);
-});
-
-skip("it toggle the sidedrawer when clicked", async function(assert) {
-  this.set("categories", makeList("category", 3));
-  this.render(hbs`{{category-selector-input categories=categories}}`);
-
-  await click("[data-test-toggle-category-selector]");
-  assert.ok(findWithAssert("[data-test-sidedrawer]").classList.contains("sidedrawer-opened"));
-
-  await click("[data-test-toggle-category-selector]");
-  assert.ok(findWithAssert("[data-test-sidedrawer]").classList.contains("sidedrawer-closed"));
+  await click("[data-test-toggle-input]");
 });
 
 test("it add a class when is clicked", async function(assert) {
-  this.set("categories", makeList("category", 3));
-  this.render(hbs`{{category-selector-input categories=categories}}`);
+  this.render(hbs`{{category-selector-input}}`);
 
-  await click("[data-test-toggle-category-selector]");
+  await click("[data-test-toggle-input]");
 
   assert.ok(find("[data-test-category-selector-input]").classList.contains("focused"), "It has the `focused` class");
-});
-
-//NOTE: probably useless
-// test("it adds a class if has a selected category", function(assert) {
-//   this.set("categories", makeList("category", 3));
-//
-//   this.render(hbs`{{category-selector-input selectedCategory=selectedCategory categories=categories}}`);
-//
-//   assert.notOk(find("[data-test-category-selector-input]").classList.contains("category-selector-input-full"));
-//
-//   this.set(
-//     "selectedCategory",
-//     make("category", {
-//       name: "Food",
-//       type: "income"
-//     })
-//   );
-//   assert.ok(find("[data-test-category-selector-input]").classList.contains("category-selector-input-full"));
-// });
-
-skip("it closes the drawer when a category is selected", async function(assert) {
-  this.set("categories", makeList("category", 3));
-  this.render(hbs`{{category-selector-input selectedCategoty=dummy categories=categories onSelection=(action (mut dummy))}}`);
-
-  assert.ok(find("[data-test-sidedrawer]").classList.contains("sidedrawer-closed"));
-
-  await click("[data-test-toggle-category-selector]");
-  assert.ok(find("[data-test-sidedrawer]").classList.contains("sidedrawer-opened"));
-
-  let categoryListItemElement = findAll("[data-test-category-list-item]")[0];
-  await click(categoryListItemElement);
-  assert.ok(find("[data-test-sidedrawer]").classList.contains("sidedrawer-closed"));
 });
 
 test("it renders a label", function(assert) {
