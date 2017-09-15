@@ -26,4 +26,6 @@
       <button type="submit" class="mui-btn mui-btn--primary" data-test-submit-transaction>Create</button>
     </form>
   </div>
+
+  {{category-selector categories=model onSelection=(action (mut transactionCategory))}}
 </div>
