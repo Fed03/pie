@@ -3,6 +3,7 @@
 @import "addons/ember-power-calendar";
 @import "components/calc-input";
 @import "components/category-badge";
+@import "components/category-selector";
 
 /* List item */
 
@@ -123,25 +124,6 @@ li.transaction--list-item {
 }
 
 /* category-selector component */
-
-.category--selector {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-.category--selector > .main {
-  flex-grow: 1;
-  overflow: auto;
-  min-height: 144px;
-  padding: 0 15px;
-}
-.category--selector .mui-tabs__bar > li.mui--is-active {
-  border-bottom: none;
-  border-top: 2px solid #2196f3;
-}
-.category--selector .list-item--description {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.26);
-}
 
 /* Sidedrawer */
 

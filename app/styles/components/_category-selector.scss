@@ -1,0 +1,24 @@
+@import "mui/colors";
+
+.category--selector {
+  .mui-tabs__bar > li.mui--is-active {
+    border-bottom: none;
+    border-top: 2px solid $mui-primary-color;
+  }
+
+  .category--selector_tabs--container {
+    padding: 0 10px;
+  }
+
+  .list-item {
+    // padding: 8px 10px;
+  }
+
+  .list-item--description {
+    border-bottom: 1px solid $mui-input-placeholder-color;
+  }
+
+  .mui-panel {
+    padding: 0;
+  }
+}

@@ -1,26 +1,26 @@
-<div class="mui-appbar">
-  <h2 class="mui--appbar-line-height appbar-brand">Choose category</h2>
-</div>
-<div class="main">
-  {{#each categoriesByType as |categorySet index|}}
-    <div class="mui-tabs__pane {{if (eq index 0) 'mui--is-active'}}" id="{{categorySet.value}}-categories-pane">
-      <ul class="mui-list--unstyled" data-test-category-list-by-type="{{categorySet.value}}">
-        {{#each (get categorySet 'items') as |category|}}
-          <li class="list-item" {{action "selectedCategory" category}} data-test-category-list-item="{{category.id}}-{{category.name}}">
-            <div class="list-item--info">
-              {{category-badge category=category}}
-              <h3 class="list-item--description" data-test-category-name>{{category.name}}</h3>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  {{/each}}
-</div>
-<ul class="mui-tabs__bar mui-tabs__bar--justified">
-  {{#each categoriesByType as |categorySet index|}}
+<h3>Choose Category</h3>
+<div class="mui-panel">
+  <div class="category--selector_tabs--container">
+    {{#each categoriesByType as |categorySet index|}}
+      <div class="mui-tabs__pane {{if (eq index 0) 'mui--is-active'}}" id="{{categorySet.value}}-categories-pane">
+        <ul class="mui-list--unstyled" data-test-category-list-by-type="{{categorySet.value}}">
+          {{#each (get categorySet 'items') as |category|}}
+            <li class="list-item" {{action "selectedCategory" category}} data-test-category-list-item="{{category.id}}-{{category.name}}">
+              <div class="list-item--info">
+                {{category-badge category=category}}
+                <h3 class="list-item--description" data-test-category-name>{{category.name}}</h3>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/each}}
+  </div>
+  <ul class="mui-tabs__bar mui-tabs__bar--justified">
+    {{#each categoriesByType as |categorySet index|}}
     <li class="{{if (eq index 0) 'mui--is-active'}}">
       <a data-mui-toggle="tab" data-mui-controls="{{categorySet.value}}-categories-pane">{{categorySet.value}}</a>
     </li>
-  {{/each}}
-</ul>
+    {{/each}}
+  </ul>
+</div>
