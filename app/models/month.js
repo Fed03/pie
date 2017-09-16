@@ -13,7 +13,7 @@ const months = ["january", "february", "march", "april", "may", "june", "july", 
 
 export default Model.extend({
   date: attr("date", { defaultValue: getDateForCurrentMonth }),
-  transactions: hasMany("transaction"),
+  transactions: hasMany("transaction", { dontsave: true }),
   openingBalance: attr("number"),
 
   name: Ember.computed("date", {
@@ -24,9 +24,11 @@ export default Model.extend({
 
   balance: Ember.computed("transactions.@each.value", {
     get() {
-      return this.get("transactions").mapBy("value").reduce((accumulator, value) => {
-        return accumulator + value;
-      }, 0);
+      return this.get("transactions")
+        .mapBy("value")
+        .reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0);
     }
   })
 });

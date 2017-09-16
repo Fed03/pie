@@ -99,6 +99,9 @@ test("create transaction", async function(assert) {
   let month = await transaction.get("month");
   assert.equal(month.get("date").getTime(), getDateForCurrentMonth().getTime(), "The transaction month is correct");
   assert.equal(month.get("transactions.length"), 1, "The month has the transaction");
+
+  let dbMonth = await findLatestInDb("month");
+  assert.equal(dbMonth.get("transactions.length"), 1, "The month in db has the transaction");
 });
 
 test("Sign is added to the value field", async function(assert) {
