@@ -1,7 +1,6 @@
 import { test, skip } from "qunit";
 import selectCategory from "pie/tests/helpers/select-category";
 import { calendarSelect, initCalendarHelpers } from "ember-power-calendar/test-support";
-import getDateForCurrentMonth from "pie/utils/get-date-for-current-month";
 import { fillCalcValue } from "pie/tests/helpers/fill-calc-value";
 import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
@@ -71,9 +70,8 @@ test("it change the value field class according to the category type", async fun
 });
 
 test("create transaction", async function(assert) {
-  assert.expect(7);
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  const date = new Date(2017, 6, 2);
+  date.setHours(0, 0, 0, 0);
 
   let selectCat = await create("category", { name: "foo", type: "outcome" });
   await visit("/transactions/create");
@@ -83,6 +81,8 @@ test("create transaction", async function(assert) {
   await click('[data-test-calc-key="equals"]');
   await fillIn("[data-test-transaction-description]", "An awesome book");
   await selectCategory(selectCat);
+  await click("[data-test-date-picker-input]");
+  await calendarSelect(".ember-power-calendar", date);
 
   await click("[data-test-submit-transaction]");
 
@@ -91,14 +91,16 @@ test("create transaction", async function(assert) {
   let transaction = await findLatestInDb("transaction");
   assert.equal(transaction.get("value"), -25, "The value is -25");
   assert.equal(transaction.get("description"), "An awesome book", 'The desc is "An awesome book"');
-  assert.equal(transaction.get("date").getTime(), today.getTime(), "The transaction date is today without hours");
+  assert.equal(transaction.get("date").getTime(), date.getTime(), "The transaction date is today without hours");
 
   let category = await transaction.get("category");
   assert.deepEqual(category, selectCat, "The transaction category is correct");
 
   let month = await transaction.get("month");
-  assert.equal(month.get("date").getTime(), getDateForCurrentMonth().getTime(), "The transaction month is correct");
-  assert.equal(month.get("transactions.length"), 1, "The month has the transaction");
+  let monthDate = new Date(date.getTime());
+  monthDate.setDate(1);
+  assert.equal(month.get("date").getTime(), monthDate.getTime(), "The transaction month is correct");
+  assert.equal(month.get("transactions.length"), 1, "The loaded month has the transaction");
 
   let dbMonth = await findLatestInDb("month");
   assert.equal(dbMonth.get("transactions.length"), 1, "The month in db has the transaction");
