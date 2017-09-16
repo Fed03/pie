@@ -39,13 +39,13 @@ test("it sends an action when clicked", async function(assert) {
   });
   this.render(hbs`{{category-selector-input onClick=(action 'clicked')}}`);
 
-  await click("[data-test-toggle-input]");
+  await click("[data-test-category-selector-input]");
 });
 
 test("it add a class when is clicked", async function(assert) {
   this.render(hbs`{{category-selector-input}}`);
 
-  await click("[data-test-toggle-input]");
+  await click("[data-test-category-selector-input]");
 
   assert.ok(find("[data-test-category-selector-input]").classList.contains("focused"), "It has the `focused` class");
 });

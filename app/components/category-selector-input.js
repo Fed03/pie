@@ -6,10 +6,8 @@ export default Ember.Component.extend({
   classNameBindings: ["focused"],
   focused: false,
 
-  actions: {
-    selectCategory() {
-      this.sendAction("onClick");
-      this.toggleProperty("focused");
-    }
+  click() {
+    this.sendAction("onClick");
+    this.toggleProperty("focused");
   }
 });
