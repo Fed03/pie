@@ -4,8 +4,8 @@ import destroyPouchDb from "pie/tests/helpers/destroy-db";
 
 function monthDate(date) {
   let monthDate = new Date(date.getTime());
-  monthDate.setUTCHours(0, 0, 0, 0);
-  monthDate.setUTCDate(1);
+  monthDate.setHours(0, 0, 0, 0);
+  monthDate.setDate(1);
 
   return monthDate;
 }

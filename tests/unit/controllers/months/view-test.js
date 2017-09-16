@@ -28,13 +28,13 @@ test("it computes transactions balance", function(assert) {
 
 test("it groups transactions by date", function(assert) {
   const today1 = new Date();
-  today1.setUTCHours(0, 0, 0, 0);
+  today1.setHours(0, 0, 0, 0);
 
   const today2 = new Date();
-  today2.setUTCHours(0, 0, 0, 0);
+  today2.setHours(0, 0, 0, 0);
 
   const randomDate = new Date(2017, 1, 1);
-  randomDate.setUTCHours(0, 0, 0, 0);
+  randomDate.setHours(0, 0, 0, 0);
 
   const trns1 = Ember.Object.create({ date: today1 });
   const trns2 = Ember.Object.create({ date: today2 });

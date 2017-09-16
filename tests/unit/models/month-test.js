@@ -10,35 +10,25 @@ moduleForModel("month", "Unit | Model | month", {
   }
 });
 
-test("it defaults the value of the date field to the current month", function(
-  assert
-) {
+test("it defaults the value of the date field to the current month", function(assert) {
   let expected = new Date();
-  expected.setUTCDate(1);
-  expected.setUTCHours(0, 0, 0, 0);
+  expected.setDate(1);
+  expected.setHours(0, 0, 0, 0);
 
   let model = this.subject();
 
-  assert.deepEqual(
-    model.get("date"),
-    expected,
-    "The date field of month is auto assigned"
-  );
+  assert.deepEqual(model.get("date"), expected, "The date field of month is auto assigned");
 });
 
 test("it computes the month name", function(assert) {
-  let jan = new Date(Date.UTC(2017, 0, 1, 0, 0, 0, 0));
+  let jan = new Date(2017, 0, 1, 0, 0, 0, 0);
   let model = this.subject({ date: jan });
 
-  assert.equal(
-    model.get("name"),
-    "january",
-    "The name field is automatically computed"
-  );
+  assert.equal(model.get("name"), "january", "The name field is automatically computed");
 });
 
 test("name attr is read only", function(assert) {
-  let jan = new Date(Date.UTC(2017, 0, 1, 0, 0, 0, 0));
+  let jan = new Date(2017, 0, 1, 0, 0, 0, 0);
   let model = this.subject({ date: jan });
 
   assert.throws(() => {
@@ -55,9 +45,5 @@ test("it computes month balance", function(assert) {
 
   let model = this.subject({ transactions });
 
-  assert.equal(
-    model.get("balance").toFixed(2),
-    11.6,
-    "The balance equal the sum of transactions"
-  );
+  assert.equal(model.get("balance").toFixed(2), 11.6, "The balance equal the sum of transactions");
 });

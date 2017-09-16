@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
 
   _getDateWithoutTime() {
     const date = new Date(this.get("transactionDate").getTime());
-    date.setUTCHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
     return date;
   },
 

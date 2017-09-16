@@ -12,8 +12,8 @@ FactoryGuy.define("transaction", {
     yesterday: {
       date: () => {
         const yesterday = new Date();
-        yesterday.setUTCHours(0, 0, 0, 0);
-        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+        yesterday.setHours(0, 0, 0, 0);
+        yesterday.setDate(yesterday.getDate() - 1);
         return yesterday;
       }
     }

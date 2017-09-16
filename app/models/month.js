@@ -18,7 +18,7 @@ export default Model.extend({
 
   name: Ember.computed("date", {
     get() {
-      return months[this.get("date").getUTCMonth()];
+      return months[this.get("date").getMonth()];
     }
   }).readOnly(),
 

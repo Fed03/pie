@@ -10,7 +10,7 @@ function getCurrentMonthName() {
   const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
   const today = new Date();
 
-  return months[today.getUTCMonth()];
+  return months[today.getMonth()];
 }
 
 moduleForAcceptance("Acceptance | month view", {
