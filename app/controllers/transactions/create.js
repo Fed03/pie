@@ -15,6 +15,8 @@ export default Ember.Controller.extend({
 
   transactionDate: new Date(),
 
+  isCatSelectorShowing: false,
+
   resetToDefaultProperties() {
     this.setProperties({
       transactionValue: 0,
@@ -63,6 +65,11 @@ export default Ember.Controller.extend({
       });
 
       return this.transitionToRoute("months.view", month);
+    },
+
+    selectCategory(selectedCategory) {
+      this.set("transactionCategory", selectedCategory);
+      this.toggleProperty("isCatSelectorShowing");
     }
   }
 });

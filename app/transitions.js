@@ -1,9 +1,3 @@
-export default function(){
-  // Add your transitions here, like:
-  //   this.transition(
-  //     this.fromRoute('people.index'),
-  //     this.toRoute('people.detail'),
-  //     this.use('toLeft'),
-  //     this.reverse('toRight')
-  //   );
+export default function() {
+  this.transition(this.hasClass("transaction-form-container"), this.toValue(true), this.use("toRight"), this.reverse("toLeft"));
 }
