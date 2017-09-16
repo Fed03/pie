@@ -13,13 +13,15 @@ li.list-item:last-child {
 }
 .list-item--info {
   display: flex;
-  align-items: center;
-}
-.list-item--description {
-  margin: 0;
-  line-height: 1.2;
-  font-weight: 400;
-  font-size: 20px;
+  .list-item--description {
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 400;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+  }
 }
 
 /* end list item */
@@ -175,17 +177,8 @@ li.transaction--list-item {
   border-bottom: none;
   border-top: 2px solid #2196f3;
 }
-.category--selector .list-item--info {
-  position: relative;
-}
-.category--selector .list-item--info::after {
-  content: "";
-  width: 81%;
-  position: absolute;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.26);
-  right: 0;
-  bottom: 10%;
+.category--selector .list-item--description {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.26);
 }
 
 /* Sidedrawer */
