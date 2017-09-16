@@ -1,0 +1,39 @@
+.category--badge {
+  background-color: #00c853;
+  margin: 0.4em 0.6em 0.4em 0;
+  border-radius: 50%;
+  font-size: 19px;
+  color: white;
+  width: 2.2em;
+  height: 2.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-transform: uppercase;
+}
+.category--badge::after {
+  content: "";
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  font: normal normal normal 0.6em/1 FontAwesome;
+  border: 2px solid white;
+  position: absolute;
+  top: -0.6em;
+  right: -1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.category--badge.category--badge-income::after {
+  background-color: #2e7d32;
+  content: "\f067";
+}
+.category--badge.category--badge-outcome::after {
+  background-color: #e53935;
+  content: "\f068";
+}
+.category--badge > span {
+  line-height: 0;
+}
