@@ -7,10 +7,11 @@ export default Ember.Route.extend({
     return this.store.findAll("category").then(categories => {
       if (categories.get("length") == 0) {
         let promises = [];
-        for (var i = 0; i < 4; i++) {
+        let type = ["income", "outcome"];
+        for (var i = 0; i < 10; i++) {
           let cat = this.store.createRecord("category", {
             name: faker.commerce.department(),
-            type: faker.random.arrayElement(["income", "outcome"])
+            type: type[i % 2]
           });
 
           promises.push(cat.save());
