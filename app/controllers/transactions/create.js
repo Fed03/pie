@@ -53,7 +53,7 @@ export default Ember.Controller.extend({
       const month = await this._getBelongingMonth();
 
       await run(() => {
-        this.store
+        return this.store
           .createRecord("transaction", {
             value: this._getValueWithSign(),
             description: this.get("transactionDescription"),
