@@ -14,8 +14,12 @@
       <div class="list-item--info transaction--list-item-info">
         {{category-badge data-test-category-badge category=transaction.category}}
         <h3 class="list-item--description transaction--list-item-description" data-test-transaction-description>
-          {{transaction.description}}
-          <small>{{transaction.category.name}}</small>
+          {{#if transaction.description}}
+            {{transaction.description}}
+            <small>{{transaction.category.name}}</small>
+          {{else}}
+            {{transaction.category.name}}
+          {{/if}}
         </h3>
       </div>
       <span
