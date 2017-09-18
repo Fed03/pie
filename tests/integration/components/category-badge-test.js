@@ -3,14 +3,9 @@ import { moduleForComponent, test } from "ember-qunit";
 import hbs from "htmlbars-inline-precompile";
 import Ember from "ember";
 
-//TODO: codemod
-moduleForComponent(
-  "category-badge",
-  "Integration | Component | category badge",
-  {
-    integration: true
-  }
-);
+moduleForComponent("category-badge", "Integration | Component | category badge", {
+  integration: true
+});
 
 test("it renders with the correct class", function(assert) {
   this.set(
@@ -22,11 +17,7 @@ test("it renders with the correct class", function(assert) {
   );
   this.render(hbs`{{category-badge category=category}}`);
 
-  assert.equal(
-    findAll("div.category--badge").length,
-    1,
-    "It has the '.category--badge' class"
-  );
+  assert.equal(findAll("div.category--badge").length, 1, "It has the '.category--badge' class");
 });
 
 test("it add a class based on the category type", function(assert) {
@@ -39,11 +30,7 @@ test("it add a class based on the category type", function(assert) {
   );
   this.render(hbs`{{category-badge category=category}}`);
 
-  assert.equal(
-    findAll("div.category--badge-income").length,
-    1,
-    "It has the '.category--badge-income' class"
-  );
+  assert.equal(findAll("div.category--badge-income").length, 1, "It has the '.category--badge-income' class");
 
   this.set(
     "category",
@@ -53,11 +40,7 @@ test("it add a class based on the category type", function(assert) {
     })
   );
 
-  assert.equal(
-    findAll("div.category--badge-outcome").length,
-    1,
-    "It has the '.category--badge-outcome' class"
-  );
+  assert.equal(findAll("div.category--badge-outcome").length, 1, "It has the '.category--badge-outcome' class");
 });
 
 test("it contains the abbrevation of the category name", function(assert) {
@@ -70,11 +53,7 @@ test("it contains the abbrevation of the category name", function(assert) {
   );
   this.render(hbs`{{category-badge category=category}}`);
 
-  assert.equal(
-    find("div.category--badge").textContent.trim(),
-    "fd",
-    "'food' is abbreviated in `fd`"
-  );
+  assert.equal(find("div.category--badge").textContent.trim(), "fd", "'food' is abbreviated in `fd`");
 
   this.set(
     "category",
@@ -84,9 +63,5 @@ test("it contains the abbrevation of the category name", function(assert) {
     })
   );
 
-  assert.equal(
-    find("div.category--badge").textContent.trim(),
-    "sp",
-    "'sport' is abbreviated in `sp`"
-  );
+  assert.equal(find("div.category--badge").textContent.trim(), "sp", "'sport' is abbreviated in `sp`");
 });
