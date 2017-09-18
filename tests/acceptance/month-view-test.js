@@ -217,3 +217,40 @@ test("it computes the total balance", async function(assert) {
     "The current balance"
   );
 });
+
+//TODO: finish it
+test("it sorts the transactions panels by desc date", async function(assert) {
+  assert.expect(0);
+  let monthDate = new Date(2017, 1, 1, 0, 0, 0, 0);
+
+  let trsn1Date = new Date(monthDate.getTime());
+  trsn1Date.setDate(25);
+  let trsn2Date = new Date(monthDate.getTime());
+  trsn2Date.setDate(18);
+  let trsn3Date = new Date(monthDate.getTime());
+  trsn3Date.setDate(27);
+  let trsn4Date = new Date(monthDate.getTime());
+  trsn4Date.setDate(23);
+
+  let transactions = [
+    await create("transaction", { date: trsn1Date }),
+    await create("transaction", { date: trsn2Date }),
+    await create("transaction", { date: trsn3Date }),
+    await create("transaction", { date: trsn4Date })
+  ];
+
+  const month = await create("month", {
+    openingBalance: 1,
+    date: monthDate,
+    transactions
+  });
+
+  transactions.forEach(async transaction => {
+    await run(() => {
+      transaction.set("month", month);
+      return transaction.save();
+    });
+  });
+
+  await visit(`/months/${month.get("id")}`);
+});
