@@ -1,0 +1,42 @@
+.transaction--list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .transaction--list-date {
+    display: flex;
+    .number {
+      font-size: 2.5em;
+      line-height: 1;
+    }
+    > span:not(.number) {
+      display: flex;
+      flex-direction: column;
+      padding: 0 8px;
+      > small {
+        font-weight: 400;
+        color: #616161;
+      }
+    }
+  }
+  .transaction--list-total-balance {
+    font-weight: 500;
+  }
+}
+
+ul.transaction--list-box {
+  margin-bottom: 0;
+  .transaction--list-item {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px;
+    padding-right: 5px;
+    .transaction--list-item-description {
+      display: flex;
+      flex-direction: column;
+      > small {
+        font-weight: 400;
+        color: #616161;
+      }
+    }
+  }
+}

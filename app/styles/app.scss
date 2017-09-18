@@ -4,6 +4,8 @@
 @import "components/calc-input";
 @import "components/category-badge";
 @import "components/category-selector";
+@import "components/transaction-panel";
+@import "pages/months-view";
 
 /* List item */
 
@@ -42,130 +44,11 @@ li.list-item:last-child {
   text-transform: uppercase;
 }
 
-/* month view */
-
-.month-summary-header,
-.transaction--list-header {
-  font-weight: 600;
-  padding: 0 5px 5px;
-}
-.month-summary-header {
-  font-size: 18px;
-  text-transform: capitalize;
-}
-.month-summary-content > div {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px;
-}
-.month-summary-content > div:last-child {
-  flex-direction: row-reverse;
-}
-.month-summary-balance-total {
-  font-size: 17px;
-  font-weight: 500;
-  width: 100px;
-  text-align: right;
-}
-.no-transactions {
-  color: #737373;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 2.5em;
-}
-.no-transactions small {
-  font-size: 65%;
-}
-
-/* end month view */
-
 .outcome-amount {
   color: #e53935 !important;
 }
 .income-amount {
   color: #2e7d32 !important;
-}
-.transaction--list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.transaction--list-date {
-  display: flex;
-}
-.transaction--list-date .number {
-  font-size: 2.5em;
-  line-height: 1;
-}
-.transaction--list-date > span:not(.number) {
-  display: flex;
-  flex-direction: column;
-  padding: 0 8px;
-}
-.transaction--list-date > span:not(.number) > small,
-.transaction--list-item-description > small {
-  font-weight: 400;
-  color: #616161;
-}
-.transaction--list-total-balance {
-  font-weight: 500;
-}
-ul.transaction--list-box {
-  margin-bottom: 0;
-}
-li.transaction--list-item {
-  display: flex;
-  justify-content: space-between;
-}
-.transaction--list-item-description {
-  display: flex;
-  flex-direction: column;
-}
-
-/* category-selector component */
-
-/* Sidedrawer */
-
-// .sidedrawer {
-//   width: 300px;
-//   transition: transform 0.2s ease-in-out;
-//   position: fixed;
-//   bottom: 0;
-// }
-// .sidedrawer.sidedrawer-left-positioned {
-//   left: 0;
-//   transform: translateX(-300px);
-// }
-// .sidedrawer.sidedrawer-right-positioned {
-//   right: 0;
-//   transform: translateX(300px);
-// }
-// .sidedrawer-sibling {
-//   margin: 0;
-//   transition: margin 0.2s ease-in-out;
-// }
-// .sidedrawer.sidedrawer-opened {
-//   transform: translateX(0);
-// }
-// .sidedrawer-sibling.sidedrawer-sibling-opened.sidedrawer-sibling-right {
-//   margin-right: 300px;
-// }
-// .sidedrawer-sibling.sidedrawer-sibling-opened.sidedrawer-sibling-left {
-//   margin-left: 300px;
-// }
-
-/* end Sidedrawer */
-
-.transaction--panel:last-child {
-  margin-bottom: 90px;
-}
-
-.create-transaction-link {
-  display: block;
-  position: fixed;
-  bottom: 10px;
-  right: 15px;
 }
 
 @keyframes fillup {
