@@ -19,5 +19,13 @@ export default Ember.Route.extend({
         return Ember.RSVP.all(promises);
       }
     });
+  },
+  model() {
+    return this.store.findAll("user");
+  },
+  setupController(controller, model) {
+    if (model.get("length") !== 0) {
+      controller.set("authUser", model.get("firstObject"));
+    }
   }
 });
