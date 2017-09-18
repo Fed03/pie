@@ -80,7 +80,7 @@ export default Ember.Component.extend(EKMixin, {
   }),
 
   equalsKey: Ember.on(keyDown(), function(event) {
-    const match = /^Numpad((Enter)|(Equal))$/.exec(getCode(event));
+    const match = /^(Numpad((Enter)|(Equal)))|Enter$/.exec(getCode(event));
     if (match) {
       this.send("equals");
     }

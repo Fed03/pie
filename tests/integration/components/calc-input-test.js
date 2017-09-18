@@ -256,5 +256,3 @@ test("fillCalcValue helper", async function(assert) {
   await click('[data-test-calc-key="equals"]');
   assert.equal(findWithAssert("[data-test-calculator-display]").textContent.trim(), "-45.32");
 });
-
-//IDEA: enter key, send action
