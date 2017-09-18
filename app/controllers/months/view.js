@@ -8,11 +8,7 @@ export default Ember.Controller.extend({
       return this.get("model.openingBalance") + this.get("model.balance");
     }
   }),
-  transactionsByDate: groupBy(
-    "model.transactions",
-    raw("date"),
-    (groupDate, currentDate) => {
-      return groupDate.getTime() == currentDate.getTime();
-    }
-  )
+  transactionsByDate: groupBy("model.transactions", raw("date"), (groupDate, currentDate) => {
+    return groupDate.getTime() == currentDate.getTime();
+  })
 });

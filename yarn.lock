@@ -2804,13 +2804,13 @@ ember-one-way-controls@^2.0.0:
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
 ember-pouch@Fed03/ember-pouch#test-waiter:
-  version "4.3.0"
-  resolved "https://codeload.github.com/Fed03/ember-pouch/tar.gz/6b82ba8c8feb8f25c9734872e353b8950849bc51"
+  version "5.0.0-beta.2"
+  resolved "https://codeload.github.com/Fed03/ember-pouch/tar.gz/54d547ad8d575fdf55bd55d447cc1aec2b7d6a7c"
   dependencies:
     broccoli-stew "^1.3.1"
     ember-cli-babel "^6.3.0"
     pouchdb "^6.3.4"
-    relational-pouch "^2.0.0"
+    relational-pouch "^2.1.0"
 
 ember-power-calendar@Fed03/ember-power-calendar#test-helpers:
   version "0.5.1"
@@ -6144,6 +6144,19 @@ regjsparser@^0.1.4:
 relational-pouch@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/relational-pouch/-/relational-pouch-2.0.0.tgz#1ee4746d0bee53a1ad9862eaddc96f9e61d1258c"
+  dependencies:
+    argsarray "0.0.1"
+    es3ify "^0.2.2"
+    inherits "~2.0.1"
+    lie "^3.1.0"
+    pouchdb-extend "^0.1.2"
+    pouchdb-find "^6.3.4"
+    pouchdb-promise "^6.3.4"
+    uniq "^1.0.1"
+
+relational-pouch@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/relational-pouch/-/relational-pouch-2.1.0.tgz#0a5fde6466b98bdc326b80f90c0be0626ea8b27a"
   dependencies:
     argsarray "0.0.1"
     es3ify "^0.2.2"
