@@ -220,7 +220,6 @@ test("it computes the total balance", async function(assert) {
 
 //TODO: finish it
 test("it sorts the transactions panels by desc date", async function(assert) {
-  assert.expect(0);
   let monthDate = new Date(2017, 1, 1, 0, 0, 0, 0);
 
   let trsn1Date = new Date(monthDate.getTime());
@@ -253,4 +252,11 @@ test("it sorts the transactions panels by desc date", async function(assert) {
   });
 
   await visit(`/months/${month.get("id")}`);
+  let panels = findAll("[data-test-transaction-panel-for-day]");
+
+  assert.equal(panels.length, 4, "There are 4 panels");
+  assert.equal(panels[0].getAttribute("data-test-transaction-panel-for-day"), 27);
+  assert.equal(panels[1].getAttribute("data-test-transaction-panel-for-day"), 25);
+  assert.equal(panels[2].getAttribute("data-test-transaction-panel-for-day"), 23);
+  assert.equal(panels[3].getAttribute("data-test-transaction-panel-for-day"), 18);
 });
