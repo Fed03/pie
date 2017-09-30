@@ -1,5 +1,8 @@
 import Ember from "ember";
 import PouchDB from "pouchdb";
+import { assert } from "@ember/debug";
+import { isBlank } from "@ember/utils";
+
 function stringToHex(string) {
   let hex = "";
   for (let i = 0; i < string.length; i++) {
@@ -27,6 +30,8 @@ export default Ember.Service.extend({
   },
 
   _initRemoteDb(username) {
+    assert("'options.remoteHost' is empty!", !isBlank(this.options.remoteHost));
+
     const hexUserName = stringToHex(username);
     const url = `${this.options.remoteHost}/userdb-${hexUserName}`;
     const remoteDb = new this.PouchDB(url, { skip_setup: true });

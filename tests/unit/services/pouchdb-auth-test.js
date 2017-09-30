@@ -56,3 +56,15 @@ test("it logins a user", function(assert) {
 
   assert.ok(dbInstance.login.calledWith("foo", "password"));
 });
+
+test("it throws an error if remote methods are called without a remoteHost option", function(assert) {
+  let service = this.subject({ PouchDB: this.stub().returns(sinon.createStubInstance(PouchDB)) });
+
+  assert.throws(() => {
+    service.login("foo", "bar");
+  }, /'options.remoteHost' is empty/);
+
+  assert.throws(() => {
+    service.registerUser("foo", "bar");
+  }, /'options.remoteHost' is empty/);
+});
