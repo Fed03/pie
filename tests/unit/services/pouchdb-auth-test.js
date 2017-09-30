@@ -1,5 +1,7 @@
 import { moduleFor } from "ember-qunit";
 import test from "ember-sinon-qunit/test-support/test";
+import sinon from "sinon";
+import PouchDB from "pouchdb";
 
 moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth");
 
@@ -14,8 +16,23 @@ test("it inits the db", function(assert) {
   assert.equal(service.get("db"), dbInstance);
 });
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
-  let service = this.subject();
-  assert.ok(service);
+test("it registers a user", function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.signup.returns(Promise.resolve());
+  let spy = this.stub().returns(dbInstance);
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: spy
+  });
+
+  let promise = service.registerUser("foo", "password");
+  assert.ok(promise instanceof Promise, "Returns a Promise");
+
+  assert.ok(spy.secondCall.calledWithNew());
+  assert.ok(spy.secondCall.calledWithExactly("host/userdb-666f6f", { skip_setup: true }), "Append the hex version of username foo");
+
+  assert.ok(dbInstance.signup.calledWith("foo", "password"));
+});
 });
