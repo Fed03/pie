@@ -5,11 +5,12 @@ import { fillCalcValue } from "pie/tests/helpers/fill-calc-value";
 import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { authAndLoadUser } from "pie/tests/helpers/auth-and-load-user";
+import { run } from "@ember/runloop";
 
 moduleForPouchAcceptance("Acceptance | create transaction", {
   async beforeEach() {
     initCalendarHelpers(this.application.__container__);
-    await authAndLoadUser(this.application);
+    this.currentUser = await authAndLoadUser(this.application);
   }
 });
 
@@ -158,4 +159,22 @@ test("it resets value on route exit", async function(assert) {
   assert.equal(find("[data-test-transaction-description]").value, "", "Description resetted to empty string");
   assert.equal(find(`${"[data-test-transaction-date]"} input`).value, new Date().toLocaleDateString("en-US"), "Date resetted to today");
   assert.equal(find("[data-test-selected-category-name]").textContent.trim(), defaultCat.get("name"), "Category resetted to default one");
+});
+
+test("creating a transaction will update user currentBalance", async function(assert) {
+  await run(() => {
+    this.currentUser.set("currentBalance", 1000);
+    return this.currentUser.save();
+  });
+  await create("category", { name: "foo", type: "outcome" });
+  await visit("/transactions/create");
+
+  await click("[data-test-value-display]");
+  await fillCalcValue("25");
+  await click('[data-test-calc-key="equals"]');
+
+  await click("[data-test-submit-transaction]");
+
+  assert.equal(this.currentUser.get("currentBalance"), 975);
+  assert.equal(findWithAssert("[data-test-user-balance]").textContent.trim(), "€ 975.00");
 });
