@@ -57,6 +57,7 @@
     "liquid-fire": "^0.28.0",
     "loader.js": "^4.2.3",
     "muicss": "^0.9.24",
+    "pouchdb-authentication": "^0.5.5",
     "roboto-fontface": "^0.8.0"
   },
   "engines": {
@@ -64,6 +65,8 @@
   },
   "private": true,
   "ember-addon": {
-    "paths": ["lib/calc-component"]
+    "paths": [
+      "lib/calc-component"
+    ]
   }
 }
