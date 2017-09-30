@@ -21,6 +21,11 @@ export default Ember.Service.extend({
     return remoteDb.signup(username, password);
   },
 
+  login(username, password) {
+    const remoteDb = this._initRemoteDb(username);
+    return remoteDb.login(username, password);
+  },
+
   _initRemoteDb(username) {
     const hexUserName = stringToHex(username);
     const url = `${this.options.remoteHost}/userdb-${hexUserName}`;

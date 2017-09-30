@@ -35,4 +35,24 @@ test("it registers a user", function(assert) {
 
   assert.ok(dbInstance.signup.calledWith("foo", "password"));
 });
+
+test("it logins a user", function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.login.returns(Promise.resolve());
+
+  let spy = this.stub();
+  spy.withArgs("host/userdb-666f6f", { skip_setup: true }).returns(dbInstance);
+
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: spy
+  });
+
+  let promise = service.login("foo", "password");
+  assert.ok(promise instanceof Promise, "Returns a Promise");
+  assert.ok(spy.calledWithExactly("host/userdb-666f6f", { skip_setup: true }));
+
+  assert.ok(dbInstance.login.calledWith("foo", "password"));
 });
