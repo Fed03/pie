@@ -51,6 +51,8 @@
     "ember-pouch": "Fed03/ember-pouch#test-waiter",
     "ember-power-calendar": "Fed03/ember-power-calendar#test-helpers",
     "ember-resolver": "^4.0.0",
+    "ember-sinon": "^1.0.1",
+    "ember-sinon-qunit": "^2.0.0",
     "ember-source": "~2.15.0",
     "ember-test-selectors": "^0.3.4",
     "ember-truth-helpers": "^1.3.0",
