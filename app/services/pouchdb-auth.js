@@ -22,6 +22,8 @@ export default Ember.Service.extend({
     }
   }),
 
+  loggedIn: false,
+
   init() {
     this.options = this.options || {};
     this.set("db", new this.PouchDB(this.options.localDb));
@@ -40,16 +42,32 @@ export default Ember.Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
-    return remoteDb.login(username, password);
+    const promise = remoteDb.login(username, password);
+    promise.then(() => {
+      this.set("loggedIn", true);
+    });
+
+    return promise;
   },
 
   logout() {
-    assert("You must be logged in to call `logout()`", isPresent(this.get("username")));
+    assert("You must be logged in to call `logout()`", this.get("loggedIn"));
     const remoteDb = this._initRemoteDb();
-    return remoteDb.logout();
+    const promise = remoteDb.logout();
+    promise.then(() => {
+      this.set("loggedIn", false);
+    });
+
+    return promise;
+  },
+
+  getSession() {
+    const remoteDb = this._initRemoteDb();
+    return remoteDb.getSession();
   },
 
   _initRemoteDb() {
+    assert("username has not been set yet", isPresent(this.get("username")));
     let remoteDb = this.get("remoteDb");
     if (!remoteDb) {
       assert("'options.remoteHost' is empty!", isPresent(this.options.remoteHost));

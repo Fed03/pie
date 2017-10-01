@@ -57,7 +57,24 @@ test("it logins a user", function(assert) {
   assert.ok(dbInstance.login.calledWith("foo", "password"));
 });
 
-test("logout the user", function(assert) {
+test("login sets a flag", async function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.login.returns(Promise.resolve());
+
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: this.stub().returns(dbInstance)
+  });
+
+  assert.equal(service.get("loggedIn"), false);
+
+  await service.login("foo", "bar");
+  assert.equal(service.get("loggedIn"), true);
+});
+
+test("logout the user", async function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.logout.returns(Promise.resolve());
 
@@ -68,11 +85,13 @@ test("logout the user", function(assert) {
     PouchDB: this.stub().returns(dbInstance)
   });
 
-  service.login("foo", "bar");
+  service.set("username", "foo");
+  service.set("loggedIn", true);
 
   let promise = service.logout();
   assert.ok(promise instanceof Promise, "Returns a Promise");
-
+  await promise;
+  assert.equal(service.get("loggedIn"), false);
   assert.ok(dbInstance.logout.calledOnce);
 });
 
@@ -89,6 +108,44 @@ test("logout throws if not already logged in", function(assert) {
   }, /you must be logged in to call `logout\(\)`/i);
 });
 
+test("it gets the auth session from remote", function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.getSession.returns(Promise.resolve());
+
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: this.stub().returns(dbInstance)
+  });
+
+  service.set("username", "foo");
+
+  let promise = service.getSession();
+  assert.ok(promise instanceof Promise, "Returns a Promise");
+
+  assert.ok(dbInstance.getSession.calledOnce);
+});
+
+test("it throws an error if remote methods are called without username being set", function(assert) {
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: this.stub().returns(sinon.createStubInstance(PouchDB))
+  });
+
+  service.set("loggedIn", true);
+
+  assert.throws(() => {
+    service.logout();
+  }, /username has not been set yet/i);
+
+  assert.throws(() => {
+    service.getSession();
+  }, /username has not been set yet/i);
+});
+
 test("it throws an error if remote methods are called without a remoteHost option", function(assert) {
   let service = this.subject({ PouchDB: this.stub().returns(sinon.createStubInstance(PouchDB)) });
 
@@ -101,12 +158,15 @@ test("it throws an error if remote methods are called without a remoteHost optio
   }, /'options.remoteHost' is empty/);
 
   assert.throws(() => {
+    service.set("loggedIn", true);
     service.logout();
   }, /'options.remoteHost' is empty/);
 });
 
 test("it inits the remotedb just once", function(assert) {
-  let stub = this.stub().returns(sinon.createStubInstance(PouchDB));
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.login.returns(Promise.resolve());
+  let stub = this.stub().returns(dbInstance);
   let remoteStub = stub.withArgs("host/userdb-666f6f", { skip_setup: true });
   let service = this.subject({
     options: {
