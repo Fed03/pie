@@ -66,6 +66,11 @@ export default Ember.Service.extend({
     return remoteDb.getSession();
   },
 
+  getUser() {
+    const remoteDb = this._initRemoteDb();
+    return remoteDb.getUser(this.get("username"));
+  },
+
   _initRemoteDb() {
     assert("username has not been set yet", isPresent(this.get("username")));
     let remoteDb = this.get("remoteDb");

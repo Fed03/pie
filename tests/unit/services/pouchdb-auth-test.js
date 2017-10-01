@@ -127,6 +127,25 @@ test("it gets the auth session from remote", function(assert) {
   assert.ok(dbInstance.getSession.calledOnce);
 });
 
+test("it get the user info from remote", function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.getUser.returns(Promise.resolve());
+
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: this.stub().returns(dbInstance)
+  });
+
+  service.set("username", "foo");
+
+  let promise = service.getUser();
+  assert.ok(promise instanceof Promise, "Returns a Promise");
+
+  assert.ok(dbInstance.getUser.calledWith("foo"));
+});
+
 test("it throws an error if remote methods are called without username being set", function(assert) {
   let service = this.subject({
     options: {
@@ -144,6 +163,10 @@ test("it throws an error if remote methods are called without username being set
   assert.throws(() => {
     service.getSession();
   }, /username has not been set yet/i);
+
+  assert.throws(() => {
+    service.getUser();
+  }, /username has not been set yet/i);
 });
 
 test("it throws an error if remote methods are called without a remoteHost option", function(assert) {
@@ -155,6 +178,11 @@ test("it throws an error if remote methods are called without a remoteHost optio
 
   assert.throws(() => {
     service.registerUser("foo", "bar");
+  }, /'options.remoteHost' is empty/);
+
+  assert.throws(() => {
+    service.set("username", "foo");
+    service.getUser();
   }, /'options.remoteHost' is empty/);
 
   assert.throws(() => {
