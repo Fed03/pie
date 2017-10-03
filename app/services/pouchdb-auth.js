@@ -29,12 +29,16 @@ export default Ember.Service.extend({
     this.set("db", new this.PouchDB(this.options.localDb));
   },
 
-  registerUser(username, password) {
+  registerUser(username, password, metadata) {
     if (!this.get("username")) {
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
-    return remoteDb.signup(username, password);
+    if (metadata) {
+      return remoteDb.signup(username, password, { metadata });
+    } else {
+      return remoteDb.signup(username, password);
+    }
   },
 
   login(username, password) {

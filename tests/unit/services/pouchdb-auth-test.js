@@ -33,7 +33,31 @@ test("it registers a user", function(assert) {
   assert.ok(spy.secondCall.calledWithNew());
   assert.ok(spy.secondCall.calledWithExactly("host/userdb-666f6f", { skip_setup: true }), "Append the hex version of username foo");
 
-  assert.ok(dbInstance.signup.calledWith("foo", "password"));
+  assert.ok(dbInstance.signup.calledWithExactly("foo", "password"));
+});
+
+test("it build metadata when registering user", function(assert) {
+  let dbInstance = sinon.createStubInstance(PouchDB);
+  let service = this.subject({
+    options: {
+      remoteHost: "host"
+    },
+    PouchDB: this.stub().returns(dbInstance)
+  });
+
+  service.registerUser("foo", "bar", {
+    name: "john",
+    age: 20
+  });
+
+  assert.ok(
+    dbInstance.signup.calledWithExactly("foo", "bar", {
+      metadata: {
+        name: "john",
+        age: 20
+      }
+    })
+  );
 });
 
 test("it logins a user", function(assert) {
