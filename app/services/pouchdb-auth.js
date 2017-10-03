@@ -49,6 +49,10 @@ export default Ember.Service.extend({
     const promise = remoteDb.login(username, password);
     promise.then(() => {
       this.set("loggedIn", true);
+      this.get("db").sync(remoteDb, {
+        live: true,
+        retry: true
+      });
     });
 
     return promise;

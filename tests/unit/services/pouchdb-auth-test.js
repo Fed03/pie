@@ -64,7 +64,7 @@ test("it logins a user", function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.login.returns(Promise.resolve());
 
-  let spy = this.stub();
+  let spy = this.stub().returns(sinon.createStubInstance(PouchDB));
   spy.withArgs("host/userdb-666f6f", { skip_setup: true }).returns(dbInstance);
 
   let service = this.subject({
@@ -96,6 +96,33 @@ test("login sets a flag", async function(assert) {
 
   await service.login("foo", "bar");
   assert.equal(service.get("loggedIn"), true);
+});
+
+test("it starts syncing when loggedIn", async function(assert) {
+  let localDb = sinon.createStubInstance(PouchDB);
+  let remoteDb = sinon.createStubInstance(PouchDB);
+  remoteDb.login.returns(Promise.resolve());
+
+  let PouchDBObj = this.stub();
+  PouchDBObj.withArgs("localDb").returns(localDb);
+  PouchDBObj.returns(remoteDb);
+
+  let service = this.subject({
+    options: {
+      localDb: "localDb",
+      remoteHost: "host"
+    },
+    PouchDB: PouchDBObj
+  });
+
+  await service.login("foo", "bar");
+
+  assert.ok(
+    localDb.sync.calledWithExactly(remoteDb, {
+      live: true,
+      retry: true
+    })
+  );
 });
 
 test("logout the user", async function(assert) {
