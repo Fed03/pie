@@ -1,4 +1,6 @@
 import Ember from "ember";
-import UnauthRoute from "pie/mixins/unauth-route";
+import UnauthenticatedRouteMixin from "ember-simple-auth/mixins/unauthenticated-route-mixin";
 
-export default Ember.Route.extend(UnauthRoute);
+export default Ember.Route.extend(UnauthenticatedRouteMixin, {
+  routeIfAlreadyAuthenticated: "/"
+});
