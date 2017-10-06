@@ -1,3 +1,3 @@
-FROM apache/couchdb:latest
+FROM apache/couchdb:1.6.1-couchperuser
 
-COPY fed.ini /opt/couchdb/etc/local.d/
+COPY local.ini /usr/local/etc/couchdb/local.d/
