@@ -1,8 +1,0 @@
-<span data-test-selector="transaction-value" class="{{typeClass}}" {{action 'toggleCalc'}}>
-  {{formattedValue}}
-</span>
-{{#if calcOpened}}
-  <div class="overlay">
-    {{calc-input value=value onResult=(action 'updateValue')}}
-  </div>
-{{/if}}
