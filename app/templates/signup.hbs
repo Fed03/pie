@@ -15,6 +15,9 @@
         {{/if}}
       </div>
       <div class="mui-textfield">
+        {{one-way-input data-test-password-input type="password" placeholder="Your password" required=true value=changeset.password update=(action (mut changeset.password))}}
+      </div>
+      <div class="mui-textfield">
         {{one-way-input data-test-initial-balance-input placeholder="Your current balance" required=true value=changeset.initialBalance update=(action (mut changeset.initialBalance)) onblur=(action "validateProperty" "initialBalance")}}
         {{#if changeset.error.initialBalance}}
           <ul class="input-validation-errors">
