@@ -3,6 +3,7 @@ import PouchDB from "pouchdb";
 import { assert } from "@ember/debug";
 import { isPresent } from "@ember/utils";
 import { computed } from "@ember/object";
+import { getOwner } from "@ember/application";
 
 function stringToHex(string) {
   let hex = "";
@@ -25,7 +26,7 @@ export default Ember.Service.extend({
   loggedIn: false,
 
   init() {
-    this.options = this.options || {};
+    this.options = this._buildOptions();
     this.set("db", new this.PouchDB(this.options.localDb));
   },
 
@@ -46,27 +47,25 @@ export default Ember.Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
-    const promise = remoteDb.login(username, password);
-    promise.then(() => {
+    return remoteDb.login(username, password).then(data => {
       this.set("loggedIn", true);
       this.get("db").sync(remoteDb, {
         live: true,
         retry: true
       });
-    });
 
-    return promise;
+      return data;
+    });
   },
 
   logout() {
     assert("You must be logged in to call `logout()`", this.get("loggedIn"));
     const remoteDb = this._initRemoteDb();
-    const promise = remoteDb.logout();
-    promise.then(() => {
+    return remoteDb.logout().then(response => {
       this.set("loggedIn", false);
-    });
 
-    return promise;
+      return response;
+    });
   },
 
   getSession() {
@@ -90,5 +89,15 @@ export default Ember.Service.extend({
       this.set("remoteDb", remoteDb);
     }
     return remoteDb;
+  },
+
+  _buildOptions() {
+    let defaultOptions = {};
+    let config = getOwner(this).resolveRegistration("config:environment");
+    if (config && config.emberPouch) {
+      defaultOptions = config.emberPouch;
+    }
+
+    return Object.assign(defaultOptions, this.options || {});
   }
 });
