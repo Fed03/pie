@@ -2,6 +2,8 @@ import { test } from "qunit";
 import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { resetCouchDb } from "pie/tests/helpers/reset-couchdb";
+import { run } from "@ember/runloop";
+import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
 moduleForPouchAcceptance("Acceptance | signup", {
   async beforeEach() {
@@ -35,7 +37,9 @@ test("it creates a new user", async function(assert) {
 
   await click("[data-test-create-user-btn]");
 
-  let user = await this.store.findRecord("user", 1);
+  // let c = currentSession(this.application);
+
+  let user = await run(() => this.store.findRecord("user", 1));
 
   assert.ok(user, "The user has been created");
   assert.equal(user.get("name"), "john", "The username is correctly saved");
@@ -60,6 +64,7 @@ test("after user creation, redirects to /", async function(assert) {
   await visit("/signup");
 
   fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
   fillIn("[data-test-initial-balance-input]", 12368.53);
   await click("[data-test-create-user-btn]");
 

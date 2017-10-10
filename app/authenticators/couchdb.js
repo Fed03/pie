@@ -3,7 +3,9 @@ import { inject } from "@ember/service";
 
 export default Base.extend({
   pouchDbService: inject("pouchdb-auth"),
-  restore(data) {},
+  restore(data) {
+    console.log("restore", data);
+  },
 
   authenticate(username, password) {
     const service = this.get("pouchDbService");

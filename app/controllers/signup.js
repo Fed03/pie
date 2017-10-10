@@ -3,10 +3,13 @@ import { or, not } from "ember-awesome-macros";
 import UserValidation from "pie/validations/user";
 import lookupValidator from "ember-changeset-validations";
 import Changeset from "ember-changeset";
+import { inject } from "@ember/service";
 
 const { run } = Ember;
 
 export default Ember.Controller.extend({
+  pouchDbService: inject("pouchdb-auth"),
+  session: inject(),
   init() {
     this._super(...arguments);
     this.changeset = new Changeset(this, lookupValidator(UserValidation), UserValidation);
@@ -38,10 +41,13 @@ export default Ember.Controller.extend({
       if (this.changeset.isValid) {
         await this.changeset.save();
 
-        const { name, initialBalance } = this.getProperties("name", "initialBalance");
+        const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
+        await this.get("pouchDbService").registerUser(name, password, { dbId: 1 });
+        // await this.get("session").authenticate("authenticator:couchdb", name, password);
         await run(() => {
           return this.store
             .createRecord("user", {
+              id: 1,
               name,
               initialBalance,
               currentBalance: initialBalance
