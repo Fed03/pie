@@ -28,16 +28,16 @@ test("the inputs are blank by default", async function(assert) {
   assert.equal(findWithAssert("[data-test-initial-balance-input]").value, "");
 });
 
-test("it creates a new user", async function(assert) {
+test("it creates a new user on signup", async function(assert) {
   await visit("/signup");
+
+  assert.equal((await this.store.findAll("user")).get("length"), 0);
 
   fillIn("[data-test-username-input]", "john");
   fillIn("[data-test-password-input]", "password");
   fillIn("[data-test-initial-balance-input]", 12368.53);
 
   await click("[data-test-create-user-btn]");
-
-  // let c = currentSession(this.application);
 
   let user = await run(() => this.store.findRecord("user", 1));
 

@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
 
         const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
         await this.get("pouchDbService").registerUser(name, password, { dbId: 1 });
-        // await this.get("session").authenticate("authenticator:couchdb", name, password);
+        await this.get("session").authenticate("authenticator:couchdb", name, password);
         await run(() => {
           return this.store
             .createRecord("user", {
