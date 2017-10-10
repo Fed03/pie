@@ -2941,9 +2941,9 @@ ember-one-way-controls@^2.0.0:
     ember-invoke-action "1.4.0"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
-ember-pouch@Fed03/ember-pouch#test-waiter:
+ember-pouch@Fed03/ember-pouch#waiter:
   version "5.0.0-beta.2"
-  resolved "https://codeload.github.com/Fed03/ember-pouch/tar.gz/54d547ad8d575fdf55bd55d447cc1aec2b7d6a7c"
+  resolved "https://codeload.github.com/Fed03/ember-pouch/tar.gz/0acbc183ad47fe444123bc002742b454c4c827dd"
   dependencies:
     broccoli-stew "^1.3.1"
     ember-cli-babel "^6.3.0"

@@ -48,7 +48,7 @@
     "ember-moment": "^7.3.1",
     "ember-native-dom-helpers": "^0.4.2",
     "ember-one-way-controls": "^2.0.0",
-    "ember-pouch": "Fed03/ember-pouch#test-waiter",
+    "ember-pouch": "Fed03/ember-pouch#waiter",
     "ember-power-calendar": "Fed03/ember-power-calendar#test-helpers",
     "ember-resolver": "^4.0.0",
     "ember-simple-auth": "^1.4.0",
