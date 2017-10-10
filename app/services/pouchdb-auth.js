@@ -15,6 +15,7 @@ function stringToHex(string) {
 }
 
 export default Ember.Service.extend({
+  waiters: 0,
   PouchDB,
 
   hexUserName: computed("username", {
@@ -28,6 +29,9 @@ export default Ember.Service.extend({
   init() {
     this.options = this._buildOptions();
     this.set("db", new this.PouchDB(this.options.localDb));
+    if (Ember.testing) {
+      Ember.Test.registerWaiter(() => this.waiters === 0);
+    }
   },
 
   registerUser(username, password, metadata) {
@@ -35,8 +39,12 @@ export default Ember.Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
+    this.waiters++;
     if (metadata) {
-      return remoteDb.signup(username, password, { metadata });
+      return remoteDb.signup(username, password, { metadata }).then(response => {
+        this.waiters--;
+        return response;
+      });
     } else {
       return remoteDb.signup(username, password);
     }
@@ -47,7 +55,9 @@ export default Ember.Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
+    this.waiters++;
     return remoteDb.login(username, password).then(data => {
+      this.waiters--;
       this.set("loggedIn", true);
       this.get("db").sync(remoteDb, {
         live: true,
@@ -75,7 +85,11 @@ export default Ember.Service.extend({
 
   getUser() {
     const remoteDb = this._initRemoteDb();
-    return remoteDb.getUser(this.get("username"));
+    this.waiters++;
+    return remoteDb.getUser(this.get("username")).then(response => {
+      this.waiters--;
+      return response;
+    });
   },
 
   _initRemoteDb() {
