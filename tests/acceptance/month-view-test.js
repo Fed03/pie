@@ -3,6 +3,7 @@ import moment from "moment";
 import { test } from "qunit";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
+import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 
 const { run } = Ember;
 
@@ -16,7 +17,7 @@ function getCurrentMonthName() {
 moduleForAcceptance("Acceptance | month view", {
   async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
-    await create("user");
+    authenticateSession(this.application);
   }
 });
 
