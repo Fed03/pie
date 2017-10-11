@@ -1,6 +1,6 @@
 import { Adapter } from "ember-pouch";
-import PouchDB from "pouchdb";
-import config from "pie/config/environment";
+// import PouchDB from "pouchdb";
+// import config from "pie/config/environment";
 import { inject } from "@ember/service";
 
 // const { assert, isEmpty } = Ember;

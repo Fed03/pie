@@ -1,17 +1,8 @@
 import { test, skip } from "qunit";
 import selectCategory from "pie/tests/helpers/select-category";
-import {
-  calendarSelect,
-  initCalendarHelpers
-} from "ember-power-calendar/test-support";
+import { calendarSelect, initCalendarHelpers } from "ember-power-calendar/test-support";
 import { fillCalcValue } from "pie/tests/helpers/fill-calc-value";
-import {
-  click,
-  fillIn,
-  find,
-  visit,
-  findWithAssert
-} from "ember-native-dom-helpers";
+import { click, fillIn, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 
@@ -19,6 +10,7 @@ moduleForPouchAcceptance("Acceptance | create transaction", {
   async beforeEach() {
     initCalendarHelpers(this.application.__container__);
     authenticateSession(this.application);
+    await create("user");
   }
 });
 

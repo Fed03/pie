@@ -1,3 +1,4 @@
+/* eslint no-console: 1, no-unused-vars: 1 */
 import Base from "ember-simple-auth/authenticators/base";
 import { inject } from "@ember/service";
 

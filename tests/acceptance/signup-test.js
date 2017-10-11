@@ -1,19 +1,9 @@
 import { test } from "qunit";
-import {
-  findWithAssert,
-  visit,
-  fillIn,
-  click,
-  find,
-  currentRouteName,
-  findAll,
-  focus,
-  blur
-} from "ember-native-dom-helpers";
+import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { resetCouchDb } from "pie/tests/helpers/reset-couchdb";
 import { run } from "@ember/runloop";
-import { currentSession } from "pie/tests/helpers/ember-simple-auth";
+// import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
 moduleForPouchAcceptance("Acceptance | signup", {
   async beforeEach() {

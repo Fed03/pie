@@ -1,4 +1,4 @@
-import { run } from '@ember/runloop';
+import { run } from "@ember/runloop";
 import moment from "moment";
 import { test } from "qunit";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
@@ -16,6 +16,7 @@ moduleForAcceptance("Acceptance | month view", {
   async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
     authenticateSession(this.application);
+    await create("user");
   }
 });
 

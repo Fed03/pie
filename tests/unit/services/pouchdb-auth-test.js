@@ -38,6 +38,7 @@ test("it registers a user", function(assert) {
 
 test("it build metadata when registering user", function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
+  dbInstance.signup.returns(Promise.resolve());
   let service = this.subject({
     options: {
       remoteHost: "host"
