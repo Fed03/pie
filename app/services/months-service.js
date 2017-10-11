@@ -1,6 +1,5 @@
-import Ember from "ember";
-
-const { run } = Ember;
+import Service, { inject as service } from '@ember/service';
+import { run } from '@ember/runloop';
 
 const monthDate = function(date) {
   let monthDate = new Date(date.getTime());
@@ -10,8 +9,8 @@ const monthDate = function(date) {
   return monthDate;
 };
 
-export default Ember.Service.extend({
-  store: Ember.inject.service(),
+export default Service.extend({
+  store: service(),
 
   async findCurrentMonth() {
     return await this.findMonthByDate(new Date());

@@ -1,10 +1,11 @@
-import Ember from "ember";
+import EmberError from '@ember/error';
+import { registerAsyncHelper } from '@ember/test';
 
-export default Ember.Test.registerAsyncHelper("findLatestInDb", function(app, modelName) {
+export default registerAsyncHelper("findLatestInDb", function(app, modelName) {
   const store = app.__container__.lookup("service:store");
   return store.findAll(modelName, { reload: true }).then(collection => {
     if (collection.get("length") === 0) {
-      throw new Ember.Error(`No records found for '${modelName}'`);
+      throw new EmberError(`No records found for '${modelName}'`);
     }
     return collection.get("lastObject");
   });

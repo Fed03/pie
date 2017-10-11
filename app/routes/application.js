@@ -1,7 +1,8 @@
-import Ember from "ember";
+import { all } from 'rsvp';
+import Route from '@ember/routing/route';
 import faker from "faker";
 
-export default Ember.Route.extend({
+export default Route.extend({
   beforeModel() {
     //TODO adjust this
     return this.store.findAll("category").then(categories => {
@@ -16,7 +17,7 @@ export default Ember.Route.extend({
 
           promises.push(cat.save());
         }
-        return Ember.RSVP.all(promises);
+        return all(promises);
       }
     });
   },

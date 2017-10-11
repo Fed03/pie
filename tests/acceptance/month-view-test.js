@@ -1,11 +1,9 @@
-import Ember from "ember";
+import { run } from '@ember/runloop';
 import moment from "moment";
 import { test } from "qunit";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
-
-const { run } = Ember;
 
 function getCurrentMonthName() {
   const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -63,7 +61,7 @@ test("visiting `/` redirects to the current month", async function(assert) {
 
 test("it creates current month if not present", async function(assert) {
   let user = (await this.store.findAll("user")).get("firstObject");
-  await Ember.run(() => {
+  await run(() => {
     user.set("currentBalance", 1233.98);
     return user.save();
   });

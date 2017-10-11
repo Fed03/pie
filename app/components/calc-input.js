@@ -1,4 +1,5 @@
-import Ember from "ember";
+import { on } from '@ember/object/evented';
+import Component from '@ember/component';
 import { EKMixin, keyDown, getCode } from "ember-keyboard";
 
 // TODO: must be refactored entirely
@@ -29,7 +30,7 @@ const CalcOperations = {
   }
 };
 
-export default Ember.Component.extend(EKMixin, {
+export default Component.extend(EKMixin, {
   "data-test-calculator": true,
   classNames: ["calculator"],
 
@@ -50,7 +51,7 @@ export default Ember.Component.extend(EKMixin, {
     }
   },
 
-  inputDigitKey: Ember.on(keyDown(), function(event) {
+  inputDigitKey: on(keyDown(), function(event) {
     const match = /^((Numpad)|(Digit))(\d)$/.exec(getCode(event));
     if (match) {
       const digit = match[4];
@@ -58,20 +59,20 @@ export default Ember.Component.extend(EKMixin, {
     }
   }),
 
-  deleteLastDigitKey: Ember.on(keyDown("Backspace"), function() {
+  deleteLastDigitKey: on(keyDown("Backspace"), function() {
     this.send("deleteLastDigit");
   }),
 
-  clearKey: Ember.on(keyDown("Delete"), function() {
+  clearKey: on(keyDown("Delete"), function() {
     this.set("displayValue", "0");
     this.send("clear");
   }),
 
-  dotKey: Ember.on(keyDown("NumpadDecimal"), function() {
+  dotKey: on(keyDown("NumpadDecimal"), function() {
     this.send("inputDot");
   }),
 
-  opKey: Ember.on(keyDown(), function(event) {
+  opKey: on(keyDown(), function(event) {
     const match = /^Numpad((Add)|(Subtract)|(Multiply)|(Divide))$/.exec(getCode(event));
     if (match) {
       const op = OpKeysMapping[match[1].toLowerCase()];
@@ -79,7 +80,7 @@ export default Ember.Component.extend(EKMixin, {
     }
   }),
 
-  equalsKey: Ember.on(keyDown(), function(event) {
+  equalsKey: on(keyDown(), function(event) {
     const match = /^(Numpad((Enter)|(Equal)))|Enter$/.exec(getCode(event));
     if (match) {
       this.send("equals");

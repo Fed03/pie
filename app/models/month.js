@@ -1,6 +1,6 @@
+import { computed } from '@ember/object';
 import Model from "ember-pouch/model";
 import DS from "ember-data";
-import Ember from "ember";
 import getDateForCurrentMonth from "../utils/get-date-for-current-month";
 
 const {
@@ -16,13 +16,13 @@ export default Model.extend({
   transactions: hasMany("transaction", { dontsave: true }),
   openingBalance: attr("number"),
 
-  name: Ember.computed("date", {
+  name: computed("date", {
     get() {
       return months[this.get("date").getMonth()];
     }
   }).readOnly(),
 
-  balance: Ember.computed("transactions.@each.value", {
+  balance: computed("transactions.@each.value", {
     get() {
       return this.get("transactions")
         .mapBy("value")

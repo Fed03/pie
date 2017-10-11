@@ -1,5 +1,5 @@
+import { A } from '@ember/array';
 import { moduleForModel, test } from "ember-qunit";
-import Ember from "ember";
 import { makeNew, manualSetup } from "ember-data-factory-guy";
 
 moduleForModel("month", "Unit | Model | month", {
@@ -37,7 +37,7 @@ test("name attr is read only", function(assert) {
 });
 
 test("it computes month balance", function(assert) {
-  const transactions = Ember.A([
+  const transactions = A([
     makeNew("transaction", { value: 20.93 }),
     makeNew("transaction", { value: 21.0 }),
     makeNew("transaction", { value: -30.33 })

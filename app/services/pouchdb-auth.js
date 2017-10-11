@@ -1,3 +1,5 @@
+import { registerWaiter } from '@ember/test';
+import Service from '@ember/service';
 import Ember from "ember";
 import PouchDB from "pouchdb";
 import { assert } from "@ember/debug";
@@ -14,7 +16,7 @@ function stringToHex(string) {
   return hex;
 }
 
-export default Ember.Service.extend({
+export default Service.extend({
   waiters: 0,
   PouchDB,
 
@@ -30,7 +32,7 @@ export default Ember.Service.extend({
     this.options = this._buildOptions();
     this.set("db", new this.PouchDB(this.options.localDb));
     if (Ember.testing) {
-      Ember.Test.registerWaiter(() => this.waiters === 0);
+      registerWaiter(() => this.waiters === 0);
     }
   },
 

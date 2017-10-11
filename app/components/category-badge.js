@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import abbreviateSentence from '../utils/abbreviate-sentence';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['category--badge'],
   classNameBindings: ['typeClass'],
   typeClass: computed('category.type', {

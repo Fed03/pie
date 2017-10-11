@@ -1,7 +1,7 @@
+import EmberObject from '@ember/object';
 import { findAll, find } from "ember-native-dom-helpers";
 import { moduleForComponent, test } from "ember-qunit";
 import hbs from "htmlbars-inline-precompile";
-import Ember from "ember";
 
 moduleForComponent("category-badge", "Integration | Component | category badge", {
   integration: true
@@ -10,7 +10,7 @@ moduleForComponent("category-badge", "Integration | Component | category badge",
 test("it renders with the correct class", function(assert) {
   this.set(
     "category",
-    Ember.Object.create({
+    EmberObject.create({
       name: "Food",
       type: "income"
     })
@@ -23,7 +23,7 @@ test("it renders with the correct class", function(assert) {
 test("it add a class based on the category type", function(assert) {
   this.set(
     "category",
-    Ember.Object.create({
+    EmberObject.create({
       name: "Food",
       type: "income"
     })
@@ -34,7 +34,7 @@ test("it add a class based on the category type", function(assert) {
 
   this.set(
     "category",
-    Ember.Object.create({
+    EmberObject.create({
       name: "Food",
       type: "outcome"
     })
@@ -46,7 +46,7 @@ test("it add a class based on the category type", function(assert) {
 test("it contains the abbrevation of the category name", function(assert) {
   this.set(
     "category",
-    Ember.Object.create({
+    EmberObject.create({
       name: "Food",
       type: "income"
     })
@@ -57,7 +57,7 @@ test("it contains the abbrevation of the category name", function(assert) {
 
   this.set(
     "category",
-    Ember.Object.create({
+    EmberObject.create({
       name: "Sport",
       type: "outcome"
     })

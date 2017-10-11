@@ -1,9 +1,8 @@
-import Ember from "ember";
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import momentComputed from "ember-moment/computeds/moment";
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ["transaction--panel", "mui-panel"],
   "data-test-transaction-panel-for-day": computed("momentDate", {
     get() {

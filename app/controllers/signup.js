@@ -1,13 +1,12 @@
-import Ember from "ember";
+import Controller from '@ember/controller';
+import { run } from '@ember/runloop';
 import { or, not } from "ember-awesome-macros";
 import UserValidation from "pie/validations/user";
 import lookupValidator from "ember-changeset-validations";
 import Changeset from "ember-changeset";
 import { inject } from "@ember/service";
 
-const { run } = Ember;
-
-export default Ember.Controller.extend({
+export default Controller.extend({
   pouchDbService: inject("pouchdb-auth"),
   session: inject(),
   init() {

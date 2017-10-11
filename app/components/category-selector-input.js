@@ -1,6 +1,6 @@
-import Ember from "ember";
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   "data-test-category-selector-input": true,
   classNames: ["category-selector-input"],
   classNameBindings: ["focused"],

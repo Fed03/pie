@@ -1,7 +1,8 @@
-import Ember from "ember";
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  monthsService: Ember.inject.service(),
+export default Route.extend({
+  monthsService: service(),
 
   async beforeModel() {
     let currentMonth = await this.get("monthsService").findCurrentMonth();

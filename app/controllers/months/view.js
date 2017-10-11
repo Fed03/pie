@@ -1,9 +1,10 @@
-import Ember from "ember";
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 import { groupBy, sort } from "ember-awesome-macros/array";
 import raw from "ember-macro-helpers/raw";
 
-export default Ember.Controller.extend({
-  currentBalance: Ember.computed("model.openingBalance", "model.balance", {
+export default Controller.extend({
+  currentBalance: computed("model.openingBalance", "model.balance", {
     get() {
       return this.get("model.openingBalance") + this.get("model.balance");
     }

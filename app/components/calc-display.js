@@ -1,11 +1,13 @@
-import Ember from "ember";
+import { isPresent } from '@ember/utils';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   "data-test-calculator-display": true,
   classNames: ["calculator-display"],
-  formattedValue: Ember.computed("value", {
+  formattedValue: computed("value", {
     get() {
-      let value = Ember.isPresent(this.get("value")) ? this.get("value") : "0";
+      let value = isPresent(this.get("value")) ? this.get("value") : "0";
       let formattedValue = parseFloat(value).toLocaleString("en-US");
 
       const match = value.match(/\.\d*?(0*)$/);

@@ -1,17 +1,18 @@
-import Ember from "ember";
+import { inject as service } from '@ember/service';
+import { oneWay, readOnly } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { run } from '@ember/runloop';
 import { filterBy, first, sort } from "ember-awesome-macros/array";
 import raw from "ember-macro-helpers/raw";
 
-const { run, inject, computed } = Ember;
-
-export default Ember.Controller.extend({
-  monthsService: inject.service(),
+export default Controller.extend({
+  monthsService: service(),
 
   defaultCategory: first(sort(filterBy("model", raw("type"), raw("outcome")), ["name"])),
 
-  transactionCategory: computed.oneWay("defaultCategory"),
+  transactionCategory: oneWay("defaultCategory"),
 
-  transactionType: computed.readOnly("transactionCategory.type"),
+  transactionType: readOnly("transactionCategory.type"),
 
   transactionDate: new Date(),
 

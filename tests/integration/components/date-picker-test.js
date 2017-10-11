@@ -1,7 +1,15 @@
 import { moduleForComponent, test } from "ember-qunit";
 import hbs from "htmlbars-inline-precompile";
-import { click, findWithAssert, find, findAll } from "ember-native-dom-helpers";
-import { calendarSelect, initCalendarHelpers } from "ember-power-calendar/test-support";
+import {
+  click,
+  findWithAssert,
+  find,
+  findAll
+} from "ember-native-dom-helpers";
+import {
+  calendarSelect,
+  initCalendarHelpers
+} from "ember-power-calendar/test-support";
 
 moduleForComponent("date-picker", "Integration | Component | date picker", {
   integration: true,

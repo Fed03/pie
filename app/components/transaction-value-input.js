@@ -1,25 +1,28 @@
-import Ember from "ember";
+import { isPresent } from '@ember/utils';
+import { alias, oneWay } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import Component from '@ember/component';
 
 const TypeSignMap = {
   income: "+",
   outcome: "-"
 };
 
-export default Ember.Component.extend({
+export default Component.extend({
   "data-test-transaction-value-input": true,
   classNameBindings: ["focused", "transactionTypeClass"],
-  transactionTypeClass: Ember.computed("transactionType", {
+  transactionTypeClass: computed("transactionType", {
     get() {
       return `${this.get("transactionType")}-amount`;
     }
   }),
   focused: false,
-  modalOpened: Ember.computed.alias("focused"),
-  internalValue: Ember.computed.oneWay("value"),
-  displayValue: Ember.computed("internalValue", "transactionType", {
+  modalOpened: alias("focused"),
+  internalValue: oneWay("value"),
+  displayValue: computed("internalValue", "transactionType", {
     get() {
       let { internalValue: value, transactionType } = this.getProperties("internalValue", "transactionType");
-      let displayValue = Ember.isPresent(value) ? value : 0;
+      let displayValue = isPresent(value) ? value : 0;
       return `${TypeSignMap[transactionType]}${displayValue.toLocaleString("en-US", { minimumFractionDigits: 2 })}`;
     }
   }),

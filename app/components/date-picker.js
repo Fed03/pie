@@ -1,8 +1,9 @@
-import Ember from "ember";
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
+import { computed } from '@ember/object';
 
-const { isPresent, computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   "data-test-date-picker": true,
   modalOpened: false,
   displayValue: computed("internalValue", {
@@ -13,8 +14,8 @@ export default Ember.Component.extend({
       }
     }
   }),
-  internalValue: computed.oneWay("value"),
-  calendarCenter: computed.oneWay("value"),
+  internalValue: oneWay("value"),
+  calendarCenter: oneWay("value"),
   actions: {
     toggleModal() {
       this.toggleProperty("modalOpened");

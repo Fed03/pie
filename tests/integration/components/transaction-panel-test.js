@@ -1,5 +1,6 @@
+import { run } from '@ember/runloop';
+import { A } from '@ember/array';
 import { find, findAll } from "ember-native-dom-helpers";
-import Ember from "ember";
 import moment from "moment";
 import hbs from "htmlbars-inline-precompile";
 import { currency } from "accounting/settings";
@@ -31,7 +32,7 @@ moduleForComponent(
 test("it renders with the correct attrs", function(assert) {
   const today = new Date();
   this.set("date", today);
-  this.set("transactions", Ember.A([]));
+  this.set("transactions", A([]));
   this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
   assert.equal(findAll("div.transaction--panel.mui-panel").length, 1);
@@ -40,7 +41,7 @@ test("it renders with the correct attrs", function(assert) {
 test("it renders the date", function(assert) {
   const today = new Date();
   this.set("date", today);
-  this.set("transactions", Ember.A([]));
+  this.set("transactions", A([]));
   this.render(hbs`{{transaction-panel date=date transactions=transactions}}`);
 
   assert.ok(
@@ -82,7 +83,7 @@ test("it sets a class according to the total balance", function(assert) {
     'It has not the ".outcome-amount" class'
   );
 
-  Ember.run(() => {
+  run(() => {
     transaction2.set("value", -5.2);
   });
   assert.notOk(
@@ -94,7 +95,7 @@ test("it sets a class according to the total balance", function(assert) {
     'It has not the ".outcome-amount" class'
   );
 
-  Ember.run(() => {
+  run(() => {
     transaction2.set("value", -8.2);
   });
   assert.notOk(
@@ -157,7 +158,7 @@ test("it renders the transactions", function(assert) {
       .hasClass("income-amount"),
     "It sets the `income` class for transaction"
   );
-  Ember.run(() => {
+  run(() => {
     firstTransaction.set("value", -4);
   });
   assert.ok(
