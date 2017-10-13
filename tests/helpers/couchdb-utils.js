@@ -1,11 +1,11 @@
-function createHeaders(config) {
+function _createHeaders(config) {
   return new Headers({
     Authorization: `Basic ${btoa(`${config.couchDbCredentials.username}:${config.couchDbCredentials.password}`)}`,
     "Content-Type": "application/json"
   });
 }
 
-function deleteUsers(remoteHost, headers) {
+function _deleteUsers(remoteHost, headers) {
   return fetch(`${remoteHost}/_users/_all_docs`, { headers })
     .then(response => response.json())
     .then(data => {
@@ -23,7 +23,7 @@ function deleteUsers(remoteHost, headers) {
     });
 }
 
-async function deleteUsersDb(remoteHost, headers) {
+async function _deleteUsersDb(remoteHost, headers) {
   const allDbs = await fetch(`${remoteHost}/_all_dbs`).then(response => response.json());
   const filteredDbs = allDbs.filter(db => db.startsWith("userdb"));
 
@@ -38,9 +38,17 @@ async function deleteUsersDb(remoteHost, headers) {
 function resetCouchDb(application) {
   const config = application.resolveRegistration("config:environment");
   const remoteHost = config.emberPouch.remoteHost;
-  const couchHeaders = createHeaders(config);
+  const couchHeaders = _createHeaders(config);
 
-  return Promise.all([deleteUsers(remoteHost, couchHeaders), deleteUsersDb(remoteHost, couchHeaders)]);
+  return Promise.all([_deleteUsers(remoteHost, couchHeaders), _deleteUsersDb(remoteHost, couchHeaders)]);
 }
 
-export { resetCouchDb };
+function findCouchUserByName(application, name) {
+  const config = application.resolveRegistration("config:environment");
+  const remoteHost = config.emberPouch.remoteHost;
+  const couchHeaders = _createHeaders(config);
+
+  return fetch(`${remoteHost}/_users/org.couchdb.user:${name}`, { headers: couchHeaders }).then(response => response.json());
+}
+
+export { resetCouchDb, findCouchUserByName };
