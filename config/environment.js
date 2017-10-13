@@ -22,7 +22,8 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
-    emberPouch: {}
+    emberPouch: {},
+    baseUserId: "pieAuthUser"
   };
 
   if (environment === "development") {

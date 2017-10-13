@@ -1,16 +1,11 @@
 import { test } from "qunit";
 import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
-import { resetCouchDb } from "pie/tests/helpers/reset-couchdb";
+import { resetCouchDb, findCouchUserByName } from "pie/tests/helpers/couchdb-utils";
 import { run } from "@ember/runloop";
-// import { currentSession } from "pie/tests/helpers/ember-simple-auth";
+import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
-moduleForPouchAcceptance("Acceptance | signup", {
-  async beforeEach() {
-    this.store = this.application.__container__.lookup("service:store");
-    await resetCouchDb(this.application);
-  }
-});
+moduleForPouchAcceptance("Acceptance | signup form");
 
 test("it shows inputs ", async function(assert) {
   await visit("/signup");
@@ -28,25 +23,6 @@ test("the inputs are blank by default", async function(assert) {
   assert.equal(findWithAssert("[data-test-initial-balance-input]").value, "");
 });
 
-test("it creates a new user on signup", async function(assert) {
-  await visit("/signup");
-
-  assert.equal((await this.store.findAll("user")).get("length"), 0);
-
-  fillIn("[data-test-username-input]", "john");
-  fillIn("[data-test-password-input]", "password");
-  fillIn("[data-test-initial-balance-input]", 12368.53);
-
-  await click("[data-test-create-user-btn]");
-
-  let user = await run(() => this.store.findRecord("user", 1));
-
-  assert.ok(user, "The user has been created");
-  assert.equal(user.get("name"), "john", "The username is correctly saved");
-  assert.equal(user.get("initialBalance"), 12368.53, "The initialBalance is correctly saved");
-  assert.equal(user.get("currentBalance"), 12368.53, "The value of currentBalance is equal to initialBalance");
-});
-
 // test("the balance is formatted", async function(assert) {
 //   await visit("/signup");
 //
@@ -59,17 +35,6 @@ test("it creates a new user on signup", async function(assert) {
 //   fillIn(testSelector("initial-balance-input"), "12.");
 //   assert.equal(find(testSelector("initial-balance-input")).value, "12.");
 // });
-
-test("after user creation, redirects to /", async function(assert) {
-  await visit("/signup");
-
-  fillIn("[data-test-username-input]", "john");
-  fillIn("[data-test-password-input]", "password");
-  fillIn("[data-test-initial-balance-input]", 12368.53);
-  await click("[data-test-create-user-btn]");
-
-  assert.equal(currentRouteName(), "months.view");
-});
 
 test("the submit btn is disabled if any input is blank", async function(assert) {
   await visit("/signup");
@@ -122,4 +87,66 @@ test("errors are displayed after blur", async function(assert) {
   focus("[data-test-initial-balance-input]");
   blur("[data-test-initial-balance-input]");
   assert.ok(findAll('[data-test-input-error="initial-balance"]').length > 0, "Initial balance input error");
+});
+
+moduleForPouchAcceptance("Acceptance | signup process", {
+  async beforeEach() {
+    this.store = this.application.__container__.lookup("service:store");
+    this.config = this.application.resolveRegistration("config:environment");
+    await resetCouchDb(this.application);
+  }
+});
+
+test("it registers the user on couchdb", async function(assert) {
+  await visit("/signup");
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  fillIn("[data-test-initial-balance-input]", 1000);
+  await click("[data-test-create-user-btn]");
+
+  let user = await findCouchUserByName(this.application, "john");
+  assert.equal(user.name, "john", "The user exists on remote db");
+  assert.equal(user.baseUserId, this.config.baseUserId, "It has a local id in metadata");
+});
+
+test("it logs the user in on signup", async function(assert) {
+  await visit("/signup");
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  fillIn("[data-test-initial-balance-input]", 1000);
+  await click("[data-test-create-user-btn]");
+
+  const session = currentSession(this.application);
+  assert.ok(session.get("isAuthenticated"), "The session is authenticated");
+  assert.equal(session.get("data.authenticated.baseUserId"), this.config.baseUserId, "The session contains the baseUserId property");
+});
+
+test("it creates a new user on signup", async function(assert) {
+  await visit("/signup");
+
+  assert.equal((await this.store.findAll("user")).get("length"), 0);
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  fillIn("[data-test-initial-balance-input]", 12368.53);
+  await click("[data-test-create-user-btn]");
+
+  let user = await run(() => this.store.findRecord("user", this.config.baseUserId));
+  assert.ok(user, "The user has been created");
+  assert.equal(user.get("name"), "john", "The username is correctly saved");
+  assert.equal(user.get("initialBalance"), 12368.53, "The initialBalance is correctly saved");
+  assert.equal(user.get("currentBalance"), 12368.53, "The value of currentBalance is equal to initialBalance");
+});
+
+test("after user creation, redirects to /", async function(assert) {
+  await visit("/signup");
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  fillIn("[data-test-initial-balance-input]", 1000);
+  await click("[data-test-create-user-btn]");
+
+  assert.equal(currentRouteName(), "months.view");
 });

@@ -1,10 +1,11 @@
-import Controller from '@ember/controller';
-import { run } from '@ember/runloop';
+import Controller from "@ember/controller";
+import { run } from "@ember/runloop";
 import { or, not } from "ember-awesome-macros";
 import UserValidation from "pie/validations/user";
 import lookupValidator from "ember-changeset-validations";
 import Changeset from "ember-changeset";
 import { inject } from "@ember/service";
+import config from "pie/config/environment";
 
 export default Controller.extend({
   pouchDbService: inject("pouchdb-auth"),
@@ -41,12 +42,13 @@ export default Controller.extend({
         await this.changeset.save();
 
         const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
-        await this.get("pouchDbService").registerUser(name, password, { dbId: 1 });
+        const { baseUserId } = config;
+        await this.get("pouchDbService").registerUser(name, password, { baseUserId });
         await this.get("session").authenticate("authenticator:couchdb", name, password);
         await run(() => {
           return this.store
             .createRecord("user", {
-              id: 1,
+              id: baseUserId,
               name,
               initialBalance,
               currentBalance: initialBalance
