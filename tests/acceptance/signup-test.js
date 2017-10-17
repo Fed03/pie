@@ -120,7 +120,6 @@ test("it logs the user in on signup", async function(assert) {
 
   const session = currentSession(this.application);
   assert.ok(session.get("isAuthenticated"), "The session is authenticated");
-  assert.equal(session.get("data.authenticated.baseUserId"), this.config.baseUserId, "The session contains the baseUserId property");
 });
 
 test("it creates a new user on signup", async function(assert) {

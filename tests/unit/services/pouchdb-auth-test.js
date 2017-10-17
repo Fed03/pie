@@ -36,7 +36,7 @@ test("it registers a user", function(assert) {
   assert.ok(dbInstance.signup.calledWithExactly("foo", "password"));
 });
 
-test("it build metadata when registering user", function(assert) {
+test("it builds metadata when registering user", function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.signup.returns(Promise.resolve());
   let service = this.subject({
@@ -61,7 +61,7 @@ test("it build metadata when registering user", function(assert) {
   );
 });
 
-test("it logins a user", function(assert) {
+test("it logs in a user", function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.login.returns(Promise.resolve());
 
@@ -82,7 +82,7 @@ test("it logins a user", function(assert) {
   assert.ok(dbInstance.login.calledWith("foo", "password"));
 });
 
-test("login sets a flag", async function(assert) {
+test("logging in sets a flag", async function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.login.returns(Promise.resolve());
 
@@ -99,7 +99,7 @@ test("login sets a flag", async function(assert) {
   assert.equal(service.get("loggedIn"), true);
 });
 
-test("it starts syncing when loggedIn", async function(assert) {
+test("it starts syncing when logged in", async function(assert) {
   let localDb = sinon.createStubInstance(PouchDB);
   let remoteDb = sinon.createStubInstance(PouchDB);
   remoteDb.login.returns(Promise.resolve());
@@ -126,7 +126,7 @@ test("it starts syncing when loggedIn", async function(assert) {
   );
 });
 
-test("logout the user", async function(assert) {
+test("it logs out the user", async function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.logout.returns(Promise.resolve());
 
@@ -147,7 +147,7 @@ test("logout the user", async function(assert) {
   assert.ok(dbInstance.logout.calledOnce);
 });
 
-test("logout throws if not already logged in", function(assert) {
+test("logging out throws if not already logged in", function(assert) {
   let service = this.subject({
     options: {
       remoteHost: "host"
