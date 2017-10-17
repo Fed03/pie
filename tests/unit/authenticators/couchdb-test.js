@@ -34,7 +34,6 @@ const PouchDBAuthServiceStub = Service.extend({
 });
 
 moduleFor("authenticator:couchdb", "Unit | Authenticator | couchdb", {
-  unit: true,
   beforeEach() {
     this.register("service:pouchdb-auth", PouchDBAuthServiceStub);
     this.inject.service("pouchdb-auth", { as: "pouchDbStub" });
