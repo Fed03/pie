@@ -1,5 +1,5 @@
 import Service, { inject } from "@ember/service";
-import { reject, resolve } from "rsvp";
+import { resolve } from "rsvp";
 import { isBlank } from "@ember/utils";
 
 export default Service.extend({

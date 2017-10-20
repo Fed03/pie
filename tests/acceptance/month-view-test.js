@@ -3,7 +3,7 @@ import moment from "moment";
 import { test } from "qunit";
 import { click, findAll, find, visit } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
-import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
+import { authAndLoadUser } from "pie/tests/helpers/auth-and-load-user";
 
 function getCurrentMonthName() {
   const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
@@ -15,8 +15,7 @@ function getCurrentMonthName() {
 moduleForAcceptance("Acceptance | month view", {
   async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
-    authenticateSession(this.application);
-    await create("user");
+    await authAndLoadUser(this.application);
   }
 });
 
@@ -127,7 +126,7 @@ test("viewing a month without transaction will result in an empty page", async f
 
 test("viewing a month will list its transactions", async function(assert) {
   assert.expect(3);
-  const today = moment().utc();
+  const today = moment();
   const todayDate = today.date();
 
   let transactions = [
