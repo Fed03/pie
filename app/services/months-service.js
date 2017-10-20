@@ -1,5 +1,5 @@
-import Service, { inject as service } from '@ember/service';
-import { run } from '@ember/runloop';
+import Service, { inject as service } from "@ember/service";
+import { run } from "@ember/runloop";
 
 const monthDate = function(date) {
   let monthDate = new Date(date.getTime());
@@ -11,6 +11,7 @@ const monthDate = function(date) {
 
 export default Service.extend({
   store: service(),
+  currentUser: service(),
 
   async findCurrentMonth() {
     return await this.findMonthByDate(new Date());
@@ -25,7 +26,7 @@ export default Service.extend({
     });
 
     if (!monthByDate) {
-      const user = (await this.get("store").findAll("user")).get("firstObject");
+      let user = this.get("currentUser.user");
       monthByDate = await run(() => {
         return this.get("store")
           .createRecord("month", {
