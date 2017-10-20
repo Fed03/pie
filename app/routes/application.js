@@ -1,9 +1,20 @@
-import { all } from 'rsvp';
-import Route from '@ember/routing/route';
+import { all } from "rsvp";
+import Route from "@ember/routing/route";
+import { inject } from "@ember/service";
 import faker from "faker";
+import ApplicationRouteMixin from "ember-simple-auth/mixins/application-route-mixin";
 
-export default Route.extend({
+export default Route.extend(ApplicationRouteMixin, {
+  currentUser: inject(),
+  routeAfterAuthentication: "months.index",
   beforeModel() {
+    return all([this._createDefaultCategories(), this.get("currentUser").load()]);
+  },
+  async sessionAuthenticated() {
+    await this.get("currentUser").load();
+    // this._super(...arguments);
+  },
+  _createDefaultCategories() {
     //TODO adjust this
     return this.store.findAll("category").then(categories => {
       if (categories.get("length") == 0) {
@@ -20,13 +31,5 @@ export default Route.extend({
         return all(promises);
       }
     });
-  },
-  model() {
-    return this.store.findAll("user");
-  },
-  setupController(controller, model) {
-    if (model.get("length") !== 0) {
-      controller.set("authUser", model.get("firstObject"));
-    }
   }
 });

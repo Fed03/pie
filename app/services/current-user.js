@@ -6,10 +6,6 @@ export default Service.extend({
   session: inject(),
   store: inject(),
   load() {
-    if (!this.get("session.isAuthenticated")) {
-      return reject();
-    }
-
     const userId = this.get("session.data.authenticated.baseUserId");
     if (isBlank(userId)) {
       return resolve();

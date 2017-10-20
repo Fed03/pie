@@ -44,7 +44,6 @@ export default Controller.extend({
         const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
         const { baseUserId } = config;
         await this.get("pouchDbService").registerUser(name, password, { baseUserId });
-        await this.get("session").authenticate("authenticator:couchdb", name, password);
         await run(() => {
           return this.store
             .createRecord("user", {
@@ -55,6 +54,7 @@ export default Controller.extend({
             })
             .save();
         });
+        await this.get("session").authenticate("authenticator:couchdb", name, password);
 
         this.transitionToRoute("/");
       }
