@@ -1,9 +1,11 @@
 <header>
   <nav class="mui-appbar">
     <span class="appbar-brand appbar-title mui--appbar-line-height">Pie</span>
-    <span class="appbar-brand mui--appbar-line-height" data-test-user-balance>
-      {{format-money authUser.currentBalance}}
-    </span>
+    {{#if session.isAuthenticated}}
+      <span class="appbar-brand mui--appbar-line-height" data-test-user-balance>
+        {{format-money currentUser.user.currentBalance}}
+      </span>
+    {{/if}}
   </nav>
 </header>
 <div class="mui--appbar-height"></div>
