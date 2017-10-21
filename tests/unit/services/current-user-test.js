@@ -1,4 +1,4 @@
-import { moduleFor, todo } from "ember-qunit";
+import { moduleFor, skip } from "ember-qunit";
 import Service from "@ember/service";
 import test from "ember-sinon-qunit/test-support/test";
 
@@ -33,7 +33,7 @@ moduleFor("service:current-user", "Unit | Service | current user", {
   }
 });
 
-todo("it returns a rejecting promise if session is not authenticated", function(assert) {
+skip("it returns a rejecting promise if session is not authenticated", function(assert) {
   assert.expect(1);
   let service = this.subject();
   this.sessionStub.set("isAuthenticated", false);

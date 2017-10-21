@@ -15,7 +15,7 @@ function getCurrentMonthName() {
 moduleForAcceptance("Acceptance | month view", {
   async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
-    await authAndLoadUser(this.application);
+    this.currentUser = await authAndLoadUser(this.application);
   }
 });
 
@@ -60,10 +60,8 @@ test("visiting `/` redirects to the current month", async function(assert) {
 });
 
 test("it creates current month if not present", async function(assert) {
-  let user = (await this.store.findAll("user")).get("firstObject");
-  await run(() => {
-    user.set("currentBalance", 1233.98);
-    return user.save();
+  run.next(() => {
+    this.currentUser.set("currentBalance", 1233.98);
   });
 
   let months = await this.store.findAll("month");
