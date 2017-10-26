@@ -1,4 +1,4 @@
-import { Promise } from 'rsvp';
+import { Promise } from "rsvp";
 import { module } from "qunit";
 import startApp from "../helpers/start-app";
 import destroyPouchDb from "../helpers/destroy-db";
@@ -7,6 +7,7 @@ import destroyApp from "../helpers/destroy-app";
 export default function(name, options = {}) {
   module(name, {
     beforeEach() {
+      let promises = [];
       let initPromise = Promise.resolve()
         .then(() => {
           return destroyPouchDb();
@@ -15,11 +16,13 @@ export default function(name, options = {}) {
           this.application = startApp();
         });
 
+      promises.push(initPromise);
       if (options.beforeEach) {
-        initPromise.then(() => options.beforeEach.apply(this, arguments));
+        let promise = initPromise.then(() => options.beforeEach.apply(this, arguments));
+        promises.push(promise);
       }
 
-      return initPromise;
+      return Promise.all(promises);
     },
 
     afterEach() {
