@@ -1,1 +1,24 @@
-{{outlet}}
+<div class="mui-col-xs-4 mui-col-xs-offset-4">
+  <h2>Sign in!</h2>
+  <div class="mui-panel">
+    <form {{action "createUser" on="submit"}}>
+      <div class="mui-textfield">
+        {{one-way-input data-test-username-input placeholder="Your name" required=true value=changeset.name update=(action (mut changeset.name)) onblur=(action "validateProperty" "name")}}
+        {{#if changeset.error.name}}
+          <ul class="input-validation-errors">
+            {{#with changeset.error.name.validation as |errors|}}
+              {{#each errors as |error|}}
+                <li data-test-input-error="username">{{error}}</li>
+              {{/each}}
+            {{/with}}
+          </ul>
+        {{/if}}
+      </div>
+      <div class="mui-textfield">
+        {{one-way-input data-test-password-input type="password" placeholder="Your password" required=true value=changeset.password update=(action (mut changeset.password))}}
+      </div>
+      <button class="mui-btn mui-btn--primary" type="submit" data-test-signin-btn disabled={{formHasErrors}}>Create Wallet</button>
+    </form>
+    {{#link-to 'signup' data-test-signup-link}}Signup{{/link-to}}
+  </div>
+</div>

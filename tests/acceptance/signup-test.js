@@ -5,6 +5,7 @@ import { resetCouchDb, findCouchUserByName } from "pie/tests/helpers/couchdb-uti
 import { run } from "@ember/runloop";
 import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
+// TODO: password validation and confirmation
 moduleForPouchAcceptance("Acceptance | signup form");
 
 test("it shows inputs ", async function(assert) {
