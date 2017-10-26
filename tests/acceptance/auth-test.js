@@ -6,19 +6,19 @@ import { authenticateSession } from "pie/tests/helpers/ember-simple-auth";
 
 moduleForPouchAcceptance("Acceptance | auth");
 
-test("visiting / while not authenticated redirects to /signup", async function(assert) {
+test("visiting / while not authenticated redirects to /signin", async function(assert) {
   await visit("/");
-  assert.equal(currentRouteName(), "signup");
+  assert.equal(currentRouteName(), "signin");
 });
 
-test("visiting /months/:id while not authenticated redirects to /signup", async function(assert) {
+test("visiting /months/:id while not authenticated redirects to /signin", async function(assert) {
   await visit("/months/1");
-  assert.equal(currentRouteName(), "signup");
+  assert.equal(currentRouteName(), "signin");
 });
 
-test("visiting /transactions/create while not authenticated redirects to /signup", async function(assert) {
+test("visiting /transactions/create while not authenticated redirects to /signin", async function(assert) {
   await visit("/transactions/create");
-  assert.equal(currentRouteName(), "signup");
+  assert.equal(currentRouteName(), "signin");
 });
 
 test("visiting / while authenticated doesn't trigger a redirect", async function(assert) {
@@ -41,15 +41,15 @@ test("visiting /transactions/create while authenticated doesn't trigger a redire
   assert.equal(currentRouteName(), "transactions.create");
 });
 
-test("visiting /signup while not authenticated doesn't trigger a redirect", async function(assert) {
-  await visit("/signup");
-  assert.equal(currentRouteName(), "signup");
+test("visiting /signin while not authenticated doesn't trigger a redirect", async function(assert) {
+  await visit("/signin");
+  assert.equal(currentRouteName(), "signin");
 });
 
-test("visiting /signup while authenticated redirects to /", async function(assert) {
+test("visiting /signin while authenticated redirects to /", async function(assert) {
   authenticateSession(this.application);
   await create("currentMonth");
-  await visit("/signup");
+  await visit("/signin");
   assert.equal(currentRouteName(), "months.view");
 });
 
