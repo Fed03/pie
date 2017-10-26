@@ -1,21 +1,18 @@
-import { inject as service } from '@ember/service';
-import { oneWay, readOnly } from '@ember/object/computed';
-import Controller from '@ember/controller';
-import { run } from '@ember/runloop';
+import { inject as service } from "@ember/service";
+import { oneWay, readOnly } from "@ember/object/computed";
+import Controller from "@ember/controller";
+import { run } from "@ember/runloop";
 import { filterBy, first, sort } from "ember-awesome-macros/array";
 import raw from "ember-macro-helpers/raw";
 
 export default Controller.extend({
   monthsService: service(),
+  currentUser: service(),
 
   defaultCategory: first(sort(filterBy("model", raw("type"), raw("outcome")), ["name"])),
-
   transactionCategory: oneWay("defaultCategory"),
-
   transactionType: readOnly("transactionCategory.type"),
-
   transactionDate: new Date(),
-
   isCatSelectorShowing: false,
 
   resetToDefaultProperties() {
@@ -49,11 +46,16 @@ export default Controller.extend({
     return this.get("monthsService").findMonthByDate(date);
   },
 
+  _updateUserCurrentBalance(transaction) {
+    const value = transaction.get("value");
+    return run(() => this.get("currentUser.user").updateCurrentBalanceByValue(value));
+  },
+
   actions: {
     async createTransaction() {
       const month = await this._getBelongingMonth();
 
-      await run(() => {
+      const transaction = await run(() => {
         return this.store
           .createRecord("transaction", {
             value: this._getValueWithSign(),
@@ -64,6 +66,8 @@ export default Controller.extend({
           })
           .save();
       });
+
+      await this._updateUserCurrentBalance(transaction);
 
       return this.transitionToRoute("months.view", month);
     },

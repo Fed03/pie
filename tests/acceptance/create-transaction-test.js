@@ -162,10 +162,10 @@ test("it resets value on route exit", async function(assert) {
 });
 
 test("creating a transaction will update user currentBalance", async function(assert) {
-  await run(() => {
+  run.next(() => {
     this.currentUser.set("currentBalance", 1000);
-    return this.currentUser.save();
   });
+
   await create("category", { name: "foo", type: "outcome" });
   await visit("/transactions/create");
 
@@ -175,6 +175,5 @@ test("creating a transaction will update user currentBalance", async function(as
 
   await click("[data-test-submit-transaction]");
 
-  assert.equal(this.currentUser.get("currentBalance"), 975);
-  assert.equal(findWithAssert("[data-test-user-balance]").textContent.trim(), "€ 975.00");
+  assert.equal(this.currentUser.get("currentBalance"), 975, "The user currentBalance has been updated");
 });
