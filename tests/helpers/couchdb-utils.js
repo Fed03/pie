@@ -1,54 +1,70 @@
-function _createHeaders(config) {
-  return new Headers({
-    Authorization: `Basic ${btoa(`${config.couchDbCredentials.username}:${config.couchDbCredentials.password}`)}`,
-    "Content-Type": "application/json"
-  });
-}
+import PouchDB from "pouchdb";
 
-function _deleteUsers(remoteHost, headers) {
-  return fetch(`${remoteHost}/_users/_all_docs`, { headers })
-    .then(response => response.json())
-    .then(data => {
-      let body = [];
-      data.rows.forEach(doc => {
-        if (!doc.key.startsWith("_")) {
-          body.push({
-            _id: doc.id,
-            _rev: doc.value.rev,
-            _deleted: true
-          });
-        }
-      });
-      return fetch(`${remoteHost}/_users/_bulk_docs`, { method: "POST", body: JSON.stringify({ docs: body }), headers });
+const couchDB = {
+  init(application) {
+    this.config = application.resolveRegistration("config:environment");
+    this.remoteHost = this.config.emberPouch.remoteHost;
+    this.headers = this._createHeaders();
+  },
+  _createHeaders() {
+    const { username, password } = this.config.couchDbCredentials;
+    return new Headers({
+      Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+      "Content-Type": "application/json"
     });
-}
+  },
 
-async function _deleteUsersDb(remoteHost, headers) {
-  const allDbs = await fetch(`${remoteHost}/_all_dbs`).then(response => response.json());
-  const filteredDbs = allDbs.filter(db => db.startsWith("userdb"));
+  _deleteUsers() {
+    return fetch(`${this.remoteHost}/_users/_all_docs`, { headers: this.headers })
+      .then(response => response.json())
+      .then(data => {
+        let body = [];
+        data.rows.forEach(doc => {
+          if (!doc.key.startsWith("_")) {
+            body.push({
+              _id: doc.id,
+              _rev: doc.value.rev,
+              _deleted: true
+            });
+          }
+        });
+        return fetch(`${this.remoteHost}/_users/_bulk_docs`, {
+          method: "POST",
+          body: JSON.stringify({ docs: body }),
+          headers: this.headers
+        });
+      });
+  },
 
-  let promises = [];
-  for (let db of filteredDbs) {
-    promises.push(fetch(`${remoteHost}/${db}`, { method: "DELETE", headers }));
+  async _deleteUsersDb() {
+    const allDbs = await fetch(`${this.remoteHost}/_all_dbs`).then(response => response.json());
+    const filteredDbs = allDbs.filter(db => db.startsWith("userdb"));
+
+    let promises = [];
+    for (let db of filteredDbs) {
+      promises.push(fetch(`${this.remoteHost}/${db}`, { method: "DELETE", headers: this.headers }));
+    }
+
+    return Promise.all(promises);
+  },
+
+  resetCouchDb() {
+    return Promise.all([this._deleteUsers(), this._deleteUsersDb()]);
+  },
+
+  findCouchUserByName(name) {
+    return fetch(`${this.remoteHost}/_users/org.couchdb.user:${name}`, { headers: this.headers }).then(response => response.json());
+  },
+
+  async registerUser(username, password) {
+    const db = new PouchDB(`${this.remoteHost}/dummy`, { skip_setup: true });
+    await db.signup(username, password);
   }
+};
 
-  return Promise.all(promises);
-}
+const resetCouchDb = couchDB.resetCouchDb.bind(couchDB);
+const findCouchUserByName = couchDB.findCouchUserByName.bind(couchDB);
+const initCouchDB = couchDB.init.bind(couchDB);
+const registerUser = couchDB.registerUser.bind(couchDB);
 
-function resetCouchDb(application) {
-  const config = application.resolveRegistration("config:environment");
-  const remoteHost = config.emberPouch.remoteHost;
-  const couchHeaders = _createHeaders(config);
-
-  return Promise.all([_deleteUsers(remoteHost, couchHeaders), _deleteUsersDb(remoteHost, couchHeaders)]);
-}
-
-function findCouchUserByName(application, name) {
-  const config = application.resolveRegistration("config:environment");
-  const remoteHost = config.emberPouch.remoteHost;
-  const couchHeaders = _createHeaders(config);
-
-  return fetch(`${remoteHost}/_users/org.couchdb.user:${name}`, { headers: couchHeaders }).then(response => response.json());
-}
-
-export { resetCouchDb, findCouchUserByName };
+export { resetCouchDb, findCouchUserByName, initCouchDB, registerUser };

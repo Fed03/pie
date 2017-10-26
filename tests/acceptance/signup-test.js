@@ -1,7 +1,7 @@
 import { test } from "qunit";
 import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
-import { resetCouchDb, findCouchUserByName } from "pie/tests/helpers/couchdb-utils";
+import { resetCouchDb, findCouchUserByName, initCouchDB } from "pie/tests/helpers/couchdb-utils";
 import { run } from "@ember/runloop";
 import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
@@ -94,7 +94,8 @@ moduleForPouchAcceptance("Acceptance | signup process", {
   async beforeEach() {
     this.store = this.application.__container__.lookup("service:store");
     this.config = this.application.resolveRegistration("config:environment");
-    await resetCouchDb(this.application);
+    initCouchDB(this.application);
+    await resetCouchDb();
   }
 });
 
@@ -106,7 +107,7 @@ test("it registers the user on couchdb", async function(assert) {
   fillIn("[data-test-initial-balance-input]", 1000);
   await click("[data-test-create-user-btn]");
 
-  let user = await findCouchUserByName(this.application, "john");
+  let user = await findCouchUserByName("john");
   assert.equal(user.name, "john", "The user exists on remote db");
   assert.equal(user.baseUserId, this.config.baseUserId, "It has a local id in metadata");
 });
