@@ -38,26 +38,24 @@ export default Controller.extend({
     //   this.changeset.set("initialBalance", number);
     // },
     async createUser() {
-      if (this.changeset.isValid) {
-        await this.changeset.save();
+      await this.changeset.save();
 
-        const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
-        const { baseUserId } = config;
-        await this.get("pouchDbService").registerUser(name, password, { baseUserId });
-        await run(() => {
-          return this.store
-            .createRecord("user", {
-              id: baseUserId,
-              name,
-              initialBalance,
-              currentBalance: initialBalance
-            })
-            .save();
-        });
-        await this.get("session").authenticate("authenticator:couchdb", name, password);
+      const { name, password, initialBalance } = this.getProperties("name", "password", "initialBalance");
+      const { baseUserId } = config;
+      await this.get("pouchDbService").registerUser(name, password, { baseUserId });
+      await run(() => {
+        return this.store
+          .createRecord("user", {
+            id: baseUserId,
+            name,
+            initialBalance,
+            currentBalance: initialBalance
+          })
+          .save();
+      });
+      await this.get("session").authenticate("authenticator:couchdb", name, password);
 
-        this.transitionToRoute("/");
-      }
+      this.transitionToRoute("/");
     },
     validateProperty(key) {
       this.changeset.validate(key);

@@ -1,7 +1,7 @@
 <div class="mui-col-xs-4 mui-col-xs-offset-4">
   <h2>Sign in!</h2>
   <div class="mui-panel">
-    <form {{action "createUser" on="submit"}}>
+    <form {{action "signin" on="submit"}}>
       <div class="mui-textfield">
         {{one-way-input data-test-username-input placeholder="Your name" required=true value=changeset.name update=(action (mut changeset.name)) onblur=(action "validateProperty" "name")}}
         {{#if changeset.error.name}}
@@ -21,4 +21,7 @@
     </form>
     {{#link-to 'signup' data-test-signup-link}}Signup{{/link-to}}
   </div>
+  {{#if errorMsg}}
+    <div data-test-login-error>{{errorMsg}}</div>
+  {{/if}}
 </div>

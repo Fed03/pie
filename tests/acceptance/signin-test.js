@@ -1,6 +1,8 @@
 import { test } from "qunit";
 import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
+import { resetCouchDb, registerUser, initCouchDB } from "pie/tests/helpers/couchdb-utils";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
+import { currentSession } from "pie/tests/helpers/ember-simple-auth";
 
 // TODO: password validation
 moduleForPouchAcceptance("Acceptance | signin form");
@@ -66,4 +68,48 @@ test("it has a link to signup page", async function(assert) {
   await click("[data-test-signup-link]");
 
   assert.equal(currentRouteName(), "signup");
+});
+
+moduleForPouchAcceptance("Acceptance | signin process", {
+  async beforeEach() {
+    initCouchDB(this.application);
+    await resetCouchDb();
+  }
+});
+
+test("it logs the user in", async function(assert) {
+  await registerUser("john", "password");
+  await visit("/signin");
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  await click("[data-test-signin-btn]");
+
+  const session = currentSession(this.application);
+  assert.ok(session.get("isAuthenticated"), "The session is authenticated");
+});
+
+test("it prevents log in if there are validation errors", async function(assert) {
+  await registerUser("stro8921$", "password");
+  await visit("/signin");
+
+  fillIn("[data-test-username-input]", "stro8921$");
+  fillIn("[data-test-password-input]", "password");
+  find("[data-test-signin-btn]").removeAttribute("disabled");
+  await click("[data-test-signin-btn]");
+
+  const session = currentSession(this.application);
+  assert.notOk(session.get("isAuthenticated"), "The session is not authenticated");
+});
+
+test("it displays an error if the user does not exist", async function(assert) {
+  await visit("/signin");
+
+  assert.notOk(find("[data-test-login-error]"));
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  await click("[data-test-signin-btn]");
+
+  assert.ok(find("[data-test-login-error]"));
 });
