@@ -1,5 +1,5 @@
-import { registerWaiter } from '@ember/test';
-import Service from '@ember/service';
+import { registerWaiter } from "@ember/test";
+import Service from "@ember/service";
 import Ember from "ember";
 import PouchDB from "pouchdb";
 import { assert } from "@ember/debug";
@@ -41,15 +41,14 @@ export default Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
-    this.waiters++;
-    if (metadata) {
-      return remoteDb.signup(username, password, { metadata }).then(response => {
-        this.waiters--;
-        return response;
-      });
-    } else {
-      return remoteDb.signup(username, password);
-    }
+
+    return this._dbOperation(() => {
+      if (metadata) {
+        return remoteDb.signup(username, password, { metadata });
+      } else {
+        return remoteDb.signup(username, password);
+      }
+    });
   },
 
   login(username, password) {
@@ -57,41 +56,40 @@ export default Service.extend({
       this.set("username", username);
     }
     const remoteDb = this._initRemoteDb();
-    this.waiters++;
-    return remoteDb.login(username, password).then(data => {
-      this.waiters--;
-      this.set("loggedIn", true);
-      this.get("db").sync(remoteDb, {
-        live: true,
-        retry: true
-      });
 
-      return data;
+    return this._dbOperation(() => {
+      return remoteDb.login(username, password).then(data => {
+        this.set("loggedIn", true);
+        this.get("db").sync(remoteDb, {
+          live: true,
+          retry: true
+        });
+
+        return data;
+      });
     });
   },
 
   logout() {
     assert("You must be logged in to call `logout()`", this.get("loggedIn"));
     const remoteDb = this._initRemoteDb();
-    return remoteDb.logout().then(response => {
-      this.set("loggedIn", false);
+    return this._dbOperation(() => {
+      return remoteDb.logout().then(response => {
+        this.set("loggedIn", false);
 
-      return response;
+        return response;
+      });
     });
   },
 
   getSession() {
     const remoteDb = this._initRemoteDb();
-    return remoteDb.getSession();
+    return this._dbOperation(() => remoteDb.getSession());
   },
 
   getUser() {
     const remoteDb = this._initRemoteDb();
-    this.waiters++;
-    return remoteDb.getUser(this.get("username")).then(response => {
-      this.waiters--;
-      return response;
-    });
+    return this._dbOperation(() => remoteDb.getUser(this.get("username")));
   },
 
   _initRemoteDb() {
@@ -115,5 +113,18 @@ export default Service.extend({
     }
 
     return Object.assign(defaultOptions, this.options || {});
+  },
+
+  _dbOperation(promise) {
+    this.waiters++;
+    return promise()
+      .then(result => {
+        this.waiters--;
+        return result;
+      })
+      .catch(e => {
+        this.waiters--;
+        throw e;
+      });
   }
 });

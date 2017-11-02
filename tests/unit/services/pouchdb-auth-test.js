@@ -246,8 +246,11 @@ test("it throws an error if remote methods are called without a remoteHost optio
 test("it inits the remotedb just once", function(assert) {
   let dbInstance = sinon.createStubInstance(PouchDB);
   dbInstance.login.returns(Promise.resolve());
+  dbInstance.signup.returns(Promise.resolve());
+
   let stub = this.stub().returns(dbInstance);
   let remoteStub = stub.withArgs("host/userdb-666f6f", { skip_setup: true });
+
   let service = this.subject({
     options: {
       remoteHost: "host"
