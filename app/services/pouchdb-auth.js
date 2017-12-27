@@ -60,12 +60,17 @@ export default Service.extend({
     return this._dbOperation(() => {
       return remoteDb.login(username, password).then(data => {
         this.set("loggedIn", true);
-        this.get("db").sync(remoteDb, {
-          live: true,
-          retry: true
-        });
+        let localDb = this.get("db");
+        return new Promise(resolve => {
+          localDb.replicate.from(remoteDb).once("complete", () => {
+            localDb.sync(remoteDb, {
+              live: true,
+              retry: true
+            });
 
-        return data;
+            resolve(data);
+          });
+        });
       });
     });
   },

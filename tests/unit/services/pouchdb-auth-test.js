@@ -3,56 +3,97 @@ import test from "ember-sinon-qunit/test-support/test";
 import sinon from "sinon";
 import PouchDB from "pouchdb";
 
-moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth");
+moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth", {
+  beforeEach() {
+    this.emitterStub = {
+      immediateEmit: true,
+      once: sinon.stub().callsFake(function(evt, func) {
+        if (this.immediateEmit) {
+          func();
+        } else {
+          this.func = func;
+        }
+      }),
+      emit() {
+        this.immediateEmit = true;
+        if (this.func) {
+          this.func();
+        }
+      }
+    };
+
+    this.authSetup = (options = {}) => {
+      let defaultOptions = {
+        localDb: "localDb",
+        remoteHost: "host"
+      };
+      options = Object.assign(defaultOptions, options);
+
+      let remoteDb = sinon.createStubInstance(PouchDB);
+      remoteDb.login.returns(Promise.resolve());
+      remoteDb.signup.returns(Promise.resolve());
+      remoteDb.logout.returns(Promise.resolve());
+      remoteDb.getSession.returns(Promise.resolve());
+      remoteDb.getUser.returns(Promise.resolve());
+
+      let localDb = sinon.createStubInstance(PouchDB);
+      Object.defineProperty(localDb, "replicate", {
+        value: {
+          from: sinon.stub().returns(this.emitterStub)
+        }
+      });
+
+      let PouchDBObj = this.stub();
+      PouchDBObj.withArgs(options.localDb).returns(localDb);
+      PouchDBObj.returns(remoteDb);
+
+      return {
+        service: this.subject({
+          options,
+          PouchDB: PouchDBObj
+        }),
+        PouchDBObj,
+        localDb,
+        remoteDb
+      };
+    };
+  }
+});
 
 test("it inits the db", function(assert) {
-  let dbInstance = {};
-  let spy = this.stub().returns(dbInstance);
   let options = { localDb: "foo" };
-  let service = this.subject({ options, PouchDB: spy });
+  let env = this.authSetup(options);
 
-  assert.ok(spy.calledWithNew());
-  assert.ok(spy.calledWithExactly("foo"));
-  assert.equal(service.get("db"), dbInstance);
+  assert.ok(env.PouchDBObj.calledWithNew());
+  assert.ok(env.PouchDBObj.calledWithExactly("foo"));
+  assert.equal(env.service.get("db"), env.localDb);
 });
 
 test("it registers a user", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.signup.returns(Promise.resolve());
-  let spy = this.stub().returns(dbInstance);
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: spy
-  });
+  let env = this.authSetup();
 
-  let promise = service.registerUser("foo", "password");
+  let promise = env.service.registerUser("foo", "password");
   assert.ok(promise instanceof Promise, "Returns a Promise");
 
-  assert.ok(spy.secondCall.calledWithNew());
-  assert.ok(spy.secondCall.calledWithExactly("host/userdb-666f6f", { skip_setup: true }), "Append the hex version of username foo");
+  assert.ok(env.PouchDBObj.secondCall.calledWithNew());
+  assert.ok(
+    env.PouchDBObj.secondCall.calledWithExactly("host/userdb-666f6f", { skip_setup: true }),
+    "Append the hex version of username foo"
+  );
 
-  assert.ok(dbInstance.signup.calledWithExactly("foo", "password"));
+  assert.ok(env.remoteDb.signup.calledWithExactly("foo", "password"));
 });
 
 test("it builds metadata when registering user", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.signup.returns(Promise.resolve());
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(dbInstance)
-  });
+  let env = this.authSetup();
 
-  service.registerUser("foo", "bar", {
+  env.service.registerUser("foo", "bar", {
     name: "john",
     age: 20
   });
 
   assert.ok(
-    dbInstance.signup.calledWithExactly("foo", "bar", {
+    env.remoteDb.signup.calledWithExactly("foo", "bar", {
       metadata: {
         name: "john",
         age: 20
@@ -62,203 +103,131 @@ test("it builds metadata when registering user", function(assert) {
 });
 
 test("it logs in a user", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.login.returns(Promise.resolve());
+  let env = this.authSetup();
 
-  let spy = this.stub().returns(sinon.createStubInstance(PouchDB));
-  spy.withArgs("host/userdb-666f6f", { skip_setup: true }).returns(dbInstance);
-
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: spy
-  });
-
-  let promise = service.login("foo", "password");
+  let promise = env.service.login("foo", "password");
   assert.ok(promise instanceof Promise, "Returns a Promise");
-  assert.ok(spy.calledWithExactly("host/userdb-666f6f", { skip_setup: true }));
+  assert.ok(env.PouchDBObj.calledWithExactly("host/userdb-666f6f", { skip_setup: true }));
 
-  assert.ok(dbInstance.login.calledWith("foo", "password"));
+  assert.ok(env.remoteDb.login.calledWith("foo", "password"));
 });
 
 test("logging in sets a flag", async function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.login.returns(Promise.resolve());
+  let env = this.authSetup();
 
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(dbInstance)
-  });
+  assert.equal(env.service.get("loggedIn"), false);
 
-  assert.equal(service.get("loggedIn"), false);
-
-  await service.login("foo", "bar");
-  assert.equal(service.get("loggedIn"), true);
+  await env.service.login("foo", "bar");
+  assert.equal(env.service.get("loggedIn"), true);
 });
 
-test("it starts syncing when logged in", async function(assert) {
-  let localDb = sinon.createStubInstance(PouchDB);
-  let remoteDb = sinon.createStubInstance(PouchDB);
-  remoteDb.login.returns(Promise.resolve());
+test("it starts syncing when logged in", function(assert) {
+  assert.expect(2);
+  this.emitterStub.immediateEmit = false;
+  let env = this.authSetup();
 
-  let PouchDBObj = this.stub();
-  PouchDBObj.withArgs("localDb").returns(localDb);
-  PouchDBObj.returns(remoteDb);
-
-  let service = this.subject({
-    options: {
-      localDb: "localDb",
-      remoteHost: "host"
-    },
-    PouchDB: PouchDBObj
+  env.service.login("foo", "bar").then(() => {
+    assert.ok(env.localDb.replicate.from.calledWithExactly(env.remoteDb));
+    assert.ok(
+      env.localDb.sync.calledWithExactly(env.remoteDb, {
+        live: true,
+        retry: true
+      })
+    );
   });
 
-  await service.login("foo", "bar");
-
-  assert.ok(
-    localDb.sync.calledWithExactly(remoteDb, {
-      live: true,
-      retry: true
-    })
-  );
+  this.emitterStub.emit();
 });
 
 test("it logs out the user", async function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.logout.returns(Promise.resolve());
+  let env = this.authSetup();
 
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(dbInstance)
-  });
+  env.service.set("username", "foo");
+  env.service.set("loggedIn", true);
 
-  service.set("username", "foo");
-  service.set("loggedIn", true);
-
-  let promise = service.logout();
+  let promise = env.service.logout();
   assert.ok(promise instanceof Promise, "Returns a Promise");
   await promise;
-  assert.equal(service.get("loggedIn"), false);
-  assert.ok(dbInstance.logout.calledOnce);
+  assert.equal(env.service.get("loggedIn"), false);
+  assert.ok(env.remoteDb.logout.calledOnce);
 });
 
 test("logging out throws if not already logged in", function(assert) {
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub()
-  });
+  let env = this.authSetup();
 
   assert.throws(() => {
-    service.logout();
+    env.service.logout();
   }, /you must be logged in to call `logout\(\)`/i);
 });
 
 test("it gets the auth session from remote", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.getSession.returns(Promise.resolve());
+  let env = this.authSetup();
 
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(dbInstance)
-  });
+  env.service.set("username", "foo");
 
-  service.set("username", "foo");
-
-  let promise = service.getSession();
+  let promise = env.service.getSession();
   assert.ok(promise instanceof Promise, "Returns a Promise");
 
-  assert.ok(dbInstance.getSession.calledOnce);
+  assert.ok(env.remoteDb.getSession.calledOnce);
 });
 
 test("it get the user info from remote", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.getUser.returns(Promise.resolve());
+  let env = this.authSetup();
 
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(dbInstance)
-  });
+  env.service.set("username", "foo");
 
-  service.set("username", "foo");
-
-  let promise = service.getUser();
+  let promise = env.service.getUser();
   assert.ok(promise instanceof Promise, "Returns a Promise");
 
-  assert.ok(dbInstance.getUser.calledWith("foo"));
+  assert.ok(env.remoteDb.getUser.calledWith("foo"));
 });
 
 test("it throws an error if remote methods are called without username being set", function(assert) {
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: this.stub().returns(sinon.createStubInstance(PouchDB))
-  });
+  let env = this.authSetup();
 
-  service.set("loggedIn", true);
+  env.service.set("loggedIn", true);
 
   assert.throws(() => {
-    service.logout();
+    env.service.logout();
   }, /username has not been set yet/i);
 
   assert.throws(() => {
-    service.getSession();
+    env.service.getSession();
   }, /username has not been set yet/i);
 
   assert.throws(() => {
-    service.getUser();
+    env.service.getUser();
   }, /username has not been set yet/i);
 });
 
 test("it throws an error if remote methods are called without a remoteHost option", function(assert) {
-  let service = this.subject({ PouchDB: this.stub().returns(sinon.createStubInstance(PouchDB)) });
+  let env = this.authSetup({ remoteHost: undefined });
 
   assert.throws(() => {
-    service.login("foo", "bar");
+    env.service.login("foo", "bar");
   }, /'options.remoteHost' is empty/);
 
   assert.throws(() => {
-    service.registerUser("foo", "bar");
+    env.service.registerUser("foo", "bar");
   }, /'options.remoteHost' is empty/);
 
   assert.throws(() => {
-    service.set("username", "foo");
-    service.getUser();
+    env.service.set("username", "foo");
+    env.service.getUser();
   }, /'options.remoteHost' is empty/);
 
   assert.throws(() => {
-    service.set("loggedIn", true);
-    service.logout();
+    env.service.set("loggedIn", true);
+    env.service.logout();
   }, /'options.remoteHost' is empty/);
 });
 
 test("it inits the remotedb just once", function(assert) {
-  let dbInstance = sinon.createStubInstance(PouchDB);
-  dbInstance.login.returns(Promise.resolve());
-  dbInstance.signup.returns(Promise.resolve());
+  let env = this.authSetup();
+  let remoteStub = env.PouchDBObj.withArgs(sinon.match.string, sinon.match.object);
 
-  let stub = this.stub().returns(dbInstance);
-  let remoteStub = stub.withArgs("host/userdb-666f6f", { skip_setup: true });
-
-  let service = this.subject({
-    options: {
-      remoteHost: "host"
-    },
-    PouchDB: stub
-  });
-  service.login("foo", "bar");
-  service.registerUser("foo", "bar");
+  env.service.login("foo", "bar");
+  env.service.registerUser("foo", "bar");
 
   assert.equal(remoteStub.callCount, 1);
 });
