@@ -1,5 +1,14 @@
 import PouchDB from "pouchdb";
 
+function stringToHex(string) {
+  let hex = "";
+  for (let i = 0; i < string.length; i++) {
+    hex += string.charCodeAt(i).toString(16);
+  }
+
+  return hex;
+}
+
 const couchDB = {
   init(application) {
     this.config = application.resolveRegistration("config:environment");
@@ -58,7 +67,23 @@ const couchDB = {
 
   async registerUser(username, password) {
     const db = new PouchDB(`${this.remoteHost}/dummy`, { skip_setup: true });
-    await db.signup(username, password);
+    await db.signup(username, password, {
+      metadata: {
+        baseUserId: this.config.baseUserId
+      }
+    });
+
+    const userDb = `${this.remoteHost}/userdb-${stringToHex(username)}`;
+    return fetch(userDb, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify({
+        _id: `user_2_${this.config.baseUserId}`,
+        data: {
+          name: username
+        }
+      })
+    });
   }
 };
 
