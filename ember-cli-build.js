@@ -28,7 +28,7 @@ module.exports = function(defaults) {
 
   app.import("node_modules/pouchdb-authentication/dist/pouchdb.authentication.js");
 
-  app.import("bower_components/Faker/build/build/faker.min.js", {
+  app.import("@bower_components/Faker/build/build/faker.min.js", {
     using: [{ transformation: "amd", as: "faker" }]
   });
 

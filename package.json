@@ -62,9 +62,11 @@
     "loader.js": "^4.2.3",
     "muicss": "^0.9.24",
     "pouchdb-authentication": "^0.5.5",
-    "roboto-fontface": "^0.8.0"
+    "roboto-fontface": "^0.8.0",
+    "@bower_components/Faker": "Marak/Faker.js#^4.1.0"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "^4.5 || 6.* || >= 7.*",
+    "yarn": ">= 1.0.0"
   }
 }
