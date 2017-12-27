@@ -2,7 +2,7 @@ import { test } from "qunit";
 import { findWithAssert, visit, fillIn, click, find, currentRouteName, findAll, focus, blur } from "ember-native-dom-helpers";
 import { resetCouchDb, registerUser, initCouchDB } from "pie/tests/helpers/couchdb-utils";
 import moduleForPouchAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
-import { currentSession } from "pie/tests/helpers/ember-simple-auth";
+import { currentSession, invalidateSession } from "pie/tests/helpers/ember-simple-auth";
 
 // TODO: password validation
 moduleForPouchAcceptance("Acceptance | signin form");
@@ -73,6 +73,7 @@ test("it has a link to signup page", async function(assert) {
 moduleForPouchAcceptance("Acceptance | signin process", {
   async beforeEach() {
     initCouchDB(this.application);
+    invalidateSession(this.application);
     await resetCouchDb();
   }
 });
@@ -112,4 +113,15 @@ test("it displays an error if the user does not exist", async function(assert) {
   await click("[data-test-signin-btn]");
 
   assert.ok(find("[data-test-login-error]"));
+});
+
+test("it redirects when the user logs in", async function(assert) {
+  await registerUser("john", "password");
+  await visit("/signin");
+
+  fillIn("[data-test-username-input]", "john");
+  fillIn("[data-test-password-input]", "password");
+  await click("[data-test-signin-btn]");
+
+  assert.equal(currentRouteName(), "months.view");
 });

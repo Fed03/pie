@@ -10,9 +10,13 @@ export default Route.extend(ApplicationRouteMixin, {
   beforeModel() {
     return all([this._createDefaultCategories(), this.get("currentUser").load()]);
   },
-  async sessionAuthenticated() {
-    await this.get("currentUser").load();
-    // this._super(...arguments);
+  sessionAuthenticated() {
+    let superMethod = this._super.bind(this, ...arguments);
+    this.get("currentUser")
+      .load()
+      .then(() => {
+        superMethod();
+      });
   },
   _createDefaultCategories() {
     //TODO adjust this
