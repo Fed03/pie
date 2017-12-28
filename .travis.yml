@@ -8,13 +8,13 @@ sudo: true
 
 services:
   - docker
+  
+addons:
+  chrome: stable
   sonarcloud:
     organization: "fed03-github"
     branches:
       - new_version
-
-addons:
-  chrome: stable
 
 notifications:
   email:
