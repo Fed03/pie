@@ -7,7 +7,7 @@ moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth", {
   beforeEach() {
     this.emitterStub = {
       immediateEmit: true,
-      once: sinon.stub().callsFake(function(evt, func) {
+      on: sinon.stub().callsFake(function(evt, func) {
         if (this.immediateEmit) {
           func();
         } else {

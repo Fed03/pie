@@ -62,7 +62,7 @@ export default Service.extend({
         this.set("loggedIn", true);
         let localDb = this.get("db");
         return new Promise(resolve => {
-          localDb.replicate.from(remoteDb).once("complete", () => {
+          localDb.replicate.from(remoteDb).on("complete", () => {
             localDb.sync(remoteDb, {
               live: true,
               retry: true
