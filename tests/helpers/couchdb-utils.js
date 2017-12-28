@@ -74,7 +74,7 @@ const couchDB = {
     });
 
     const userDb = `${this.remoteHost}/userdb-${stringToHex(username)}`;
-    return fetch(userDb, {
+    await fetch(userDb, {
       method: "POST",
       headers: this.headers,
       body: JSON.stringify({
