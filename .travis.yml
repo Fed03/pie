@@ -8,7 +8,7 @@ sudo: true
 
 services:
   - docker
-  - sonarcloud:
+  sonarcloud:
     organization: "fed03-github"
     branches:
       - new_version
@@ -27,6 +27,7 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
+    - COVERAGE=true
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -38,6 +39,5 @@ install:
   - yarn install --non-interactive
 
 script:
-  - export COVERAGE=true
   - yarn test
   - sonar-scanner
