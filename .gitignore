@@ -9,6 +9,7 @@
 /bower_components
 
 # misc
+/.scannerwork
 /.sass-cache
 /connect.lock
 /coverage/*
