@@ -8,6 +8,10 @@ sudo: true
 
 services:
   - docker
+  - sonarcloud:
+    organization: "fed03-github"
+    branches:
+      - new_version
 
 addons:
   chrome: stable
@@ -34,4 +38,6 @@ install:
   - yarn install --non-interactive
 
 script:
+  - export COVERAGE=true
   - yarn test
+  - sonar-scanner
