@@ -1,10 +1,10 @@
-import EmberObject from '@ember/object';
+import EmberObject from "@ember/object";
 import { moduleFor, test } from "ember-qunit";
 import { make, manualSetup } from "ember-data-factory-guy";
 
 moduleFor("controller:months/view", "Unit | Controller | months.view", {
   // Specify the other units that are required for this test.
-  needs: ["model:transaction", "model:month", "model:category"],
+  needs: ["model:transaction", "model:month", "model:category", "service:monthsService"],
   beforeEach() {
     manualSetup(this.container);
   }
@@ -19,11 +19,7 @@ test("it computes transactions balance", function(assert) {
   });
   let controller = this.subject({ model: month });
 
-  assert.equal(
-    controller.get("currentBalance"),
-    128.75,
-    "currentBalance is the sum of transactions value"
-  );
+  assert.equal(controller.get("currentBalance"), 128.75, "currentBalance is the sum of transactions value");
 });
 
 test("it groups transactions by date", function(assert) {
@@ -41,16 +37,9 @@ test("it groups transactions by date", function(assert) {
   const trns3 = EmberObject.create({ date: randomDate });
   const month = EmberObject.create({ transactions: [trns1, trns2, trns3] });
 
-  let transactionsByDate = this.subject({ model: month }).get(
-    "transactionsByDate"
-  );
+  let transactionsByDate = this.subject({ model: month }).get("transactionsByDate");
 
   assert.equal(transactionsByDate.length, 2, "Array has 2 groups");
-  assert.deepEqual(transactionsByDate.findBy("value", today1).items, [
-    trns1,
-    trns2
-  ]);
-  assert.deepEqual(transactionsByDate.findBy("value", randomDate).items, [
-    trns3
-  ]);
+  assert.deepEqual(transactionsByDate.findBy("value", today1).items, [trns1, trns2]);
+  assert.deepEqual(transactionsByDate.findBy("value", randomDate).items, [trns3]);
 });
