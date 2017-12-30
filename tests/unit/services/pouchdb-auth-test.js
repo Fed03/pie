@@ -5,23 +5,6 @@ import PouchDB from "pouchdb";
 
 moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth", {
   beforeEach() {
-    this.emitterStub = {
-      immediateEmit: true,
-      once: sinon.stub().callsFake(function(evt, func) {
-        if (this.immediateEmit) {
-          func();
-        } else {
-          this.func = func;
-        }
-      }),
-      emit() {
-        this.immediateEmit = true;
-        if (this.func) {
-          this.func();
-        }
-      }
-    };
-
     this.authSetup = (options = {}) => {
       let defaultOptions = {
         localDb: "localDb",
@@ -39,7 +22,7 @@ moduleFor("service:pouchdb-auth", "Unit | Service | pouchdb auth", {
       let localDb = sinon.createStubInstance(PouchDB);
       Object.defineProperty(localDb, "replicate", {
         value: {
-          from: sinon.stub().returns(this.emitterStub)
+          from: sinon.stub().returns(Promise.resolve())
         }
       });
 
@@ -102,13 +85,14 @@ test("it builds metadata when registering user", function(assert) {
   );
 });
 
-test("it logs in a user", function(assert) {
+test("it logs in a user", async function(assert) {
   let env = this.authSetup();
 
   let promise = env.service.login("foo", "password");
   assert.ok(promise instanceof Promise, "Returns a Promise");
-  assert.ok(env.PouchDBObj.calledWithExactly("host/userdb-666f6f", { skip_setup: true }));
 
+  await promise;
+  assert.ok(env.PouchDBObj.calledWithExactly("host/userdb-666f6f", { skip_setup: true }));
   assert.ok(env.remoteDb.login.calledWith("foo", "password"));
 });
 
@@ -121,22 +105,19 @@ test("logging in sets a flag", async function(assert) {
   assert.equal(env.service.get("loggedIn"), true);
 });
 
-test("it starts syncing when logged in", function(assert) {
+test("it starts syncing when logged in", async function(assert) {
   assert.expect(2);
-  this.emitterStub.immediateEmit = false;
   let env = this.authSetup();
 
-  env.service.login("foo", "bar").then(() => {
-    assert.ok(env.localDb.replicate.from.calledWithExactly(env.remoteDb));
-    assert.ok(
-      env.localDb.sync.calledWithExactly(env.remoteDb, {
-        live: true,
-        retry: true
-      })
-    );
-  });
+  await env.service.login("foo", "bar");
 
-  this.emitterStub.emit();
+  assert.ok(env.localDb.replicate.from.calledWithExactly(env.remoteDb));
+  assert.ok(
+    env.localDb.sync.calledWithExactly(env.remoteDb, {
+      live: true,
+      retry: true
+    })
+  );
 });
 
 test("it logs out the user", async function(assert) {
@@ -222,12 +203,12 @@ test("it throws an error if remote methods are called without a remoteHost optio
   }, /'options.remoteHost' is empty/);
 });
 
-test("it inits the remotedb just once", function(assert) {
+test("it inits the remotedb just once", async function(assert) {
   let env = this.authSetup();
   let remoteStub = env.PouchDBObj.withArgs(sinon.match.string, sinon.match.object);
 
-  env.service.login("foo", "bar");
-  env.service.registerUser("foo", "bar");
+  await env.service.login("foo", "bar");
+  await env.service.registerUser("foo", "bar");
 
   assert.equal(remoteStub.callCount, 1);
 });

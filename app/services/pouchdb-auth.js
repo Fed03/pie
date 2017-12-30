@@ -59,26 +59,23 @@ export default Service.extend({
     const remoteDb = this._initRemoteDb();
 
     return this._dbOperation(() => {
-      return remoteDb.login(username, password).then(data => {
-        this.set("loggedIn", true);
-        let localDb = this.get("db");
-        return new Promise((resolve, reject) => {
-          localDb.replicate
-            .from(remoteDb)
-            .once("complete", () => {
-              localDb.sync(remoteDb, {
-                live: true,
-                retry: true
-              });
+      let result;
+      let localDb = this.get("db");
+      return remoteDb
+        .login(username, password)
+        .then(data => {
+          result = data;
+          return localDb.replicate.from(remoteDb);
+        })
+        .then(() => {
+          this.set("loggedIn", true);
+          localDb.sync(remoteDb, {
+            live: true,
+            retry: true
+          });
 
-              resolve(data);
-            })
-            .once("error", () => {
-              console.warn(arguments);
-              reject(arguments);
-            });
+          return result;
         });
-      });
     });
   },
 
