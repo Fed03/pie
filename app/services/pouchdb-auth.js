@@ -1,3 +1,4 @@
+/*eslint no-console: off*/
 import { registerWaiter } from "@ember/test";
 import Service from "@ember/service";
 import Ember from "ember";
@@ -61,15 +62,21 @@ export default Service.extend({
       return remoteDb.login(username, password).then(data => {
         this.set("loggedIn", true);
         let localDb = this.get("db");
-        return new Promise(resolve => {
-          localDb.replicate.from(remoteDb).on("complete", () => {
-            localDb.sync(remoteDb, {
-              live: true,
-              retry: true
-            });
+        return new Promise((resolve, reject) => {
+          localDb.replicate
+            .from(remoteDb)
+            .once("complete", () => {
+              localDb.sync(remoteDb, {
+                live: true,
+                retry: true
+              });
 
-            resolve(data);
-          });
+              resolve(data);
+            })
+            .once("error", () => {
+              console.warn(arguments);
+              reject(arguments);
+            });
         });
       });
     });
