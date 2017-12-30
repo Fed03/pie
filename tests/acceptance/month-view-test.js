@@ -1,7 +1,7 @@
 import { run } from "@ember/runloop";
 import moment from "moment";
 import { test } from "qunit";
-import { click, findAll, find, visit } from "ember-native-dom-helpers";
+import { click, findAll, find, visit, findWithAssert } from "ember-native-dom-helpers";
 import moduleForAcceptance from "pie/tests/helpers/module-for-pouch-acceptance";
 import { authAndLoadUser } from "pie/tests/helpers/auth-and-load-user";
 
@@ -37,26 +37,12 @@ test("visiting `/` redirects to the current month", async function(assert) {
   );
 
   assert.equal(
-    findWithAssert("[data-test-opening-balance-value]")
-      .text()
-      .trim(),
+    findWithAssert("[data-test-opening-balance-value]").textContent.trim(),
     "€ 342.58",
     "The opening balance is correctly displayed"
   );
-  assert.equal(
-    findWithAssert("[data-test-month-balance-value]")
-      .text()
-      .trim(),
-    "€ 0.00",
-    "The month balance is zero"
-  );
-  assert.equal(
-    findWithAssert("[data-test-current-balance-value]")
-      .text()
-      .trim(),
-    "€ 342.58",
-    "The current balance"
-  );
+  assert.equal(findWithAssert("[data-test-month-balance-value]").textContent.trim(), "€ 0.00", "The month balance is zero");
+  assert.equal(findWithAssert("[data-test-current-balance-value]").textContent.trim(), "€ 342.58", "The current balance");
 });
 
 test("it creates current month if not present", async function(assert) {
@@ -84,26 +70,12 @@ test("it creates current month if not present", async function(assert) {
   );
 
   assert.equal(
-    findWithAssert("[data-test-opening-balance-value]")
-      .text()
-      .trim(),
+    findWithAssert("[data-test-opening-balance-value]").textContent.trim(),
     "€ 1,233.98",
     "The opening balance is correctly displayed"
   );
-  assert.equal(
-    findWithAssert("[data-test-month-balance-value]")
-      .text()
-      .trim(),
-    "€ 0.00",
-    "The month balance is zero"
-  );
-  assert.equal(
-    findWithAssert("[data-test-current-balance-value]")
-      .text()
-      .trim(),
-    "€ 1,233.98",
-    "The current balance"
-  );
+  assert.equal(findWithAssert("[data-test-month-balance-value]").textContent.trim(), "€ 0.00", "The month balance is zero");
+  assert.equal(findWithAssert("[data-test-current-balance-value]").textContent.trim(), "€ 1,233.98", "The current balance");
 });
 
 test("viewing a month without transaction will result in an empty page", async function(assert) {
@@ -113,8 +85,7 @@ test("viewing a month without transaction will result in an empty page", async f
 
   assert.ok(
     findWithAssert("[data-test-transactions-container]")
-      .text()
-      .trim()
+      .textContent.trim()
       .split(" ")
       .join(" "),
     "No transactions. Add (+) some!"
@@ -193,29 +164,18 @@ test("it computes the total balance", async function(assert) {
 
   await visit(`/months/${currentMonth.get("id")}`);
   assert.equal(
-    findWithAssert("[data-test-opening-balance-value]")
-      .text()
-      .trim(),
+    findWithAssert("[data-test-opening-balance-value]").textContent.trim(),
     "€ 339.00",
     "The opening balance is correctly displayed"
   );
   assert.equal(
-    findWithAssert("[data-test-month-balance-value]")
-      .text()
-      .trim(),
+    findWithAssert("[data-test-month-balance-value]").textContent.trim(),
     "€ -25.00",
     "The month balance is the sum of transactions value"
   );
-  assert.equal(
-    findWithAssert("[data-test-current-balance-value]")
-      .text()
-      .trim(),
-    "€ 314.00",
-    "The current balance"
-  );
+  assert.equal(findWithAssert("[data-test-current-balance-value]").textContent.trim(), "€ 314.00", "The current balance");
 });
 
-//TODO: finish it
 test("it sorts the transactions panels by desc date", async function(assert) {
   let monthDate = new Date(2017, 1, 1, 0, 0, 0, 0);
 
@@ -256,4 +216,14 @@ test("it sorts the transactions panels by desc date", async function(assert) {
   assert.equal(panels[1].getAttribute("data-test-transaction-panel-for-day"), 25);
   assert.equal(panels[2].getAttribute("data-test-transaction-panel-for-day"), 23);
   assert.equal(panels[3].getAttribute("data-test-transaction-panel-for-day"), 18);
+});
+
+test("Current month name and year is been displayed", async function(assert) {
+  let march2015 = new Date(2015, 2, 1, 0, 0, 0, 0);
+  let month = await create("month", { date: march2015 });
+
+  await visit(`/months/${month.get("id")}`);
+
+  let monthEl = findWithAssert("[data-test-month-selector]");
+  assert.ok(monthEl.textContent.includes("March 2015"));
 });
