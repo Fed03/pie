@@ -16,7 +16,6 @@ test("it renders the required html", function(assert) {
   this.set("month", make("currentMonth"));
   this.render(hbs`{{month-selector currentMonth=month}}`);
 
-  findWithAssert("[data-test-month-selector]");
   findWithAssert("a[data-test-next-month-btn]");
   findWithAssert("a[data-test-previous-month-btn]");
   findWithAssert("[data-test-current-month]");
