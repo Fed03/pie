@@ -11,7 +11,7 @@ test("it renders the required html", function(assert) {
   this.render(hbs`{{month-selector}}`);
 
   findWithAssert("[data-test-month-selector]");
-  findWithAssert("button[data-test-next-month-btn]");
-  findWithAssert("button[data-test-previous-month-btn]");
+  findWithAssert("a[data-test-next-month-btn]");
+  findWithAssert("a[data-test-previous-month-btn]");
   findWithAssert("[data-test-current-month]");
 });
