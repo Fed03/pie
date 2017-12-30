@@ -1,6 +1,5 @@
 import Base from "ember-simple-auth/authenticators/base";
 import { inject } from "@ember/service";
-import Promise from "rsvp";
 
 export default Base.extend({
   pouchDbService: inject("pouchdb-auth"),
