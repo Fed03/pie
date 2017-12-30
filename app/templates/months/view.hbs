@@ -1,4 +1,4 @@
-{{month-selector data-test-month-selector currentMonth=model}}
+{{month-selector data-test-month-selector currentMonth=model prevMonthAction=(action "transitionToMonth") nextMonthAction=(action "transitionToMonth")}}
 <div class="mui-col-xs-6 mui-col-xs-offset-3">
   <div class="month-summary mui-panel">
     <h2 class="mui--divider-bottom month-summary-header" data-test-month-name>

@@ -227,3 +227,23 @@ test("Current month name and year is been displayed", async function(assert) {
   let monthEl = findWithAssert("[data-test-month-selector]");
   assert.ok(monthEl.textContent.includes("March 2015"));
 });
+
+test("When prev month link is clicked then the page changes", async function(assert) {
+  let march2015 = await create("month", { date: new Date(2015, 2, 1, 0, 0, 0, 0) });
+  let february2015 = await create("month", { date: new Date(2015, 1, 1, 0, 0, 0, 0) });
+
+  await visit(`/months/${march2015.get("id")}`);
+  await click("[data-test-previous-month-btn]");
+
+  assert.equal(currentURL(), `/months/${february2015.get("id")}`);
+});
+
+test("When next month link is clicked then the page changes", async function(assert) {
+  let march2015 = await create("month", { date: new Date(2015, 2, 1, 0, 0, 0, 0) });
+  let february2015 = await create("month", { date: new Date(2015, 1, 1, 0, 0, 0, 0) });
+
+  await visit(`/months/${february2015.get("id")}`);
+  await click("[data-test-next-month-btn]");
+
+  assert.equal(currentURL(), `/months/${march2015.get("id")}`);
+});
