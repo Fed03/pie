@@ -13,7 +13,7 @@
   "scripts": {
     "build": "ember build",
     "start": "ember serve",
-    "test": "ember test"
+    "test": "ember pie:test"
   },
   "devDependencies": {
     "@bower_components/Faker": "Marak/Faker.js#^4.1.0",
@@ -75,8 +75,6 @@
     "yarn": ">= 1.0.0"
   },
   "ember-addon": {
-    "paths": [
-      "lib/commands"
-    ]
+    "paths": ["lib/commands"]
   }
 }
