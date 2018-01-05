@@ -23,7 +23,11 @@ module.exports = function(environment) {
       // when it is created
     },
     emberPouch: {
-      localDb: "local_pie_db"
+      localDb: "local_pie_db",
+      remotePort: process.env.PIE_DOCKER_PORT || 5984,
+      get remoteHost() {
+        return `http://localhost:${this.remotePort}`;
+      }
     },
     baseUserId: "pieAuthUser"
   };
@@ -34,7 +38,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.emberPouch.remoteHost = "http://localhost:5985";
+    ENV.emberPouch.remotePort = ENV.emberPouch.remotePort || 5985;
   }
 
   if (environment === "test") {
@@ -46,7 +50,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.emberPouch.localDb = "test_pie_db";
-    ENV.emberPouch.remoteHost = "http://localhost:5984";
     ENV.couchDbCredentials = {
       username: "admin",
       password: "password"
