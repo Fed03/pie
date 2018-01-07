@@ -57,6 +57,14 @@ test("it shows the dot even with leading zero", async function(assert) {
   assert.equal(findWithAssert("[data-test-calculator-display]").textContent.trim(), "0.5");
 });
 
+test("it does not add another dot if there is one already", async function(assert) {
+  this.render(hbs`{{calc-input}}`);
+  await click('[data-test-calc-key="5"]');
+  await click('[data-test-calc-key="dot"]');
+  await click('[data-test-calc-key="dot"]');
+  assert.equal(findWithAssert("[data-test-calculator-display]").textContent.trim(), "5.");
+});
+
 test("it displays the previous value when using an operand", async function(assert) {
   this.render(hbs`{{calc-input}}`);
   await click('[data-test-calc-key="9"]');
