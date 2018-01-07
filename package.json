@@ -18,6 +18,8 @@
   "devDependencies": {
     "@bower_components/Faker": "Marak/Faker.js#^4.1.0",
     "broccoli-asset-rev": "^2.4.5",
+    "broccoli-cjs-to-es6": "^1.0.2",
+    "broccoli-funnel": "^2.0.1",
     "chalk": "^2.3.0",
     "dockerode": "^2.5.3",
     "ember-ajax": "^3.0.0",
