@@ -32,6 +32,7 @@ export default Service.extend({
   init() {
     this.options = this._buildOptions();
     this.set("db", new this.PouchDB(this.options.localDb));
+    /* istanbul ignore else  */
     if (Ember.testing) {
       registerWaiter(() => this.waiters === 0);
     }
