@@ -9,6 +9,17 @@ function stringToHex(string) {
   return hex;
 }
 
+function delayPromise(time) {
+  return function(previouslyResolvedData) {
+    return new Promise(resolve => {
+      let id = setTimeout(() => {
+        clearTimeout(id);
+        resolve(previouslyResolvedData);
+      }, time);
+    });
+  };
+}
+
 const couchDB = {
   init(application) {
     this.config = application.resolveRegistration("config:environment");
@@ -67,11 +78,13 @@ const couchDB = {
 
   async registerUser(username, password) {
     const db = new PouchDB(`${this.remoteHost}/dummy`, { skip_setup: true });
-    await db.signup(username, password, {
-      metadata: {
-        baseUserId: this.config.baseUserId
-      }
-    });
+    await db
+      .signup(username, password, {
+        metadata: {
+          baseUserId: this.config.baseUserId
+        }
+      })
+      .then(delayPromise(500));
 
     const userDb = `${this.remoteHost}/userdb-${stringToHex(username)}`;
     await fetch(userDb, {
