@@ -21,7 +21,7 @@ export default Route.extend(ApplicationRouteMixin, {
   _createDefaultCategories() {
     //TODO adjust this
     return this.store.findAll("category").then(categories => {
-      if (categories.get("length") == 0) {
+      if (categories.get("length") === 0) {
         let promises = [];
         let type = ["income", "outcome"];
         for (var i = 0; i < 10; i++) {
@@ -34,6 +34,7 @@ export default Route.extend(ApplicationRouteMixin, {
         }
         return all(promises);
       }
+      return Promise.resolve();
     });
   }
 });

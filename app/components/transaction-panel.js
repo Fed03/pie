@@ -1,5 +1,5 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from "@ember/component";
+import { computed } from "@ember/object";
 import momentComputed from "ember-moment/computeds/moment";
 
 export default Component.extend({
@@ -25,6 +25,7 @@ export default Component.extend({
       } else if (balance < 0) {
         return "outcome-amount";
       }
+      return null;
     }
   })
 });

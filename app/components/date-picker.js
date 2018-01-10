@@ -1,7 +1,7 @@
-import { oneWay } from '@ember/object/computed';
-import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
-import { computed } from '@ember/object';
+import { oneWay } from "@ember/object/computed";
+import Component from "@ember/component";
+import { isPresent } from "@ember/utils";
+import { computed } from "@ember/object";
 
 export default Component.extend({
   "data-test-date-picker": true,
@@ -12,6 +12,7 @@ export default Component.extend({
       if (isPresent(value)) {
         return value.toLocaleDateString("en-US");
       }
+      return null;
     }
   }),
   internalValue: oneWay("value"),
