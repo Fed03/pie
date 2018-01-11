@@ -1,0 +1,18 @@
+#month-selector {
+  height: 44px;
+  background-color: $mui-primary-color;
+  border-top: 3px solid mui-color("blue", "300");
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  a {
+    color: inherit;
+  }
+  span {
+    padding: 0 3rem;
+  }
+}

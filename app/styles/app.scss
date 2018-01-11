@@ -26,6 +26,7 @@ a.mui-btn {
 @import "components/category-badge";
 @import "components/category-selector";
 @import "components/transaction-panel";
+@import "components/month-selector";
 @import "pages/months-view";
 @import "pages/signin";
 
@@ -138,10 +139,6 @@ header {
   right: 0;
   left: 0;
   z-index: 1;
-}
-
-main {
-  margin-top: 5px;
 }
 
 .mui-textfield {
