@@ -1,19 +1,18 @@
 {
   "name": "pie",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Small description for pie goes here",
+  "description": "Simple money tracker PWA built with ember",
   "license": "MIT",
-  "author": "",
+  "author": "Federico Teotini",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/Fed03/pie",
   "scripts": {
-    "build": "ember build",
-    "start": "ember serve",
-    "test": "ember pie:test"
+    "build": "./node_modules/.bin/ember build",
+    "start": "./node_modules/.bin/ember pie:serve",
+    "test": "./node_modules/.bin/ember pie:test"
   },
   "devDependencies": {
     "@bower_components/Faker": "Marak/Faker.js#^4.1.0",
