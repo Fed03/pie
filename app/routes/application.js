@@ -29,15 +29,15 @@ export default Route.extend(ApplicationRouteMixin, {
       if (catNumber === 0) {
         let promises = [];
         let type = ["income", "outcome"];
-        for (var i = 0; i < 10; i++) {
-          run(() => {
+        run(() => {
+          for (var i = 0; i < 10; i++) {
             let cat = this.store.createRecord("category", {
               name: faker.commerce.department(),
               type: type[i % 2]
             });
             promises.push(cat.save());
-          });
-        }
+          }
+        });
         promise = all(promises);
       }
     }
