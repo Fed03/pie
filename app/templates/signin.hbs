@@ -1,4 +1,4 @@
-<div class="mui-col-xs-4 mui-col-xs-offset-4">
+<div id="signin-form" class="mui-col-xs-4 mui-col-xs-offset-4">
   <h2>Sign in!</h2>
   <div class="mui-panel">
     <form {{action "signin" on="submit"}}>
@@ -17,9 +17,10 @@
       <div class="mui-textfield">
         {{one-way-input data-test-password-input type="password" placeholder="Your password" required=true value=changeset.password update=(action (mut changeset.password))}}
       </div>
-      <button class="mui-btn mui-btn--primary" type="submit" data-test-signin-btn disabled={{formHasErrors}}>Create Wallet</button>
+      <button class="mui-btn mui-btn--primary full-width" type="submit" data-test-signin-btn disabled={{formHasErrors}}>Signin</button>
     </form>
-    {{#link-to 'signup' data-test-signup-link}}Signup{{/link-to}}
+    <div class="sideline">or</div>
+    {{#link-to 'signup' data-test-signup-link class="mui-btn mui-btn--danger full-width"}}Signup{{/link-to}}
   </div>
   {{#if errorMsg}}
     <div data-test-login-error>{{errorMsg}}</div>

@@ -1,4 +1,25 @@
 @import "mui";
+
+.full-width {
+  width: 100%;
+}
+a.mui-btn {
+  box-sizing: border-box;
+}
+
+.sideline {
+  display: flex;
+  align-items: center;
+  &:before,
+  &:after {
+    content: "";
+    height: 1px;
+    width: 100%;
+    margin: 0 5px;
+    background-color: rgba(0, 0, 0, 0.26);
+  }
+}
+
 @import "addons/ember-modal-dialog";
 @import "addons/ember-power-calendar";
 @import "components/calc-input";
@@ -6,6 +27,7 @@
 @import "components/category-selector";
 @import "components/transaction-panel";
 @import "pages/months-view";
+@import "pages/signin";
 
 /* List item */
 
