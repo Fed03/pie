@@ -1,4 +1,4 @@
-# Pie [![Build Status](https://travis-ci.org/Fed03/pie.svg?branch=new_version)](https://travis-ci.org/Fed03/pie)
+# Pie [![Build Status](https://travis-ci.org/Fed03/pie.svg?branch=new_version)](https://travis-ci.org/Fed03/pie) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=fed03%3Apie%3Anew_version&metric=alert_status)](https://sonarcloud.io/dashboard?id=fed03%3Apie%3Anew_version) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fed03%3Apie%3Anew_version&metric=coverage)](https://sonarcloud.io/dashboard?id=fed03%3Apie%3Anew_version)
 
 Pie is a simple money tracker app built with the PWA mantra in mind. It's not yet a full blown PWA (it does not work offline) but its structure allows that evolution.
 
